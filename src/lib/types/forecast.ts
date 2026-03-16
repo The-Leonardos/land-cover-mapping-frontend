@@ -1,5 +1,3 @@
-// Types related to forecasting and time series data
-
 export interface BarangayLandCoverTimeSeries {
     barangay: string
     timestamps: string[] // YYYY-Q format: "2016-Q1", "2016-Q2", etc.
