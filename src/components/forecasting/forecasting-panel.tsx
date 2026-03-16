@@ -3,8 +3,8 @@
 import { useState } from "react"
 import { TrendingUp, TrendingDown } from "lucide-react"
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend } from "recharts"
-import type { LandCoverClass } from "@/lib/barangay-data"
-import { getBarangayTimeSeries } from "@/lib/deepar-data"
+import type { LandCoverClass } from "@/lib/types"
+import { getBarangayTimeSeries } from "@/lib/services/deepar-service"
 
 interface ForecastingPanelProps {
     selectedBarangay: string | null

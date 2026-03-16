@@ -2,12 +2,12 @@
 
 import { useState, useEffect } from "react"
 import { MapPin, BarChart3, Plus, Minus, CircleHelp, UserCircle, Search, Sun, Moon, Layers3, ZoomIn, ZoomOut, Globe, TrendingUp, Satellite, HelpCircle, User, Menu, X, ChevronUp } from "lucide-react"
-import { TimelineControl } from "@/components/timeline-control"
-import { ForecastingPanel } from "@/components/forecasting-panel"
-import { InteractiveMapGrid } from "@/components/interactive-map-grid"
-import { BarangayDetailPanel } from "@/components/barangay-detail-panel"
-import { LayerPanel } from "@/components/layer-panel"
-import { HelpModal } from "@/components/help-modal"
+import { TimelineControl } from "@/components/timeline/timeline-control"
+import { ForecastingPanel } from "@/components/forecasting/forecasting-panel"
+import { InteractiveMapGrid } from "@/components/map/interactive-map-grid"
+import { BarangayDetailPanel } from "@/components/barangay/barangay-detail-panel"
+import { LayerPanel } from "@/components/map/layer-panel"
+import { HelpModal } from "@/components/modals/help-modal"
 import { BAGUIO_BARANGAYS, LAND_COVER_CLASSES, YEARS } from "@/lib/barangay-data"
 import { getBarangayTimeSeries } from "@/lib/deepar-data"
 

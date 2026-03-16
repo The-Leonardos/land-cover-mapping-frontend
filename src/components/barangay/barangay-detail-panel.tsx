@@ -3,8 +3,8 @@
 import { useState } from "react"
 
 import { X, TrendingUp, TrendingDown } from "lucide-react"
-import type { LandCoverClass } from "@/lib/barangay-data"
-import type { BarangayLandCoverTimeSeries } from "@/lib/deepar-data"
+import type { LandCoverClass } from "@/lib/types"
+import type { BarangayLandCoverTimeSeries } from "@/lib/types"
 
 interface BarangayDetailPanelProps {
     barangay: string

@@ -1,7 +1,7 @@
 "use client"
 
 import { useState } from "react"
-import { generateSegmentationOverlay } from "@/lib/segmentation-mapper"
+import { generateSegmentationOverlay } from "@/lib/utils/segmentation-mapper"
 
 interface InteractiveMapGridProps {
     barangays: readonly string[]
