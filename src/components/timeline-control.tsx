@@ -1,16 +1,10 @@
 "use client";
 
 import { YEARS } from "@/lib/utils/constants";
+import { useBarangayStore } from "@/lib/store/barangayStore";
 
-interface TimelineControlProps {
-  currentYear: number;
-  onYearChange: (year: number) => void;
-}
-
-export function TimelineControl({
-  currentYear,
-  onYearChange,
-}: TimelineControlProps) {
+export function TimelineControl() {
+  const { currentYear, setCurrentYear } = useBarangayStore();
   return (
     <div className="flex items-center gap-2 md:gap-4 w-full">
       {/* Slider and Year Labels */}
@@ -21,7 +15,7 @@ export function TimelineControl({
             min={YEARS[0]}
             max={YEARS[YEARS.length - 1]}
             value={currentYear}
-            onChange={(e) => onYearChange(Number.parseInt(e.target.value))}
+            onChange={(e) => setCurrentYear(Number.parseInt(e.target.value))}
             className="w-full h-1.5 md:h-2 bg-muted/50 dark:bg-muted/30 rounded-full appearance-none cursor-pointer slider-primary"
           />
           {/* Custom track fill */}

@@ -5,8 +5,6 @@ import {
   BarChart3,
   Plus,
   Minus,
-  CircleHelp,
-  UserCircle,
   Search,
   Layers3,
   Globe,
@@ -17,19 +15,14 @@ import { TimelineControl } from "@/components/timeline-control";
 import { ForecastingPanel } from "@/components/forecasting-panel";
 import { BarangayDetailPanel } from "@/components/barangay-detail-panel";
 import { LayerPanel } from "@/components/layer-panel";
-import { HelpModal } from "@/components/help-modal";
+import { useBarangayStore } from "@/lib/store/barangayStore";
 
 export default function Home() {
-  const [selectedBarangay, setSelectedBarangay] = useState<string | null>("Asin");
-  const [selectedYear, setSelectedYear] = useState<number>(2021);
-  const [compareYear, setCompareYear] = useState<number | null>(null);
-  const [comparisonMode, setComparisonMode] = useState<boolean>(false);
+  const { selectedBarangay, setSelectedBarangay } = useBarangayStore();
   const [activeLayers, setActiveLayers] = useState<Set<string>>(new Set(["satellite", "segmentation", "boundaries"]));
   const [segmentationOpacity, setSegmentationOpacity] = useState<number>(0.8);
-  const [animating, setAnimating] = useState<boolean>(false);
   const [activeTab, setActiveTab] = useState<"map" | "forecast">("map");
   const [showLayerPanel, setShowLayerPanel] = useState<boolean>(false);
-  const [showHelpModal, setShowHelpModal] = useState<boolean>(false);
   const [showMobilePanel, setShowMobilePanel] = useState<boolean>(false);
 
   const handleLayerToggle = (layerId: string) => {
@@ -40,6 +33,11 @@ export default function Home() {
       newLayers.add(layerId);
     }
     setActiveLayers(newLayers);
+  };
+
+  const handleBarangayDetailsPanelOnClose = () => {
+    setSelectedBarangay('');
+    setShowMobilePanel(false);
   };
 
   return (
@@ -126,19 +124,6 @@ export default function Home() {
                 className="pl-10 pr-4 py-2 bg-muted/50 dark:bg-black/30 border border-border rounded-lg text-sm w-52 focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary/50"
               />
             </div>
-            <button
-              onClick={() => setShowHelpModal(true)}
-              className="p-2 md:p-2.5 hover:bg-muted/80 rounded-lg transition-colors"
-              title="Help & Documentation"
-            >
-              <CircleHelp className="h-5 w-5 text-muted-foreground hover:text-foreground transition-colors" />
-            </button>
-            <button
-              className="hidden sm:block p-2 md:p-2.5 hover:bg-muted/80 rounded-lg transition-colors"
-              title="User Profile"
-            >
-              <UserCircle className="h-5 w-5 text-muted-foreground hover:text-foreground transition-colors" />
-            </button>
           </div>
         </div>
       </header>
@@ -184,33 +169,25 @@ export default function Home() {
         {/* Main Content Area */}
         <div className="flex-1 relative">
           {activeTab === "map" ? (
-            <div className="w-full h-full flex justify-center items-center">
-              REAL MAP
+            <div className="w-full h-full flex flex-col justify-center items-center gap-8">
+              <button
+                onClick={() => setSelectedBarangay("Sample Baranggay")}
+                className="p-2 md:p-2.5 bg-primary backdrop-blur-sm border border-border rounded-lg hover:bg-muted hover:border-primary/50 transition-all shadow-md"
+              >
+                Sample Baranggay Button (use to test the barangay detail
+                panel)
+              </button>
+              REAL MAP (I AM GONNA IMPLEMENT THIS SOON - STEPHEN COLOMA)
             </div>
           ) : (
-            <ForecastingPanel
-              selectedBarangay={selectedBarangay}
-              onBarangaySelect={setSelectedBarangay}
-              barangays={BAGUIO_BARANGAYS}
-            />
+            <ForecastingPanel />
           )}
         </div>
 
         {/* Right Detail Panel - Desktop Only */}
         {selectedBarangay && activeTab === "map" && (
           <div className="hidden lg:flex w-96 border-l border-border bg-card flex-col overflow-hidden">
-            <BarangayDetailPanel
-              barangay={selectedBarangay}
-              year={selectedYear}
-              compareYear={compareYear}
-              comparisonMode={comparisonMode}
-              onComparisonModeChange={setComparisonMode}
-              onCompareYearChange={setCompareYear}
-              onYearChange={setSelectedYear}
-              timeSeries={getBarangayTimeSeries(selectedBarangay)}
-              landCoverClasses={LAND_COVER_CLASSES}
-              onClose={() => setSelectedBarangay(null)}
-            />
+            <BarangayDetailPanel onClose={handleBarangayDetailsPanelOnClose} />
           </div>
         )}
 
@@ -233,21 +210,7 @@ export default function Home() {
             </button>
 
             <div className="bg-card border-t border-border max-h-[70vh] overflow-hidden flex flex-col">
-              <BarangayDetailPanel
-                barangay={selectedBarangay}
-                year={selectedYear}
-                compareYear={compareYear}
-                comparisonMode={comparisonMode}
-                onComparisonModeChange={setComparisonMode}
-                onCompareYearChange={setCompareYear}
-                onYearChange={setSelectedYear}
-                timeSeries={getBarangayTimeSeries(selectedBarangay)}
-                landCoverClasses={LAND_COVER_CLASSES}
-                onClose={() => {
-                  setSelectedBarangay(null);
-                  setShowMobilePanel(false);
-                }}
-              />
+              <BarangayDetailPanel onClose={handleBarangayDetailsPanelOnClose} />
             </div>
           </div>
         )}
@@ -256,18 +219,9 @@ export default function Home() {
       {/* Bottom Timeline Control - Only on Map Tab */}
       {activeTab === "map" && (
         <div className="border-t border-border bg-card p-2 md:p-4">
-          <TimelineControl
-            currentYear={selectedYear}
-            onYearChange={setSelectedYear}
-          />
+          <TimelineControl/>
         </div>
       )}
-
-      {/* Help Modal */}
-      <HelpModal
-        isOpen={showHelpModal}
-        onClose={() => setShowHelpModal(false)}
-      />
     </div>
   );
 }
