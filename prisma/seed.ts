@@ -1,62 +1,81 @@
 import * as fs from 'fs'
+import * as path from 'path'
 import { prisma } from '../src/lib/prisma/prisma'
 
 async function main() {
   console.log('Start seeding...')
 
-  const rawData = fs.readFileSync('land_cover_data.json', 'utf-8')
-  const data = JSON.parse(rawData)
+  // Step 1: Remove current data
+  console.log('Clearing existing data...')
+  await prisma.landCoverTimeseries.deleteMany({})
+  await prisma.barangay.deleteMany({})
+  console.log('Existing data cleared.')
 
-  // Step 1: Extract unique barangay names
-  const barangayNames = Array.from(new Set(data.map((item: any) => item.barangay))) as string[]
-  
-  console.log(`Found ${barangayNames.length} unique barangays.`)
+  // Step 2: Read CSV data
+  const csvPath = path.resolve(process.cwd(), 'prisma/Time-Series-Dataset-Unnormalized.csv')
+  const rawData = fs.readFileSync(csvPath, 'utf-8')
+  const lines = rawData.trim().split('\n')
+  const header = lines[0].split(',')
+  const dataLines = lines.slice(1)
 
-  // Step 2: Seed Barangays and create a map for IDs
-  const barangayMap = new Map<string, number>()
-  
-  for (const name of barangayNames) {
-    const barangay = await prisma.barangay.upsert({
-      where: { id: -1 }, // Use a non-existent ID for upsert logic if name isn't unique in schema yet, but better to check by name if we had a unique constraint.
-      // Since 'name' is NOT unique in the schema, we'll just find or create.
-      update: {},
-      create: { name },
-    })
-    
-    // Since name isn't unique in schema, but we want to avoid duplicates in this run:
-    const existing = await prisma.barangay.findFirst({ where: { name } })
-    if (existing) {
-      barangayMap.set(name, existing.id)
-    } else {
-      const created = await prisma.barangay.create({ data: { name } })
-      barangayMap.set(name, created.id)
+  console.log(`Processing ${dataLines.length} rows from CSV...`)
+
+  // Create a map for unique barangays
+  const barangaysMap = new Map<number, string>()
+  const timeseriesData: any[] = []
+
+  for (const line of dataLines) {
+    const values = line.split(',')
+    if (values.length < 13) continue
+
+    const name = values[0].trim()
+    const bareGround = parseFloat(values[1])
+    const builtArea = parseFloat(values[2])
+    const crops = parseFloat(values[3])
+    const floodedVegetation = parseFloat(values[4])
+    const grass = parseFloat(values[5])
+    const quarter = parseInt(values[6])
+    const shrubAndScrub = parseFloat(values[7])
+    const snowAndIce = parseFloat(values[8])
+    const trees = parseFloat(values[9])
+    const water = parseFloat(values[10])
+    const year = parseInt(values[11])
+    const barangayId = parseInt(values[12])
+
+    if (!barangaysMap.has(barangayId)) {
+      barangaysMap.set(barangayId, name)
     }
+
+    timeseriesData.push({
+      barangayId,
+      year,
+      quarter,
+      water,
+      trees,
+      grass,
+      floodedVegetation,
+      crops,
+      shrub: shrubAndScrub,
+      snow: snowAndIce,
+      built: builtArea,
+      bare: bareGround,
+    })
   }
 
-  console.log('Barangays seeded.')
-
-  // Step 3: Seed LandCoverTimeseries
-  console.log(`Seeding ${data.length} timeseries records...`)
-  
-  // We can use createMany for efficiency if the database supports it (Postgres does)
-  // However, we need to map the barangay names to IDs.
-  
-  const timeseriesData = data.map((item: any) => ({
-    barangayId: barangayMap.get(item.barangay),
-    year: item.year,
-    quarter: item.quarter,
-    water: item.water,
-    trees: item.trees,
-    grass: item.grass,
-    floodedVegetation: item.flooded_vegetation,
-    crops: item.crops,
-    shrub: item.shrub,
-    snow: item.snow,
-    built: item.built,
-    bare: item.bare,
+  // Step 3: Seed Barangays
+  console.log(`Seeding ${barangaysMap.size} unique barangays...`)
+  const barangayRecords = Array.from(barangaysMap.entries()).map(([id, name]) => ({
+    id,
+    name,
   }))
 
-  // Chunk the data to avoid statement limits
+  await prisma.barangay.createMany({
+    data: barangayRecords,
+  })
+  console.log('Barangays seeded.')
+
+  // Step 4: Seed LandCoverTimeseries in chunks
+  console.log(`Seeding ${timeseriesData.length} timeseries records...`)
   const chunkSize = 1000
   for (let i = 0; i < timeseriesData.length; i += chunkSize) {
     const chunk = timeseriesData.slice(i, i + chunkSize)
@@ -67,7 +86,7 @@ async function main() {
     console.log(`Seeded chunk ${Math.floor(i / chunkSize) + 1} of ${Math.ceil(timeseriesData.length / chunkSize)}`)
   }
 
-  console.log('Seeding finished.')
+  console.log('Seeding finished successfully.')
 }
 
 main()
@@ -78,3 +97,4 @@ main()
   .finally(async () => {
     await prisma.$disconnect()
   })
+

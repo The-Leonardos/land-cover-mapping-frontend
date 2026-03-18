@@ -10,7 +10,8 @@
     "lint": "eslint .",
     "db:start": "docker compose up -d",
     "db:stop": "docker compose down",
-    "db:seed": "npx prisma db seed"
+    "db:seed": "npx prisma db seed",
+    "db:studio": "npx prisma studio"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.10.0",

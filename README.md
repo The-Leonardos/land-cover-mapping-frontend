@@ -58,6 +58,9 @@ npx prisma db push
 
 # (Only run once) Seed the database
 pnpm db:seed
+
+# View the database
+pnpm db:studio
 ```
 
 ### 6. Run the Development Server
@@ -78,4 +81,5 @@ Open [http://localhost:3000](http://localhost:3000) in your browser to see the a
 - `pnpm db:start`: Starts the PostgreSQL Docker container.
 - `pnpm db:stop`: Stops the PostgreSQL Docker container.
 - `pnpm db:seed`: Seeds the database using Prisma.
+- `pnpm db:studio`: Views the database.
 - `pnpm lint`: Runs ESLint for code quality checks.
