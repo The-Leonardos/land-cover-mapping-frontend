@@ -1,6 +1,6 @@
 "use client";
 
-import { TiffRenderer } from "@/components/tiff-renderer";
+import { DynamicWorldImageRenderer } from "@/components/dynamic-world-image-renderer";
 
 export default function TestPage() {
     return (
@@ -17,7 +17,7 @@ export default function TestPage() {
             </header>
             
             <main className="flex-1 bg-black relative flex items-center justify-center p-8 overflow-auto">
-                <TiffRenderer url="/2023_Q1.tif" />
+                <DynamicWorldImageRenderer url="/DW_RGB_2023_Q1.tif" />
             </main>
             
             <footer className="p-3 border-t border-border bg-card text-center text-[10px] text-muted-foreground uppercase tracking-widest">
@@ -25,4 +25,4 @@ export default function TestPage() {
             </footer>
         </div>
     );
-}
+}
