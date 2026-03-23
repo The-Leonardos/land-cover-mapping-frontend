@@ -5,6 +5,7 @@ import { Plus, Minus, Layers3 } from "lucide-react";
 import { SatelliteImageRenderer } from "./satellite-image-renderer";
 import { DynamicWorldImageRenderer } from "./dynamic-world-image-renderer";
 import { LayerPanel } from "./layer-panel";
+import { BarangayVectorLayer } from "./barangay-vector-layer";
 
 export const InteractiveMap = () => {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -172,6 +173,11 @@ export const InteractiveMap = () => {
             {activeLayers.has("segmentation") && (
               <div className="absolute inset-0 z-10 flex items-center justify-center pointer-events-none transition-opacity duration-200" style={{ opacity: segmentationOpacity }}>
                 <DynamicWorldImageRenderer url="/DW_RGB_2023_Q1.tif" />
+              </div>
+            )}
+            {activeLayers.has("boundaries") && (
+              <div className="absolute inset-0 z-20">
+                <BarangayVectorLayer />
               </div>
             )}
           </div>
