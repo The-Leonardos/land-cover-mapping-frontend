@@ -5,7 +5,6 @@ interface LayerPanelProps {
   onLayerToggle: (layerId: string) => void;
   segmentationOpacity: number;
   onOpacityChange: (opacity: number) => void;
-  onRecenter: () => void;
 }
 
 export function LayerPanel({
@@ -13,7 +12,6 @@ export function LayerPanel({
   onLayerToggle,
   segmentationOpacity,
   onOpacityChange,
-  onRecenter,
 }: LayerPanelProps) {
   const layers = [
     {
@@ -122,17 +120,6 @@ export function LayerPanel({
               )}
           </div>
         ))}
-      </div>
-
-      {/* Recenter Button */}
-      <div className="p-3 md:p-4 border-t border-border bg-muted/30">
-        <button
-          onClick={onRecenter}
-          className="w-full flex items-center justify-center gap-2 px-3 py-2 bg-background border border-border hover:bg-muted hover:border-primary/50 text-foreground text-xs md:text-sm font-semibold rounded-md transition-all shadow-sm"
-        >
-          <span className="shrink-0 text-primary font-bold">𖦏</span>
-          Recenter Map
-        </button>
       </div>
     </div>
   );

@@ -117,19 +117,9 @@ export default function Home() {
 
 
         {/* Main Content Area */}
-        <div className="flex-1 relative">
+        <div className="flex-1 relative min-w-0">
           {activeTab === "map" ? (
-            <div className="w-full h-full relative">
-              <div className="absolute top-4 left-1/2 -translate-x-1/2 z-20">
-                <button
-                  onClick={() => setSelectedBarangay("Sample Baranggay")}
-                  className="p-2 md:p-2.5 bg-primary/95 text-primary-foreground text-xs md:text-sm font-semibold backdrop-blur-sm border border-primary rounded-lg shadow-lg hover:bg-primary/80 transition-all"
-                >
-                  Test Target "Sample Baranggay"
-                </button>
-              </div>
-              <InteractiveMap />
-            </div>
+            <InteractiveMap />
           ) : (
             <ForecastingPanel />
           )}
@@ -137,7 +127,7 @@ export default function Home() {
 
         {/* Right Detail Panel - Desktop Only */}
         {selectedBarangay && activeTab === "map" && (
-          <div className="hidden lg:flex w-96 border-l border-border bg-card flex-col overflow-hidden">
+          <div className="hidden 2xl:flex w-96 border-l border-border bg-card flex-col overflow-hidden">
             <BarangayDetailPanel onClose={handleBarangayDetailsPanelOnClose} />
           </div>
         )}

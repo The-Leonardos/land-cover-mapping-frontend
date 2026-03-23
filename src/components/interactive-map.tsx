@@ -15,12 +15,24 @@ export const InteractiveMap = () => {
   const [showLayerPanel, setShowLayerPanel] = useState<boolean>(false);
   const [scale, setScale] = useState<number>(1);
   const [initialScale, setInitialScale] = useState<number>(1);
+  const [mapSize, setMapSize] = useState<number>(1000);
+  
 
   useEffect(() => {
     if (containerRef.current) {
       const { clientWidth, clientHeight } = containerRef.current;
-      // Auto-fit the 1000x1000 map inside the container, keeping a little margin
-      const calculatedScale = Math.min(clientWidth / 1000, clientHeight / 1000) * 0.95;
+
+      // Set a smaller base map size for smaller screens to make it more compact
+      if(window.innerWidth < 640){
+        setMapSize(600);
+      }else if(window.innerWidth < 768){
+        setMapSize(800);
+      }else{
+        setMapSize(1000); // default map size
+      }
+
+      // Auto-fit the map inside the container, keeping a little margin
+      const calculatedScale = Math.min(clientWidth / mapSize, clientHeight / mapSize) * 0.95;
       const validScale = Math.max(calculatedScale, 0.1);
       setScale(validScale);
       setInitialScale(validScale);
@@ -55,8 +67,8 @@ export const InteractiveMap = () => {
     let newX = mx - (mx - position.x) * ratio;
     let newY = my - (my - position.y) * ratio;
     
-    const maxPanX = (1000 * newScale) / 1.5;
-    const maxPanY = (1000 * newScale) / 1.5;
+    const maxPanX = (mapSize * newScale) / 1.5;
+    const maxPanY = (mapSize * newScale) / 1.5;
     
     newX = Math.max(-maxPanX, Math.min(maxPanX, newX));
     newY = Math.max(-maxPanY, Math.min(maxPanY, newY));
@@ -87,15 +99,44 @@ export const InteractiveMap = () => {
     let newY = e.clientY - startPos.y;
     
     // Bounding limits to stop infinite drag.
-    // Based on center (0,0) drag offset for a 1000x1000 map.
-    const maxPanX = (1000 * scale) / 1.5;
-    const maxPanY = (1000 * scale) / 1.5;
+    // Based on center (0,0) drag offset for the map size.
+    const maxPanX = (mapSize * scale) / 1.5;
+    const maxPanY = (mapSize * scale) / 1.5;
     
     newX = Math.max(-maxPanX, Math.min(maxPanX, newX));
     newY = Math.max(-maxPanY, Math.min(maxPanY, newY));
 
     setPosition({ x: newX, y: newY });
   };  
+
+  const handleTouchStart = (e: React.TouchEvent) => {
+    if (e.touches.length === 1) {
+      setIsDragging(true);
+      setStartPos({
+        x: e.touches[0].clientX - position.x,
+        y: e.touches[0].clientY - position.y
+      });
+    }
+  };
+
+  const handleTouchMove = (e: React.TouchEvent) => {
+    if (!isDragging || e.touches.length !== 1) return;
+    
+    let newX = e.touches[0].clientX - startPos.x;
+    let newY = e.touches[0].clientY - startPos.y;
+    
+    const maxPanX = (mapSize * scale) / 1.5;
+    const maxPanY = (mapSize * scale) / 1.5;
+    
+    newX = Math.max(-maxPanX, Math.min(maxPanX, newX));
+    newY = Math.max(-maxPanY, Math.min(maxPanY, newY));
+
+    setPosition({ x: newX, y: newY });
+  };
+
+  const handleTouchEnd = () => {
+    setIsDragging(false);
+  };
 
   const handleWheel = (e: React.WheelEvent) => {
     if (!containerRef.current) return;
@@ -136,6 +177,15 @@ export const InteractiveMap = () => {
         >
           <Layers3 className={`h-4 w-4 md:h-5 md:w-5 ${showLayerPanel ? "text-primary" : "text-foreground"}`} />
         </button>
+        <button
+          onClick={handleRecenter}
+          className="p-2 md:p-2.5 bg-card/95 backdrop-blur-sm border border-border rounded-lg hover:bg-muted hover:border-primary/50 transition-all shadow-md group"
+          title="Recenter Map"
+        >
+          <span className="h-4 w-4 md:h-5 md:w-5 flex items-center justify-center text-primary font-bold text-lg md:text-xl leading-none">
+            𖦏
+          </span>
+        </button>
       </div>
 
       {/* Layer Panel */}
@@ -146,25 +196,28 @@ export const InteractiveMap = () => {
             onLayerToggle={handleLayerToggle}
             segmentationOpacity={segmentationOpacity}
             onOpacityChange={setSegmentationOpacity}
-            onRecenter={handleRecenter}
           />
         </div>
       )}
 
       {/* Map Area */}
       <div 
-        className="w-full h-full cursor-grab active:cursor-grabbing"
+        className="w-full h-full cursor-grab active:cursor-grabbing touch-none"
         onMouseDown={handleMouseDown}
         onMouseMove={handleMouseMove}
         onMouseUp={handleMouseUp}
         onMouseLeave={handleMouseUp}
         onWheel={handleWheel}
+        onTouchStart={handleTouchStart}
+        onTouchMove={handleTouchMove}
+        onTouchEnd={handleTouchEnd}
+        onTouchCancel={handleTouchEnd}
       >
         <div 
           className="w-full h-full flex items-center justify-center origin-center transition-transform duration-100 ease-out will-change-transform"
           style={{ transform: `translate(${position.x}px, ${position.y}px) scale(${scale})` }}
         >
-          <div className="relative w-[1000px] h-[1000px]">
+          <div className="relative" style={{ width: mapSize, height: mapSize }}>
             {activeLayers.has("satellite") && (
               <div className="absolute inset-0 z-0 flex items-center justify-center">
                 <SatelliteImageRenderer url="/2023_Q1.tif" />
