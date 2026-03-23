@@ -19,7 +19,7 @@ export const DynamicWorldImageRenderer: React.FC<DynamicWorldImageRendererProps>
       try {
         setLoading(true);
         setError(null);
-        console.log("Starting Dynamic World GeoTIFF render for:", url);
+        // console.log("Starting Dynamic World GeoTIFF render for:", url);
 
         // fromUrl is often better for tiled GeoTIFFs
         const tiff = await fromUrl(url);
@@ -27,7 +27,7 @@ export const DynamicWorldImageRenderer: React.FC<DynamicWorldImageRendererProps>
 
         const width = image.getWidth();
         const height = image.getHeight();
-        console.log("Image dimensions:", width, "x", height);
+        // console.log("Image dimensions:", width, "x", height);
 
         // Dynamic world images might use different bands, but we will preserve 
         // the RGB rendering logic from the original tiff renderer.
@@ -40,7 +40,7 @@ export const DynamicWorldImageRenderer: React.FC<DynamicWorldImageRendererProps>
         if (isCancelled) return;
 
         const [redBand, greenBand, blueBand] = rasters as any;
-        console.log("First pixel (R,G,B):", redBand[0], greenBand[0], blueBand[0]);
+        // console.log("First pixel (R,G,B):", redBand[0], greenBand[0], blueBand[0]);
 
         const canvas = canvasRef.current;
         if (!canvas) return;
@@ -72,7 +72,7 @@ export const DynamicWorldImageRenderer: React.FC<DynamicWorldImageRendererProps>
         }
 
         ctx.putImageData(imageData, 0, 0);
-        console.log("Render complete");
+        // console.log("Render complete");
         setLoading(false);
       } catch (err) {
         console.error("Error rendering TIFF:", err);

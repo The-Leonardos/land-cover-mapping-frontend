@@ -19,7 +19,7 @@ export const SatelliteImageRenderer: React.FC<SatelliteImageRendererProps> = ({ 
       try {
         setLoading(true);
         setError(null);
-        console.log("Starting Satellite GeoTIFF render for:", url);
+        // console.log("Starting Satellite GeoTIFF render for:", url);
 
         // fromUrl is often better for tiled GeoTIFFs
         const tiff = await fromUrl(url);
@@ -27,7 +27,7 @@ export const SatelliteImageRenderer: React.FC<SatelliteImageRendererProps> = ({ 
 
         const width = image.getWidth();
         const height = image.getHeight();
-        console.log("Image dimensions:", width, "x", height);
+        // console.log("Image dimensions:", width, "x", height);
 
         // Read specific bands (B4, B3, B2)
         // Metadata: 0=B4(Red), 1=B3(Green), 2=B2(Blue)
@@ -43,7 +43,7 @@ export const SatelliteImageRenderer: React.FC<SatelliteImageRendererProps> = ({ 
 
         // rasters is an array of TypedArrays (e.g., Float32Array[])
         const [redBand, greenBand, blueBand] = rasters as any;
-        console.log("First pixel (R,G,B):", redBand[0], greenBand[0], blueBand[0]);
+        // console.log("First pixel (R,G,B):", redBand[0], greenBand[0], blueBand[0]);
 
         const canvas = canvasRef.current;
         if (!canvas) return;
@@ -73,7 +73,7 @@ export const SatelliteImageRenderer: React.FC<SatelliteImageRendererProps> = ({ 
         }
 
         ctx.putImageData(imageData, 0, 0);
-        console.log("Render complete");
+        // console.log("Render complete");
         setLoading(false);
       } catch (err) {
         console.error("Error rendering TIFF:", err);

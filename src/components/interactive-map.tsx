@@ -19,24 +19,33 @@ export const InteractiveMap = () => {
   
 
   useEffect(() => {
-    if (containerRef.current) {
+    const handleResize = () => {
+      if (!containerRef.current) return;
+      
       const { clientWidth, clientHeight } = containerRef.current;
+      const width = window.innerWidth;
 
-      // Set a smaller base map size for smaller screens to make it more compact
-      if(window.innerWidth < 640){
-        setMapSize(600);
-      }else if(window.innerWidth < 768){
-        setMapSize(800);
-      }else{
-        setMapSize(1000); // default map size
+      // Calculate the correct map size for this width
+      let newMapSize = 1000;
+      if (width < 640) {
+        newMapSize = 600;
+      } else if (width < 768) {
+        newMapSize = 800;
       }
+      
+      setMapSize(newMapSize);
 
-      // Auto-fit the map inside the container, keeping a little margin
-      const calculatedScale = Math.min(clientWidth / mapSize, clientHeight / mapSize) * 0.95;
+      // Calculate scale using the NEW map size immediately to avoid "small map" stale state bug
+      const calculatedScale = Math.min(clientWidth / newMapSize, clientHeight / newMapSize) * 0.95;
       const validScale = Math.max(calculatedScale, 0.1);
+      
       setScale(validScale);
       setInitialScale(validScale);
-    }
+    };
+
+    handleResize();
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
   }, []);
 
   // Panning state
@@ -158,7 +167,7 @@ export const InteractiveMap = () => {
   };
 
   return (
-    <div ref={containerRef} className="relative w-full h-full bg-black/5 overflow-hidden">
+    <div ref={containerRef} className="relative w-full h-full min-w-0 min-h-0 bg-black/5 overflow-hidden">
       {/* Controls Container */}
       <div className="absolute left-2 md:left-4 top-2 md:top-4 z-20 flex flex-col gap-1.5 md:gap-2">
         <button onClick={handleZoomIn} className="p-2 md:p-2.5 bg-card/95 backdrop-blur-sm border border-border rounded-lg hover:bg-muted hover:border-primary/50 transition-all shadow-md group">
