@@ -1,22 +1,23 @@
 "use client";
 
 import React, { useState, useEffect, useRef } from "react";
-import { Plus, Minus, Layers3 } from "lucide-react";
+import { Plus, Minus, Layers3, Loader, Loader2 } from "lucide-react";
 import { SatelliteImageRenderer } from "./satellite-image-renderer";
 import { DynamicWorldImageRenderer } from "./dynamic-world-image-renderer";
 import { LayerPanel } from "./layer-panel";
 import { BarangayVectorLayer } from "./barangay-vector-layer";
+import { useLoadingLayerStore } from "@/lib/store/loadingLayerStore";
 
 export const InteractiveMap = () => {
   const containerRef = useRef<HTMLDivElement>(null);
 
+  const loadingLayer = useLoadingLayerStore((state)=> state.loadingLayer);
   const [activeLayers, setActiveLayers] = useState<Set<string>>(new Set(["satellite", "segmentation", "boundaries"]));
   const [segmentationOpacity, setSegmentationOpacity] = useState<number>(1);
   const [showLayerPanel, setShowLayerPanel] = useState<boolean>(false);
   const [scale, setScale] = useState<number>(1);
   const [initialScale, setInitialScale] = useState<number>(1);
   const [mapSize, setMapSize] = useState<number>(1000);
-  
 
   useEffect(() => {
     const handleResize = () => {
@@ -244,6 +245,16 @@ export const InteractiveMap = () => {
             )}
           </div>
         </div>
+
+        {/* Centralized Loader Overlay */}
+        {loadingLayer && (
+          <div className="absolute inset-0 z-[100] flex items-center justify-center bg-background/40 pointer-events-auto">
+            <div className="bg-card border border-border p-4 rounded-lg shadow-md flex flex-col items-center gap-2">
+              <Loader2 className="animate-spin text-primary"/>
+              <p className="text-sm text-foreground">Loading Map Layers</p>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );

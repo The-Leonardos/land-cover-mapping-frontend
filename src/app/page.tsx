@@ -115,7 +115,6 @@ export default function Home() {
       {/* Main Content */}
       <div className="flex flex-1 overflow-hidden relative">
 
-
         {/* Main Content Area */}
         <div className="flex-1 relative min-w-0">
           {activeTab === "map" ? (

@@ -9,7 +9,6 @@ interface DynamicWorldImageRendererProps {
 
 export const DynamicWorldImageRenderer: React.FC<DynamicWorldImageRendererProps> = ({ url }) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
@@ -17,7 +16,6 @@ export const DynamicWorldImageRenderer: React.FC<DynamicWorldImageRendererProps>
 
     async function renderTiff() {
       try {
-        setLoading(true);
         setError(null);
         // console.log("Starting Dynamic World GeoTIFF render for:", url);
 
@@ -73,12 +71,10 @@ export const DynamicWorldImageRenderer: React.FC<DynamicWorldImageRendererProps>
 
         ctx.putImageData(imageData, 0, 0);
         // console.log("Render complete");
-        setLoading(false);
       } catch (err) {
         console.error("Error rendering TIFF:", err);
         if (!isCancelled) {
           setError(err instanceof Error ? err.message : "Failed to load/render TIFF");
-          setLoading(false);
         }
       }
     }
@@ -92,14 +88,6 @@ export const DynamicWorldImageRenderer: React.FC<DynamicWorldImageRendererProps>
 
   return (
     <div className="relative w-full h-full flex items-center justify-center pointer-events-none">
-      {loading && (
-        <div className="absolute inset-0 flex items-center justify-center pointer-events-auto bg-background/50 backdrop-blur-sm z-10 rounded-xl">
-          <div className="flex flex-col items-center gap-2">
-            <div className="w-8 h-8 border-4 border-primary border-t-transparent rounded-full animate-spin"></div>
-            <p className="text-sm font-medium">Processing Dynamic World Image...</p>
-          </div>
-        </div>
-      )}
       {error && (
         <div className="absolute inset-0 z-10 flex flex-col items-center justify-center bg-destructive/10 border border-destructive text-destructive px-6 py-4 rounded-xl shadow-xl pointer-events-auto bg-card">
           <div className="w-12 h-12 bg-destructive/20 rounded-full flex items-center justify-center mb-3">

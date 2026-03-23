@@ -2,6 +2,7 @@
 
 import React, { useEffect, useRef, useState } from "react";
 import { fromUrl } from "geotiff";
+import { useLoadingLayerStore } from "@/lib/store/loadingLayerStore";
 
 interface SatelliteImageRendererProps {
   url: string;
@@ -9,16 +10,16 @@ interface SatelliteImageRendererProps {
 
 export const SatelliteImageRenderer: React.FC<SatelliteImageRendererProps> = ({ url }) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const setLoading = useLoadingLayerStore((state)=> state.setLoadingLayer)
 
   useEffect(() => {
     let isCancelled = false;
 
     async function renderTiff() {
       try {
-        setLoading(true);
         setError(null);
+        setLoading(true)
         // console.log("Starting Satellite GeoTIFF render for:", url);
 
         // fromUrl is often better for tiled GeoTIFFs
@@ -74,13 +75,13 @@ export const SatelliteImageRenderer: React.FC<SatelliteImageRendererProps> = ({ 
 
         ctx.putImageData(imageData, 0, 0);
         // console.log("Render complete");
-        setLoading(false);
+        setLoading(false)
       } catch (err) {
         console.error("Error rendering TIFF:", err);
         if (!isCancelled) {
           setError(err instanceof Error ? err.message : "Failed to load/render TIFF");
-          setLoading(false);
         }
+        setLoading(false)
       }
     }
 
@@ -93,14 +94,6 @@ export const SatelliteImageRenderer: React.FC<SatelliteImageRendererProps> = ({ 
 
   return (
     <div className="relative w-full h-full flex items-center justify-center pointer-events-none">
-      {loading && (
-        <div className="absolute inset-0 flex items-center justify-center pointer-events-auto bg-background/50 backdrop-blur-sm z-10 rounded-xl">
-          <div className="flex flex-col items-center gap-2">
-            <div className="w-8 h-8 border-4 border-primary border-t-transparent rounded-full animate-spin"></div>
-            <p className="text-sm font-medium">Processing Satellite Image...</p>
-          </div>
-        </div>
-      )}
       {error && (
         <div className="absolute inset-0 z-10 flex flex-col items-center justify-center bg-destructive/10 border border-destructive text-destructive px-6 py-4 rounded-xl shadow-xl pointer-events-auto bg-card">
           <div className="w-12 h-12 bg-destructive/20 rounded-full flex items-center justify-center mb-3">
