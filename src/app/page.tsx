@@ -19,8 +19,6 @@ export default function Home() {
   const [activeTab, setActiveTab] = useState<"map" | "forecast">("map");
   const [showMobilePanel, setShowMobilePanel] = useState<boolean>(false);
 
-
-
   const handleBarangayDetailsPanelOnClose = () => {
     setSelectedBarangay('');
     setShowMobilePanel(false);

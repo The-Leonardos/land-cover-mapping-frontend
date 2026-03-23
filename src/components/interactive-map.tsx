@@ -13,13 +13,16 @@ export const InteractiveMap = () => {
   const [segmentationOpacity, setSegmentationOpacity] = useState<number>(1);
   const [showLayerPanel, setShowLayerPanel] = useState<boolean>(false);
   const [scale, setScale] = useState<number>(1);
+  const [initialScale, setInitialScale] = useState<number>(1);
 
   useEffect(() => {
     if (containerRef.current) {
       const { clientWidth, clientHeight } = containerRef.current;
       // Auto-fit the 1000x1000 map inside the container, keeping a little margin
-      const initialScale = Math.min(clientWidth / 1000, clientHeight / 1000) * 0.95;
-      setScale(Math.max(initialScale, 0.1));
+      const calculatedScale = Math.min(clientWidth / 1000, clientHeight / 1000) * 0.95;
+      const validScale = Math.max(calculatedScale, 0.1);
+      setScale(validScale);
+      setInitialScale(validScale);
     }
   }, []);
 
@@ -36,6 +39,11 @@ export const InteractiveMap = () => {
       newLayers.add(layerId);
     }
     setActiveLayers(newLayers);
+  };
+
+  const handleRecenter = () => {
+    setScale(initialScale);
+    setPosition({ x: 0, y: 0 });
   };
 
   const doZoom = (newScale: number, mx: number = 0, my: number = 0) => {
@@ -137,6 +145,7 @@ export const InteractiveMap = () => {
             onLayerToggle={handleLayerToggle}
             segmentationOpacity={segmentationOpacity}
             onOpacityChange={setSegmentationOpacity}
+            onRecenter={handleRecenter}
           />
         </div>
       )}
