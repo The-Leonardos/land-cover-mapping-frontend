@@ -10,7 +10,7 @@ export const InteractiveMap = () => {
   const containerRef = useRef<HTMLDivElement>(null);
 
   const [activeLayers, setActiveLayers] = useState<Set<string>>(new Set(["satellite", "segmentation", "boundaries"]));
-  const [segmentationOpacity, setSegmentationOpacity] = useState<number>(0.8);
+  const [segmentationOpacity, setSegmentationOpacity] = useState<number>(1);
   const [showLayerPanel, setShowLayerPanel] = useState<boolean>(false);
   const [scale, setScale] = useState<number>(1);
 
@@ -38,8 +38,26 @@ export const InteractiveMap = () => {
     setActiveLayers(newLayers);
   };
 
-  const handleZoomIn = () => setScale(prev => Math.min(prev * 1.5, 10));
-  const handleZoomOut = () => setScale(prev => Math.max(prev / 1.5, 0.5));
+  const doZoom = (newScale: number, mx: number = 0, my: number = 0) => {
+    if (newScale === scale) return;
+    const ratio = newScale / scale;
+    
+    // Zoom towards cursor (mx, my) or center if (0, 0)
+    let newX = mx - (mx - position.x) * ratio;
+    let newY = my - (my - position.y) * ratio;
+    
+    const maxPanX = (1000 * newScale) / 1.5;
+    const maxPanY = (1000 * newScale) / 1.5;
+    
+    newX = Math.max(-maxPanX, Math.min(maxPanX, newX));
+    newY = Math.max(-maxPanY, Math.min(maxPanY, newY));
+    
+    setScale(newScale);
+    setPosition({ x: newX, y: newY });
+  };
+
+  const handleZoomIn = () => doZoom(Math.min(scale * 1.5, 10));
+  const handleZoomOut = () => doZoom(Math.max(scale / 1.5, 0.1));
 
   const handleMouseDown = (e: React.MouseEvent) => {
     setIsDragging(true);
@@ -47,6 +65,10 @@ export const InteractiveMap = () => {
       x: e.clientX - position.x,
       y: e.clientY - position.y
     });
+  };
+
+  const handleMouseUp = () => {
+    setIsDragging(false);
   };
 
   const handleMouseMove = (e: React.MouseEvent) => {
@@ -64,18 +86,25 @@ export const InteractiveMap = () => {
     newY = Math.max(-maxPanY, Math.min(maxPanY, newY));
 
     setPosition({ x: newX, y: newY });
-  };
-
-  const handleMouseUp = () => {
-    setIsDragging(false);
-  };
+  };  
 
   const handleWheel = (e: React.WheelEvent) => {
+    if (!containerRef.current) return;
+    
+    // Calculate cursor position relative to the center of the container
+    const rect = containerRef.current.getBoundingClientRect();
+    const mx = e.clientX - rect.left - rect.width / 2;
+    const my = e.clientY - rect.top - rect.height / 2;
+    
+    const zoomFactor = 1.30; // Finer zoom factor for mouse wheel
+    let targetScale = scale;
     if (e.deltaY < 0) {
-      handleZoomIn();
+      targetScale = Math.min(scale * zoomFactor, 25);
     } else {
-      handleZoomOut();
+      targetScale = Math.max(scale / zoomFactor, 0.5);
     }
+    
+    doZoom(targetScale, mx, my);
   };
 
   return (
