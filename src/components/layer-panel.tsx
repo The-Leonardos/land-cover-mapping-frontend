@@ -96,16 +96,26 @@ export function LayerPanel({
                       {Math.round(segmentationOpacity * 100)}%
                     </span>
                   </div>
-                  <input
-                    type="range"
-                    min="0"
-                    max="100"
-                    value={Math.round(segmentationOpacity * 100)}
-                    onChange={(e) =>
-                      onOpacityChange(Number.parseInt(e.target.value) / 100)
-                    }
-                    className="w-full h-1 md:h-1.5 bg-muted rounded-full appearance-none cursor-pointer accent-primary"
-                  />
+                  <div className="relative w-full h-2 md:h-2.5 bg-muted rounded-full flex items-center inset-y-1">
+                    <div 
+                      className="absolute left-0 h-full bg-primary rounded-l-full pointer-events-none" 
+                      style={{ width: `${Math.round(segmentationOpacity * 100)}%` }} 
+                    />
+                    <input
+                      type="range"
+                      min="0"
+                      max="100"
+                      value={Math.round(segmentationOpacity * 100)}
+                      onChange={(e) =>
+                        onOpacityChange(Number.parseInt(e.target.value) / 100)
+                      }
+                      className="absolute w-full h-full opacity-0 cursor-pointer z-10 m-0"
+                    />
+                    <div 
+                      className="absolute w-3 h-3 md:w-4 md:h-4 bg-primary rounded-full shadow pointer-events-none transform -translate-x-1/2 transition-transform duration-75"
+                      style={{ left: `${Math.round(segmentationOpacity * 100)}%` }}
+                    />
+                  </div>
                 </div>
               )}
           </div>

@@ -1,16 +1,27 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Plus, Minus, Layers3 } from "lucide-react";
 import { SatelliteImageRenderer } from "./satellite-image-renderer";
 import { DynamicWorldImageRenderer } from "./dynamic-world-image-renderer";
 import { LayerPanel } from "./layer-panel";
 
 export const InteractiveMap = () => {
+  const containerRef = useRef<HTMLDivElement>(null);
+
   const [activeLayers, setActiveLayers] = useState<Set<string>>(new Set(["satellite", "segmentation", "boundaries"]));
   const [segmentationOpacity, setSegmentationOpacity] = useState<number>(0.8);
   const [showLayerPanel, setShowLayerPanel] = useState<boolean>(false);
   const [scale, setScale] = useState<number>(1);
+
+  useEffect(() => {
+    if (containerRef.current) {
+      const { clientWidth, clientHeight } = containerRef.current;
+      // Auto-fit the 1000x1000 map inside the container, keeping a little margin
+      const initialScale = Math.min(clientWidth / 1000, clientHeight / 1000) * 0.95;
+      setScale(Math.max(initialScale, 0.1));
+    }
+  }, []);
 
   // Panning state
   const [isDragging, setIsDragging] = useState(false);
@@ -40,10 +51,19 @@ export const InteractiveMap = () => {
 
   const handleMouseMove = (e: React.MouseEvent) => {
     if (!isDragging) return;
-    setPosition({
-      x: e.clientX - startPos.x,
-      y: e.clientY - startPos.y
-    });
+    
+    let newX = e.clientX - startPos.x;
+    let newY = e.clientY - startPos.y;
+    
+    // Bounding limits to stop infinite drag.
+    // Based on center (0,0) drag offset for a 1000x1000 map.
+    const maxPanX = (1000 * scale) / 1.5;
+    const maxPanY = (1000 * scale) / 1.5;
+    
+    newX = Math.max(-maxPanX, Math.min(maxPanX, newX));
+    newY = Math.max(-maxPanY, Math.min(maxPanY, newY));
+
+    setPosition({ x: newX, y: newY });
   };
 
   const handleMouseUp = () => {
@@ -59,7 +79,7 @@ export const InteractiveMap = () => {
   };
 
   return (
-    <div className="relative w-full h-full bg-black/5 overflow-hidden">
+    <div ref={containerRef} className="relative w-full h-full bg-black/5 overflow-hidden">
       {/* Controls Container */}
       <div className="absolute left-2 md:left-4 top-2 md:top-4 z-20 flex flex-col gap-1.5 md:gap-2">
         <button onClick={handleZoomIn} className="p-2 md:p-2.5 bg-card/95 backdrop-blur-sm border border-border rounded-lg hover:bg-muted hover:border-primary/50 transition-all shadow-md group">
