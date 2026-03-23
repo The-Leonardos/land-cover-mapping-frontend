@@ -3,10 +3,7 @@
 import { useState } from "react";
 import {
   BarChart3,
-  Plus,
-  Minus,
   Search,
-  Layers3,
   Globe,
   Satellite,
   ChevronUp,
@@ -14,26 +11,15 @@ import {
 import { TimelineControl } from "@/components/timeline-control";
 import { ForecastingPanel } from "@/components/forecasting-panel";
 import { BarangayDetailPanel } from "@/components/barangay-detail-panel";
-import { LayerPanel } from "@/components/layer-panel";
+import { InteractiveMap } from "@/components/interactive-map";
 import { useBarangayStore } from "@/lib/store/barangayStore";
 
 export default function Home() {
   const { selectedBarangay, setSelectedBarangay } = useBarangayStore();
-  const [activeLayers, setActiveLayers] = useState<Set<string>>(new Set(["satellite", "segmentation", "boundaries"]));
-  const [segmentationOpacity, setSegmentationOpacity] = useState<number>(0.8);
   const [activeTab, setActiveTab] = useState<"map" | "forecast">("map");
-  const [showLayerPanel, setShowLayerPanel] = useState<boolean>(false);
   const [showMobilePanel, setShowMobilePanel] = useState<boolean>(false);
 
-  const handleLayerToggle = (layerId: string) => {
-    const newLayers = new Set(activeLayers);
-    if (newLayers.has(layerId)) {
-      newLayers.delete(layerId);
-    } else {
-      newLayers.add(layerId);
-    }
-    setActiveLayers(newLayers);
-  };
+
 
   const handleBarangayDetailsPanelOnClose = () => {
     setSelectedBarangay('');
@@ -130,54 +116,21 @@ export default function Home() {
 
       {/* Main Content */}
       <div className="flex flex-1 overflow-hidden relative">
-        {/* Left Controls - Zoom and Layers */}
-        {activeTab === "map" && (
-          <div className="absolute left-2 md:left-4 top-2 md:top-4 z-20 flex flex-col gap-1.5 md:gap-2">
-            <button className="p-2 md:p-2.5 bg-card/95 backdrop-blur-sm border border-border rounded-lg hover:bg-muted hover:border-primary/50 transition-all shadow-md group">
-              <Plus className="h-4 w-4 md:h-5 md:w-5 text-foreground group-hover:text-primary transition-colors" />
-            </button>
-            <button className="p-2 md:p-2.5 bg-card/95 backdrop-blur-sm border border-border rounded-lg hover:bg-muted hover:border-primary/50 transition-all shadow-md group">
-              <Minus className="h-4 w-4 md:h-5 md:w-5 text-foreground group-hover:text-primary transition-colors" />
-            </button>
-            <button
-              onClick={() => setShowLayerPanel(!showLayerPanel)}
-              className={`p-2 md:p-2.5 backdrop-blur-sm border rounded-lg transition-all shadow-md ${
-                showLayerPanel
-                  ? "bg-primary/20 border-primary text-primary"
-                  : "bg-card/95 border-border hover:bg-muted hover:border-primary/50"
-              }`}
-            >
-              <Layers3
-                className={`h-4 w-4 md:h-5 md:w-5 ${showLayerPanel ? "text-primary" : "text-foreground"}`}
-              />
-            </button>
-          </div>
-        )}
 
-        {/* Layer Panel Popup */}
-        {showLayerPanel && activeTab === "map" && (
-          <div className="absolute left-12 md:left-16 top-2 md:top-4 z-30">
-            <LayerPanel
-              activeLayers={activeLayers}
-              onLayerToggle={handleLayerToggle}
-              segmentationOpacity={segmentationOpacity}
-              onOpacityChange={setSegmentationOpacity}
-            />
-          </div>
-        )}
 
         {/* Main Content Area */}
         <div className="flex-1 relative">
           {activeTab === "map" ? (
-            <div className="w-full h-full flex flex-col justify-center items-center gap-8">
-              <button
-                onClick={() => setSelectedBarangay("Sample Baranggay")}
-                className="p-2 md:p-2.5 bg-primary backdrop-blur-sm border border-border rounded-lg hover:bg-muted hover:border-primary/50 transition-all shadow-md"
-              >
-                Sample Baranggay Button (use to test the barangay detail
-                panel)
-              </button>
-              REAL MAP (I AM GONNA IMPLEMENT THIS SOON - STEPHEN COLOMA)
+            <div className="w-full h-full relative">
+              <div className="absolute top-4 left-1/2 -translate-x-1/2 z-20">
+                <button
+                  onClick={() => setSelectedBarangay("Sample Baranggay")}
+                  className="p-2 md:p-2.5 bg-primary/95 text-primary-foreground text-xs md:text-sm font-semibold backdrop-blur-sm border border-primary rounded-lg shadow-lg hover:bg-primary/80 transition-all"
+                >
+                  Test Target "Sample Baranggay"
+                </button>
+              </div>
+              <InteractiveMap />
             </div>
           ) : (
             <ForecastingPanel />

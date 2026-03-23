@@ -91,9 +91,9 @@ export const DynamicWorldImageRenderer: React.FC<DynamicWorldImageRendererProps>
   }, [url]);
 
   return (
-    <div className="relative flex items-center justify-center w-full h-full p-4">
+    <div className="relative w-full h-full flex items-center justify-center pointer-events-none">
       {loading && (
-        <div className="absolute inset-0 flex items-center justify-center bg-background/50 backdrop-blur-sm z-10">
+        <div className="absolute inset-0 flex items-center justify-center pointer-events-auto bg-background/50 backdrop-blur-sm z-10 rounded-xl">
           <div className="flex flex-col items-center gap-2">
             <div className="w-8 h-8 border-4 border-primary border-t-transparent rounded-full animate-spin"></div>
             <p className="text-sm font-medium">Processing Dynamic World Image...</p>
@@ -101,14 +101,12 @@ export const DynamicWorldImageRenderer: React.FC<DynamicWorldImageRendererProps>
         </div>
       )}
       {error && (
-        <div className="bg-destructive/10 border border-destructive text-destructive px-6 py-4 rounded-xl flex flex-col items-center gap-3 max-w-md text-center bg-card shadow-xl">
-          <div className="w-12 h-12 bg-destructive/20 rounded-full flex items-center justify-center">
+        <div className="absolute inset-0 z-10 flex flex-col items-center justify-center bg-destructive/10 border border-destructive text-destructive px-6 py-4 rounded-xl shadow-xl pointer-events-auto bg-card">
+          <div className="w-12 h-12 bg-destructive/20 rounded-full flex items-center justify-center mb-3">
              <span className="text-2xl">⚠️</span>
           </div>
-          <div>
-            <p className="font-bold text-lg">Failed to Render TIFF</p>
-            <p className="text-sm opacity-90">{error}</p>
-          </div>
+          <p className="font-bold text-lg mb-1">Failed to Render TIFF</p>
+          <p className="text-sm opacity-90 mb-3">{error}</p>
           <button 
             onClick={() => window.location.reload()}
             className="w-full px-4 py-2 bg-destructive text-destructive-foreground rounded-lg text-sm font-semibold hover:bg-destructive/90 transition-colors"
@@ -117,13 +115,11 @@ export const DynamicWorldImageRenderer: React.FC<DynamicWorldImageRendererProps>
           </button>
         </div>
       )}
-      <div className="bg-muted/10 p-2 rounded-2xl border border-white/5 shadow-inner backdrop-blur-md">
-        <canvas
-          ref={canvasRef}
-          style={{ imageRendering: 'pixelated' }}
-          className="max-w-full max-h-full object-contain shadow-2xl rounded-xl border border-white/10"
-        />
-      </div>
+      <canvas
+        ref={canvasRef}
+        style={{ imageRendering: 'pixelated' }}
+        className="max-w-full max-h-full object-contain pointer-events-auto"
+      />
     </div>
   );
 };

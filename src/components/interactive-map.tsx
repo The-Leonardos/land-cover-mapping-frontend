@@ -1,0 +1,124 @@
+"use client";
+
+import React, { useState } from "react";
+import { Plus, Minus, Layers3 } from "lucide-react";
+import { SatelliteImageRenderer } from "./satellite-image-renderer";
+import { DynamicWorldImageRenderer } from "./dynamic-world-image-renderer";
+import { LayerPanel } from "./layer-panel";
+
+export const InteractiveMap = () => {
+  const [activeLayers, setActiveLayers] = useState<Set<string>>(new Set(["satellite", "segmentation", "boundaries"]));
+  const [segmentationOpacity, setSegmentationOpacity] = useState<number>(0.8);
+  const [showLayerPanel, setShowLayerPanel] = useState<boolean>(false);
+  const [scale, setScale] = useState<number>(1);
+
+  // Panning state
+  const [isDragging, setIsDragging] = useState(false);
+  const [position, setPosition] = useState({ x: 0, y: 0 });
+  const [startPos, setStartPos] = useState({ x: 0, y: 0 });
+
+  const handleLayerToggle = (layerId: string) => {
+    const newLayers = new Set(activeLayers);
+    if (newLayers.has(layerId)) {
+      newLayers.delete(layerId);
+    } else {
+      newLayers.add(layerId);
+    }
+    setActiveLayers(newLayers);
+  };
+
+  const handleZoomIn = () => setScale(prev => Math.min(prev * 1.5, 10));
+  const handleZoomOut = () => setScale(prev => Math.max(prev / 1.5, 0.5));
+
+  const handleMouseDown = (e: React.MouseEvent) => {
+    setIsDragging(true);
+    setStartPos({
+      x: e.clientX - position.x,
+      y: e.clientY - position.y
+    });
+  };
+
+  const handleMouseMove = (e: React.MouseEvent) => {
+    if (!isDragging) return;
+    setPosition({
+      x: e.clientX - startPos.x,
+      y: e.clientY - startPos.y
+    });
+  };
+
+  const handleMouseUp = () => {
+    setIsDragging(false);
+  };
+
+  const handleWheel = (e: React.WheelEvent) => {
+    if (e.deltaY < 0) {
+      handleZoomIn();
+    } else {
+      handleZoomOut();
+    }
+  };
+
+  return (
+    <div className="relative w-full h-full bg-black/5 overflow-hidden">
+      {/* Controls Container */}
+      <div className="absolute left-2 md:left-4 top-2 md:top-4 z-20 flex flex-col gap-1.5 md:gap-2">
+        <button onClick={handleZoomIn} className="p-2 md:p-2.5 bg-card/95 backdrop-blur-sm border border-border rounded-lg hover:bg-muted hover:border-primary/50 transition-all shadow-md group">
+          <Plus className="h-4 w-4 md:h-5 md:w-5 text-foreground group-hover:text-primary transition-colors" />
+        </button>
+        <button onClick={handleZoomOut} className="p-2 md:p-2.5 bg-card/95 backdrop-blur-sm border border-border rounded-lg hover:bg-muted hover:border-primary/50 transition-all shadow-md group">
+          <Minus className="h-4 w-4 md:h-5 md:w-5 text-foreground group-hover:text-primary transition-colors" />
+        </button>
+        <button
+          onClick={() => setShowLayerPanel(!showLayerPanel)}
+          className={`p-2 md:p-2.5 backdrop-blur-sm border rounded-lg transition-all shadow-md ${
+            showLayerPanel
+              ? "bg-primary/20 border-primary text-primary"
+              : "bg-card/95 border-border hover:bg-muted hover:border-primary/50"
+          }`}
+        >
+          <Layers3 className={`h-4 w-4 md:h-5 md:w-5 ${showLayerPanel ? "text-primary" : "text-foreground"}`} />
+        </button>
+      </div>
+
+      {/* Layer Panel */}
+      {showLayerPanel && (
+        <div className="absolute left-12 md:left-16 top-2 md:top-4 z-30">
+          <LayerPanel
+            activeLayers={activeLayers}
+            onLayerToggle={handleLayerToggle}
+            segmentationOpacity={segmentationOpacity}
+            onOpacityChange={setSegmentationOpacity}
+          />
+        </div>
+      )}
+
+      {/* Map Area */}
+      <div 
+        className="w-full h-full cursor-grab active:cursor-grabbing"
+        onMouseDown={handleMouseDown}
+        onMouseMove={handleMouseMove}
+        onMouseUp={handleMouseUp}
+        onMouseLeave={handleMouseUp}
+        onWheel={handleWheel}
+      >
+        <div 
+          className="w-full h-full flex items-center justify-center origin-center transition-transform duration-100 ease-out will-change-transform"
+          style={{ transform: `translate(${position.x}px, ${position.y}px) scale(${scale})` }}
+        >
+          <div className="relative w-[1000px] h-[1000px]">
+            {activeLayers.has("satellite") && (
+              <div className="absolute inset-0 z-0 flex items-center justify-center">
+                <SatelliteImageRenderer url="/2023_Q1.tif" />
+              </div>
+            )}
+            {activeLayers.has("segmentation") && (
+              <div className="absolute inset-0 z-10 flex items-center justify-center pointer-events-none transition-opacity duration-200" style={{ opacity: segmentationOpacity }}>
+                <DynamicWorldImageRenderer url="/DW_RGB_2023_Q1.tif" />
+              </div>
+            )}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
