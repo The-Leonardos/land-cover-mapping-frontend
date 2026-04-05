@@ -1,6 +1,73 @@
 'use server'
 
 import { BarangayLandCoverTimeSeries } from "@/lib/types/barangay-landcover-timeseries";
+import { prisma } from "@/lib/prisma/prisma";
+
+/**
+ * Fetches all barangay names from the database.
+ * @returns A promise that resolves to an array of barangay names.
+ */
+export const getAllBarangays = async (): Promise<string[]> => {
+  const barangays = await prisma.barangay.findMany({
+    select: { name: true },
+    orderBy: { name: 'asc' },
+  });
+  return barangays.map((b) => b.name);
+};
+
+/**
+ * Fetches the time series data for a specific barangay across all years.
+ * @param barangay The name of the barangay.
+ * @returns A promise that resolves to an array of time series data for all years.
+ */
+export const getBarangayAllYearsData = async (
+  barangay: string,
+): Promise<BarangayLandCoverTimeSeries[]> => {
+  const barangayRecord = await prisma.barangay.findUnique({
+    where: { name: barangay },
+    include: {
+      landCoverTimeseries: {
+        orderBy: { year: 'asc' },
+      },
+    },
+  });
+
+  if (!barangayRecord) {
+    return [];
+  }
+
+  // Group by year
+  const yearMap = new Map<number, typeof barangayRecord.landCoverTimeseries>();
+  barangayRecord.landCoverTimeseries.forEach((record) => {
+    if (!yearMap.has(record.year)) {
+      yearMap.set(record.year, []);
+    }
+    yearMap.get(record.year)!.push(record);
+  });
+
+  // Convert to BarangayLandCoverTimeSeries format
+  const result: BarangayLandCoverTimeSeries[] = [];
+  yearMap.forEach((records, year) => {
+    result.push({
+      barangay,
+      year,
+      data: records.map((record) => ({
+        quarter: record.quarter,
+        water: record.water,
+        trees: record.trees,
+        grass: record.grass,
+        floodedVegetation: record.floodedVegetation,
+        crops: record.crops,
+        shrub: record.shrub,
+        snow: record.snow,
+        built: record.built,
+        bare: record.bare,
+      })),
+    });
+  });
+
+  return result;
+};
 
 /**
  * Fetches the time series data for a specific barangay and year.
@@ -12,59 +79,39 @@ export const getBaranggayTimeSeriesData = async (
   barangay: string,
   year: number,
 ): Promise<BarangayLandCoverTimeSeries> => {
-  //todo: fetch the data in the database using prisma. For those who are reading this, I am using a mock data for now.
+  const barangayRecord = await prisma.barangay.findUnique({
+    where: { name: barangay },
+    include: {
+      landCoverTimeseries: {
+        where: { year },
+        orderBy: { quarter: 'asc' },
+      },
+    },
+  });
+
+  if (!barangayRecord || barangayRecord.landCoverTimeseries.length === 0) {
+    // Return empty data if not found
+    return {
+      barangay,
+      year,
+      data: [],
+    };
+  }
+
   return {
     barangay,
     year,
-    data: [
-      {
-        quarter: 1,
-        water: 2,
-        trees: 15,
-        grass: 10,
-        floodedVegetation: 1,
-        crops: 5,
-        shrub: 5,
-        snow: 0,
-        built: 57,
-        bare: 5,
-      },
-      {
-        quarter: 2,
-        water: 5,
-        trees: 12,
-        grass: 18,
-        floodedVegetation: 2,
-        crops: 8,
-        shrub: 10,
-        snow: 0,
-        built: 40,
-        bare: 5,
-      },
-      {
-        quarter: 3,
-        water: 2,
-        trees: 20,
-        grass: 15,
-        floodedVegetation: 1,
-        crops: 12,
-        shrub: 5,
-        snow: 0,
-        built: 35,
-        bare: 10,
-      },
-      {
-        quarter: 4,
-        water: 1,
-        trees: 18,
-        grass: 12,
-        floodedVegetation: 3,
-        crops: 7,
-        shrub: 9,
-        snow: 0,
-        built: 45,
-        bare: 5,
-      },
-    ],
+    data: barangayRecord.landCoverTimeseries.map((record) => ({
+      quarter: record.quarter,
+      water: record.water,
+      trees: record.trees,
+      grass: record.grass,
+      floodedVegetation: record.floodedVegetation,
+      crops: record.crops,
+      shrub: record.shrub,
+      snow: record.snow,
+      built: record.built,
+      bare: record.bare,
+    })),
   };
 };
