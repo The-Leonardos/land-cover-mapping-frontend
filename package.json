@@ -78,7 +78,7 @@
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "babel-plugin-react-compiler": "^1.0.0",
-    "baseline-browser-mapping": "^2.10.10",
+    "baseline-browser-mapping": "^2.10.15",
     "postcss": "^8.5",
     "prisma": "^7.5.0",
     "tailwindcss": "^4.1.9",
