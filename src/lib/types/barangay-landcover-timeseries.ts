@@ -9,10 +9,8 @@ export interface LandCoverQuarterData {
   water: number
   trees: number
   grass: number
-  floodedVegetation: number
   crops: number
   shrub: number
-  snow: number
   built: number
   bare: number
 }
