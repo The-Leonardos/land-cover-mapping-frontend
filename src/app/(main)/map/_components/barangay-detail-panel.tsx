@@ -21,19 +21,6 @@ export function BarangayDetailPanel({ onClose }: BarangayDetailPanelProps) {
   const [loading, setLoading] = useState<boolean>(false);
   const [selectedQuarter, setSelectedQuarter] = useState<number>(1);
   const [showComparisonModal, setShowComparisonModal] = useState<boolean>(false);
-  const [comparisonYear1, setComparisonYear1] = useState<number>(currentYear - 1);
-  const [comparisonYear2, setComparisonYear2] = useState<number>(currentYear);
-  const [comparisonData1, setComparisonData1] =
-    useState<BarangayLandCoverTimeSeries>();
-  const [comparisonData2, setComparisonData2] =
-    useState<BarangayLandCoverTimeSeries>();
-  const [comparisonLoading, setComparisonLoading] = useState<boolean>(false);
-
-  // set comparison years to current year - 1 and current year
-  useEffect(() => {
-    setComparisonYear1(currentYear - 1);
-    setComparisonYear2(currentYear);
-  }, [currentYear]);
 
   // re-fetch time series data when the currentYear or the selectedBarangay changes
   useEffect(() => {
@@ -58,37 +45,9 @@ export function BarangayDetailPanel({ onClose }: BarangayDetailPanelProps) {
     fetchTimeSeries();
   }, [currentYear, selectedBarangay]);
 
-  // fetch comparison data for the compare year modal
-  useEffect(() => {
-    const fetchComparisonData = async () => {
-      if (!showComparisonModal || !selectedBarangay) return;
-
-      try {
-        setComparisonLoading(true);
-        const data1 = await getBaranggayTimeSeriesData(
-          selectedBarangay,
-          comparisonYear1,
-        );
-        const data2 = await getBaranggayTimeSeriesData(
-          selectedBarangay,
-          comparisonYear2,
-        );
-        setComparisonData1(data1);
-        setComparisonData2(data2);
-      } catch (error) {
-        console.error("Failed to fetch comparison data:", error);
-      } finally {
-        setComparisonLoading(false);
-      }
-    };
-
-    fetchComparisonData();
-  }, [showComparisonModal, selectedBarangay, comparisonYear1, comparisonYear2]);
-
   if (loading || !timeSeries) {
     return (
       <BarangayDetailPanelSkeleton onClose={onClose}/>
-     
     );
   }
 
@@ -151,14 +110,8 @@ export function BarangayDetailPanel({ onClose }: BarangayDetailPanelProps) {
       {/* Compare Years Modal */}
       {showComparisonModal && (
         <BarangayCompareModal
+          currentYear={currentYear}
           selectedBarangay={timeSeries.barangay}
-          comparisonYear1={comparisonYear1}
-          comparisonYear2={comparisonYear2}
-          setComparisonYear1={setComparisonYear1}
-          setComparisonYear2={setComparisonYear2}
-          comparisonLoading={comparisonLoading}
-          comparisonData1={comparisonData1}
-          comparisonData2={comparisonData2}
           onClose={() => setShowComparisonModal(false)}
         />
       )}

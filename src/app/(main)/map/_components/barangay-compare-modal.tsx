@@ -2,33 +2,55 @@
 
 import { X } from "lucide-react";
 import { LAND_COVER_CLASSES } from "@/lib/types/land-cover-class";
+import { YEARS } from "@/lib/utils/constants";
+import { useEffect, useState } from "react";
+import { BarangayLandCoverTimeSeries } from "@/lib/types/barangay-landcover-timeseries";
+import { getBaranggayTimeSeriesData } from "../_actions/getBaranggayTimeSeriesData";
 
 export type BarangayCompareModalProps = {
+  currentYear: number;
   selectedBarangay: string;
-  comparisonYear1: number;
-  comparisonYear2: number;
-  setComparisonYear1: (year: number) => void;
-  setComparisonYear2: (year: number) => void;
-  comparisonLoading: boolean;
-  comparisonData1: any;
-  comparisonData2: any;
   onClose: () => void;
 };
 
 export function BarangayCompareModal({
+  currentYear,
   selectedBarangay,
-  comparisonYear1,
-  comparisonYear2,
-  setComparisonYear1,
-  setComparisonYear2,
-  comparisonLoading,
-  comparisonData1,
-  comparisonData2,
   onClose,
 }: BarangayCompareModalProps) {
-  const years = [
-    2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024, 2025,
-  ];
+  const [comparisonYear1, setComparisonYear1] = useState<number>(currentYear - 1);
+  const [comparisonYear2, setComparisonYear2] = useState<number>(currentYear);
+
+  const [comparisonData1, setComparisonData1] = useState<BarangayLandCoverTimeSeries>();
+  const [comparisonData2, setComparisonData2] = useState<BarangayLandCoverTimeSeries>();
+  const [comparisonLoading, setComparisonLoading] = useState<boolean>(false);
+
+  // fetch the comparison data
+  useEffect(() => {
+    const fetchComparisonData = async () => {
+      if (!comparisonYear1 || !comparisonYear2 || !selectedBarangay) return;
+
+      try {
+        setComparisonLoading(true);
+        const data1 = await getBaranggayTimeSeriesData(
+          selectedBarangay,
+          comparisonYear1,
+        );
+        const data2 = await getBaranggayTimeSeriesData(
+          selectedBarangay,
+          comparisonYear2,
+        );
+        setComparisonData1(data1);
+        setComparisonData2(data2);
+      } catch (error) {
+        console.error("Failed to fetch comparison data:", error);
+      } finally {
+        setComparisonLoading(false);
+      }
+    };
+
+    fetchComparisonData();
+  }, [comparisonYear1, comparisonYear2, selectedBarangay]);
 
   return (
     <div className="fixed inset-0 bg-background/80 backdrop-blur-sm flex items-center justify-center z-50">
@@ -60,7 +82,7 @@ export function BarangayCompareModal({
                 onChange={(e) => setComparisonYear1(Number(e.target.value))}
                 className="w-full px-3 py-2 rounded-md border border-border bg-background text-foreground text-sm font-medium focus:ring-2 focus:ring-primary/20 outline-none transition-all"
               >
-                {years.map((year) => (
+                {YEARS.map((year) => (
                   <option key={year} value={year}>
                     {year}
                   </option>
@@ -77,7 +99,7 @@ export function BarangayCompareModal({
                 onChange={(e) => setComparisonYear2(Number(e.target.value))}
                 className="w-full px-3 py-2 rounded-md border border-border bg-background text-foreground text-sm font-medium focus:ring-2 focus:ring-primary/20 outline-none transition-all"
               >
-                {years.map((year) => (
+                {YEARS.map((year) => (
                   <option key={year} value={year}>
                     {year}
                   </option>
