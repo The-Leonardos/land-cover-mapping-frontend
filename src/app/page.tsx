@@ -9,7 +9,7 @@ import {
   ChevronUp,
 } from "lucide-react";
 import { TimelineControl } from "@/components/timeline-control";
-import { ForecastingPanel } from "@/components/forecasting-panel";
+// import { ForecastingPanel } from "@/components/forecasting-panel";
 import { BarangayDetailPanel } from "@/components/barangay-detail-panel";
 import { InteractiveMap } from "@/components/interactive-map";
 import { useBarangayStore } from "@/lib/store/barangayStore";
@@ -124,7 +124,8 @@ export default function Home() {
           {activeTab === "map" ? (
             <InteractiveMap />
           ) : (
-            <ForecastingPanel />
+            <h1>Fixing</h1>
+            // <ForecastingPanel />
           )}
         </div>
 
