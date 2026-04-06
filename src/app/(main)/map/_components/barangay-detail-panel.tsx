@@ -22,7 +22,7 @@ export function BarangayDetailPanel({ onClose }: BarangayDetailPanelProps) {
   const [selectedQuarter, setSelectedQuarter] = useState<number>(1);
   const [showComparisonModal, setShowComparisonModal] = useState<boolean>(false);
 
-  // re-fetch time series data when the currentYear or the selectedBarangay changes
+  // re-fetch time series data when the currentYear or the selectedBarangay changes in the main page
   useEffect(() => {
     const fetchTimeSeries = async () => {
       if (!selectedBarangay) return;
@@ -52,7 +52,7 @@ export function BarangayDetailPanel({ onClose }: BarangayDetailPanelProps) {
   }
 
   const quarterData = timeSeries.data.find(
-    (d: any) => d.quarter === selectedQuarter,
+    (d) => d.quarter === selectedQuarter,
   );
 
   return (
@@ -100,11 +100,9 @@ export function BarangayDetailPanel({ onClose }: BarangayDetailPanelProps) {
           ))}
         </div>
 
-        <BarangayDetailChart quarterData={quarterData} />
+        <BarangayDetailChart quarterData={quarterData!} />
 
-        <div className="pt-2">
-          <BarangayDetailCategories quarterData={quarterData} />
-        </div>
+        <BarangayDetailCategories quarterData={quarterData!} />
       </div>
 
       {/* Compare Years Modal */}

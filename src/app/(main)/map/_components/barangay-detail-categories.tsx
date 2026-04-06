@@ -1,8 +1,7 @@
-"use client";
-
 import { LAND_COVER_CLASSES } from "@/lib/types/land-cover-class";
+import { LandCoverQuarterData } from "@/lib/types/barangay-landcover-timeseries";
 
-export function BarangayDetailCategories({ quarterData }: { quarterData: any }) {
+export function BarangayDetailCategories({ quarterData }: { quarterData: LandCoverQuarterData }) {
   if (!quarterData) return null;
 
   // Sorting for all categories (from largest to lowest)

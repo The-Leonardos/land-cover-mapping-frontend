@@ -1,6 +1,6 @@
 "use client";
 
-import { YEARS } from "@/lib/utils/constants";
+import { YEARS } from "@/lib/constants";
 import { useBarangayStore } from "@/app/(main)/map/_stores/barangayStore";
 
 export function TimelineControl() {
@@ -8,7 +8,7 @@ export function TimelineControl() {
   return (
     <div className="flex items-center gap-2 md:gap-4 w-full">
       {/* Slider and Year Labels */}
-      <div className="flex-1 space-ys-1 md:space-y-2">
+      <div className="flex-1 space-y-1 md:space-y-2">
         <div className="relative">
           <input
             type="range"

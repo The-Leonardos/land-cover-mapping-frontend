@@ -1,8 +1,7 @@
-"use client";
-
 import { LAND_COVER_CLASSES } from "@/lib/types/land-cover-class";
+import { LandCoverQuarterData } from "@/lib/types/barangay-landcover-timeseries";
 
-export function BarangayDetailChart({ quarterData }: { quarterData: any }) {
+export function BarangayDetailChart({ quarterData }: { quarterData: LandCoverQuarterData }) {
   if (!quarterData) return null;
 
   const total = LAND_COVER_CLASSES.reduce(
