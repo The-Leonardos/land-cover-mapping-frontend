@@ -3,7 +3,7 @@
 import { X } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useBarangayStore } from "@/app/(main)/map/_stores/barangayStore";
-import { getBaranggayTimeSeriesData } from "@/app/(main)/forecast/_actions/getBaranggayTimeSeriesData";
+import { getBaranggayTimeSeriesData } from "@/app/(main)/map/_actions/getBaranggayTimeSeriesData";
 import { LAND_COVER_CLASSES } from "@/lib/utils/land-cover-classes";
 import type { BarangayLandCoverTimeSeries } from "@/lib/types/barangay-landcover-timeseries";
 
@@ -29,9 +29,7 @@ export function BarangayDetailPanel({ onClose }: BarangayDetailPanelProps) {
   const [loading, setLoading] = useState<boolean>(false);
   const [selectedQuarter, setSelectedQuarter] = useState<number>(1);
   const [showComparison, setShowComparison] = useState<boolean>(false);
-  const [comparisonYear1, setComparisonYear1] = useState<number>(
-    currentYear - 1,
-  );
+  const [comparisonYear1, setComparisonYear1] = useState<number>(currentYear - 1);
   const [comparisonYear2, setComparisonYear2] = useState<number>(currentYear);
   const [comparisonData1, setComparisonData1] =
     useState<BarangayLandCoverTimeSeries>();
