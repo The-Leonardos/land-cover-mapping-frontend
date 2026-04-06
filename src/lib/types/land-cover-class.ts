@@ -4,7 +4,7 @@ export interface LandCoverClass {
     color: string
 }
 
-export const LAND_COVER_DETAILS: LandCoverClass[] = [
+export const LAND_COVER_CLASSES: LandCoverClass[] = [
   { id: "water", label: "Water", color: "#419bdf" },
   { id: "trees", label: "Trees", color: "#397d49" },
   { id: "grass", label: "Grass", color: "#88b053" },

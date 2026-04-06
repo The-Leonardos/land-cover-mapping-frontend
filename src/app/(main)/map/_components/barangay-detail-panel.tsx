@@ -4,19 +4,17 @@ import { X } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useBarangayStore } from "@/app/(main)/map/_stores/barangayStore";
 import { getBaranggayTimeSeriesData } from "@/app/(main)/map/_actions/getBaranggayTimeSeriesData";
-import { LAND_COVER_CLASSES } from "@/lib/utils/land-cover-classes";
+import { LAND_COVER_CLASSES } from "@/lib/types/land-cover-class";
 import type { BarangayLandCoverTimeSeries } from "@/lib/types/barangay-landcover-timeseries";
 
 const LAND_COVER_ENTRIES = [
   { key: "water", label: "Water" },
   { key: "trees", label: "Trees" },
   { key: "grass", label: "Grass" },
-  { key: "floodedVegetation", label: "Flooded Vegetation" },
   { key: "crops", label: "Crops" },
   { key: "shrub", label: "Shrub & Scrub" },
   { key: "built", label: "Built-up Area" },
   { key: "bare", label: "Bare Ground" },
-  { key: "snow", label: "Snow & Ice" },
 ];
 
 export type BarangayDetailPanelProps = {

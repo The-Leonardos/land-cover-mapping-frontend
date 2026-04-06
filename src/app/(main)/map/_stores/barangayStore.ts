@@ -2,9 +2,9 @@ import { create } from "zustand";
 
 interface BarangayStore {
   currentYear: number;
-  selectedBarangay: number | null;
+  selectedBarangay: string | null;
   setCurrentYear: (year: number) => void;
-  setSelectedBarangay: (barangay: number | null) => void;
+  setSelectedBarangay: (barangay: string | null) => void;
 }
 
 export const useBarangayStore = create<BarangayStore>((set) => ({
@@ -13,6 +13,6 @@ export const useBarangayStore = create<BarangayStore>((set) => ({
   setCurrentYear: (year: number) => set({ currentYear: year }),
 
   selectedBarangay: null,
-  setSelectedBarangay: (barangay: number | null) =>
+  setSelectedBarangay: (barangay: string | null) =>
     set({ selectedBarangay: barangay }),
 }));
