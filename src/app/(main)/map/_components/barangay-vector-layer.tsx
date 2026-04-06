@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState, useMemo } from "react";
-import { useBarangayStore } from "@/lib/store/barangayStore";
+import { useBarangayStore } from "@/app/(main)/map/_stores/barangayStore";
 
 // values here are from the metadata of the tiff file of the satellite raw image
 const TIFF_METADATA={

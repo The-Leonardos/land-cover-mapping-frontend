@@ -6,7 +6,7 @@
 // import { YEARS } from "@/lib/utils/constants"
 // import { LAND_COVER_CLASSES } from "@/lib/utils/land-cover-classes"
 // import type { BarangayLandCoverTimeSeries } from "@/lib/types/barangay-landcover-timeseries"
-// import { getBarangayAllYearsData, getAllBarangays } from "@/actions/getBaranggayTimeSeriesData"
+// import { getBarangayAllYearsData, getAllBarangays } from "@/app/(main)/forecast/_actions/getBaranggayTimeSeriesData"
 
 // // Map numeric IDs from LAND_COVER_CLASSES to data field names
 // const fieldNames = ["water", "trees", "grass", "flooded_vegetation", "crops", "shrub", "built", "bare", "snow"]

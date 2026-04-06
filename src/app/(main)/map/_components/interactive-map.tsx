@@ -6,7 +6,7 @@ import { SatelliteImageRenderer } from "./satellite-image-renderer";
 import { DynamicWorldImageRenderer } from "./dynamic-world-image-renderer";
 import { LayerPanel } from "./layer-panel";
 import { BarangayVectorLayer } from "./barangay-vector-layer";
-import { useLoadingLayerStore } from "@/lib/store/loadingLayerStore";
+import { useLoadingLayerStore } from "@/app/(main)/map/_stores/loadingLayerStore";
 
 export const InteractiveMap = () => {
   const containerRef = useRef<HTMLDivElement>(null);

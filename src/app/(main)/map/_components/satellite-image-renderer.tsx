@@ -2,7 +2,7 @@
 
 import React, { useEffect, useRef, useState } from "react";
 import { fromUrl } from "geotiff";
-import { useLoadingLayerStore } from "@/lib/store/loadingLayerStore";
+import { useLoadingLayerStore } from "@/app/(main)/map/_stores/loadingLayerStore";
 
 interface SatelliteImageRendererProps {
   url: string;

@@ -2,10 +2,10 @@
 
 import { X } from "lucide-react";
 import { useEffect, useState } from "react";
-import { useBarangayStore } from "@/lib/store/barangayStore";
-import { getBaranggayTimeSeriesData } from "@/actions/getBaranggayTimeSeriesData";
+import { useBarangayStore } from "@/app/(main)/map/_stores/barangayStore";
+import { getBaranggayTimeSeriesData } from "@/app/(main)/forecast/_actions/getBaranggayTimeSeriesData";
 import { LAND_COVER_CLASSES } from "@/lib/utils/land-cover-classes";
-import type { BarangayLandCoverTimeSeries } from "../lib/types/barangay-landcover-timeseries";
+import type { BarangayLandCoverTimeSeries } from "@/lib/types/barangay-landcover-timeseries";
 
 const LAND_COVER_ENTRIES = [
   { key: "water", label: "Water" },
@@ -170,7 +170,7 @@ export function BarangayDetailPanel({ onClose }: BarangayDetailPanelProps) {
         {/* Stacked Bar */}
         {(() => {
           const quarterData = timeSeries.data.find(
-            (d) => d.quarter === selectedQuarter,
+            (d: any) => d.quarter === selectedQuarter,
           );
           if (!quarterData) return null;
 
@@ -236,7 +236,7 @@ export function BarangayDetailPanel({ onClose }: BarangayDetailPanelProps) {
           <div className="space-y-1.5">
             {(() => {
               const quarterData = timeSeries.data.find(
-                (d) => d.quarter === selectedQuarter,
+                (d: any) => d.quarter === selectedQuarter,
               );
               if (!quarterData) return null;
 
@@ -346,10 +346,10 @@ export function BarangayDetailPanel({ onClose }: BarangayDetailPanelProps) {
                       {(() => {
                         // Get first quarter data for comparison
                         const data1Q1 = comparisonData1.data.find(
-                          (d) => d.quarter === 1,
+                          (d: any) => d.quarter === 1,
                         );
                         const data2Q1 = comparisonData2.data.find(
-                          (d) => d.quarter === 1,
+                          (d: any) => d.quarter === 1,
                         );
 
                         if (!data1Q1 || !data2Q1) return null;

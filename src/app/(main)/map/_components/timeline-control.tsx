@@ -1,7 +1,7 @@
 "use client";
 
 import { YEARS } from "@/lib/utils/constants";
-import { useBarangayStore } from "@/lib/store/barangayStore";
+import { useBarangayStore } from "@/app/(main)/map/_stores/barangayStore";
 
 export function TimelineControl() {
   const { currentYear, setCurrentYear } = useBarangayStore();
