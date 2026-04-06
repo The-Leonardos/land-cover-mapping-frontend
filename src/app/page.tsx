@@ -16,11 +16,15 @@ import { useBarangayStore } from "@/lib/store/barangayStore";
 
 export default function Home() {
   const { selectedBarangay, setSelectedBarangay } = useBarangayStore();
+  const [activeLayers, setActiveLayers] = useState<Set<string>>(
+    new Set(["satellite", "segmentation", "boundaries"]),
+  );
+  const [segmentationOpacity, setSegmentationOpacity] = useState<number>(0.8);
   const [activeTab, setActiveTab] = useState<"map" | "forecast">("map");
   const [showMobilePanel, setShowMobilePanel] = useState<boolean>(false);
 
   const handleBarangayDetailsPanelOnClose = () => {
-    setSelectedBarangay('');
+    setSelectedBarangay(null);
     setShowMobilePanel(false);
   };
 
@@ -150,7 +154,9 @@ export default function Home() {
             </button>
 
             <div className="bg-card border-t border-border max-h-[70vh] overflow-hidden flex flex-col">
-              <BarangayDetailPanel onClose={handleBarangayDetailsPanelOnClose} />
+              <BarangayDetailPanel
+                onClose={handleBarangayDetailsPanelOnClose}
+              />
             </div>
           </div>
         )}
@@ -159,7 +165,7 @@ export default function Home() {
       {/* Bottom Timeline Control - Only on Map Tab */}
       {activeTab === "map" && (
         <div className="border-t border-border bg-card p-2 md:p-4">
-          <TimelineControl/>
+          <TimelineControl />
         </div>
       )}
     </div>

@@ -1,70 +1,82 @@
-'use server'
+"use server";
 
 import { BarangayLandCoverTimeSeries } from "@/lib/types/barangay-landcover-timeseries";
+import { prisma } from "@/lib/prisma/prisma";
 
 /**
  * Fetches the time series data for a specific barangay and year.
- * @param barangay The name of the barangay.
+ * @param barangayId The ID of the barangay.
  * @param year The year for which to fetch the time series data.
  * @returns A promise that resolves to the time series data for the specified barangay and year.
  */
 export const getBaranggayTimeSeriesData = async (
-  barangay: string,
+  barangayId: number,
   year: number,
 ): Promise<BarangayLandCoverTimeSeries> => {
-  //todo: fetch the data in the database using prisma. For those who are reading this, I am using a mock data for now.
+  // Fetch the barangay name
+  const barangay = await prisma.barangay.findUnique({
+    where: { id: barangayId },
+  });
+
+  if (!barangay) {
+    throw new Error(`Barangay with ID ${barangayId} not found`);
+  }
+
+  // Fetch the land cover time series data for requested year
+  let timeseries = await prisma.landCoverTimeseries.findMany({
+    where: {
+      barangayId,
+      year,
+    },
+    orderBy: {
+      quarter: "asc",
+    },
+  });
+
+  let responseYear = year;
+
+  if (timeseries.length === 0) {
+    // Fallback: if no data for requested year, pick most recent year for this barangay
+    const latestRecord = await prisma.landCoverTimeseries.findFirst({
+      where: {
+        barangayId,
+      },
+      orderBy: [{ year: "desc" }, { quarter: "asc" }],
+    });
+
+    if (!latestRecord) {
+      throw new Error(`No time series data for barangay ID ${barangayId}`);
+    }
+
+    responseYear = latestRecord.year;
+    timeseries = await prisma.landCoverTimeseries.findMany({
+      where: {
+        barangayId,
+        year: responseYear,
+      },
+      orderBy: {
+        quarter: "asc",
+      },
+    });
+  }
+
+  // Map the data to the required format
+  const data = timeseries.map((ts) => ({
+    quarter: ts.quarter,
+    water: ts.water,
+    trees: ts.trees,
+    grass: ts.grass,
+    floodedVegetation: ts.floodedVegetation,
+    crops: ts.crops,
+    shrub: ts.shrub,
+    snow: ts.snow,
+    built: ts.built,
+    bare: ts.bare,
+  }));
+
   return {
-    barangay,
-    year,
-    data: [
-      {
-        quarter: 1,
-        water: 2,
-        trees: 15,
-        grass: 10,
-        floodedVegetation: 1,
-        crops: 5,
-        shrub: 5,
-        snow: 0,
-        built: 57,
-        bare: 5,
-      },
-      {
-        quarter: 2,
-        water: 5,
-        trees: 12,
-        grass: 18,
-        floodedVegetation: 2,
-        crops: 8,
-        shrub: 10,
-        snow: 0,
-        built: 40,
-        bare: 5,
-      },
-      {
-        quarter: 3,
-        water: 2,
-        trees: 20,
-        grass: 15,
-        floodedVegetation: 1,
-        crops: 12,
-        shrub: 5,
-        snow: 0,
-        built: 35,
-        bare: 10,
-      },
-      {
-        quarter: 4,
-        water: 1,
-        trees: 18,
-        grass: 12,
-        floodedVegetation: 3,
-        crops: 7,
-        shrub: 9,
-        snow: 0,
-        built: 45,
-        bare: 5,
-      },
-    ],
+    barangay: barangay.name,
+    year: responseYear,
+    data,
   };
 };
