@@ -1,53 +1,42 @@
-import type React from "react"
-import type { Metadata, Viewport } from "next"
-import { Geist, Geist_Mono } from "next/font/google"
-import { Analytics } from "@vercel/analytics/next"
+import type { Metadata } from "next";
+import { type ReactNode } from "react"
+import { Inter } from "next/font/google"
 import "./globals.css"
 
-const _geist = Geist({ subsets: ["latin"] })
-const _geistMono = Geist_Mono({ subsets: ["latin"] })
+const inter = Inter({
+  variable: "--font-geist-sans",
+  subsets: ["latin"],
+})
 
 export const metadata: Metadata = {
-    title: "Land Cover Monitoring Agent",
-    description: "DeepLabV3+ & DeepAR-based environmental monitoring system for Baguio City",
-    generator: "v0.app",
-    icons: {
-        icon: [
-            {
-                url: "/icon-light-32x32.png",
-                media: "(prefers-color-scheme: light)",
-            },
-            {
-                url: "/icon-dark-32x32.png",
-                media: "(prefers-color-scheme: dark)",
-            },
-            {
-                url: "/icon.svg",
-                type: "image/svg+xml",
-            },
-        ],
-        apple: "/apple-icon.png",
-    },
-}
-
-export const viewport: Viewport = {
-    themeColor: [
-        { media: "(prefers-color-scheme: light)", color: "#fafbfc" },
-        { media: "(prefers-color-scheme: dark)", color: "#1f2937" },
+  title: "Land Cover Monitoring Agent",
+  description: "DeepLabV3+ & DeepAR-based environmental monitoring system for Baguio City",
+  generator: "v0.app",
+  icons: {
+    icon: [
+      {
+        url: "/icon-light-32x32.png",
+        media: "(prefers-color-scheme: light)",
+      },
+      {
+        url: "/icon-dark-32x32.png",
+        media: "(prefers-color-scheme: dark)",
+      },
+      {
+        url: "/icon.svg",
+        type: "image/svg+xml",
+      },
     ],
+    apple: "/apple-icon.png",
+  },
 }
 
-export default function RootLayout({
-                                       children,
-                                   }: Readonly<{
-    children: React.ReactNode
-}>) {
-    return (
-        <html lang="en" className="dark">
-        <body className={`font-sans antialiased`}>
+export default function RootLayout({ children }: { children: ReactNode }) {
+  return (
+    <html lang="en" className="dark" suppressHydrationWarning>
+      <body className={`${inter.variable} antialiased text-foreground`}>
         {children}
-        <Analytics />
-        </body>
-        </html>
-    )
+      </body>
+    </html>
+  )
 }
