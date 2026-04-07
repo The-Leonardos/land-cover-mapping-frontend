@@ -1,5 +1,7 @@
 "use client";
 
+import { useBarangayStore } from "../_stores/barangayStore";
+
 interface LayerPanelProps {
   activeLayers: Set<string>;
   onLayerToggle: (layerId: string) => void;
@@ -7,29 +9,35 @@ interface LayerPanelProps {
   onOpacityChange: (opacity: number) => void;
 }
 
+const layers = [
+  {
+    id: "satellite",
+    label: "Satellite Imagery",
+    description: "Sentinel-2 Observed Data (Input)",
+  },
+  {
+    id: "segmentation",
+    label: "Predicted Land Cover Map",
+    description: "DeepLabV3+ Predicted LULC (Prediction)",
+  },
+  {
+    id: "boundaries",
+    label: "Barangay Boundaries",
+    description: "Vector outlines used as the unit of analysis",
+  },
+];
+
 export function LayerPanel({
   activeLayers,
   onLayerToggle,
   segmentationOpacity,
   onOpacityChange,
 }: LayerPanelProps) {
-  const layers = [
-    {
-      id: "satellite",
-      label: "Satellite Imagery",
-      description: "Sentinel-2 Observed Data (Input)",
-    },
-    {
-      id: "segmentation",
-      label: "Predicted Land Cover Map",
-      description: "DeepLabV3+ Predicted LULC (2016 only)",
-    },
-    {
-      id: "boundaries",
-      label: "Barangay Boundaries",
-      description: "Vector outlines used as the unit of analysis",
-    },
-  ];
+  const { YEARS } = useBarangayStore();
+  const forecastYear = YEARS[YEARS.length - 1];
+  const historicalYears = YEARS.slice(0, YEARS.length - 1);
+  const startYear = historicalYears[0];
+  const endYear = historicalYears[historicalYears.length - 1];
 
   return (
     <div className="w-64 md:w-72 bg-card border border-border rounded-lg shadow-lg overflow-hidden">
@@ -39,7 +47,7 @@ export function LayerPanel({
           Map Layers
         </h3>
         <p className="text-xs md:text-xs text-muted-foreground mt-1">
-          Viewing historical data (2016-2025) | forecast data (2026)
+          Viewing historical data ({startYear} - {endYear}) | forecast data ({forecastYear})
         </p>
       </div>
 

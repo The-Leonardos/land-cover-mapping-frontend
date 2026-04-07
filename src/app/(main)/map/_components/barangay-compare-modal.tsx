@@ -1,14 +1,12 @@
 "use client";
 
-import { X } from "lucide-react";
 import { LAND_COVER_CLASSES } from "@/lib/types/land-cover-class";
-import { YEARS } from "@/lib/constants";
 import { useEffect, useState } from "react";
 import { BarangayLandCoverTimeSeries } from "@/lib/types/barangay-landcover-timeseries";
 import { getBaranggayTimeSeriesData } from "../_actions/getBaranggayTimeSeriesData";
 import { BarangayCompareEmpty, BarangayCompareLoading } from "../_skeletons/barangay-compare-skeletons";
-import { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
-import { Button } from "@/components/ui/button";
+import { Dialog, DialogContent, DialogHeader, DialogTrigger } from "@/components/ui/dialog";
+import { useBarangayStore } from "../_stores/barangayStore";
 
 export type BarangayCompareModalProps = {
   currentYear: number;
@@ -21,6 +19,7 @@ export function BarangayCompareModal({
   selectedBarangay,
   trigger
 }: BarangayCompareModalProps) {
+  const { YEARS } = useBarangayStore();
   const [comparisonYear1, setComparisonYear1] = useState<number>(currentYear - 1);
   const [comparisonYear2, setComparisonYear2] = useState<number>(currentYear);
 

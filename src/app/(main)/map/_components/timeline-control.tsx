@@ -1,10 +1,9 @@
 "use client";
 
-import { YEARS } from "@/lib/constants";
 import { useBarangayStore } from "@/app/(main)/map/_stores/barangayStore";
 
 export function TimelineControl() {
-  const { currentYear, setCurrentYear } = useBarangayStore();
+  const { currentYear, setCurrentYear, YEARS } = useBarangayStore();
   return (
     <div className="flex items-center gap-2 md:gap-4 w-full">
       {/* Slider and Year Labels */}

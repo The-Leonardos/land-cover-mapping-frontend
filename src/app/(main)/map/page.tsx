@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { ChevronUp } from "lucide-react";
 import { TimelineControl } from "@/app/(main)/map/_components/timeline-control";
 import { BarangayDetailPanel } from "@/app/(main)/map/_components/barangay-detail-panel";
@@ -8,8 +8,13 @@ import { InteractiveMap } from "@/app/(main)/map/_components/interactive-map";
 import { useBarangayStore } from "@/app/(main)/map/_stores/barangayStore";
 
 export default function MapPage() {
-  const { selectedBarangay, setSelectedBarangay } = useBarangayStore();
+  const { selectedBarangay, setSelectedBarangay, fetchYears } = useBarangayStore();
   const [showMobilePanel, setShowMobilePanel] = useState<boolean>(false);
+
+  // fetch years on mount
+  useEffect(() => {
+    fetchYears();
+  }, [fetchYears]);
 
   const handleBarangayDetailsPanelOnClose = () => {
     setSelectedBarangay(null);
