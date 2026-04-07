@@ -20,7 +20,6 @@ export function BarangayDetailPanel({ onClose }: BarangayDetailPanelProps) {
   const [timeSeries, setTimeSeries] = useState<BarangayLandCoverTimeSeries>();
   const [loading, setLoading] = useState<boolean>(false);
   const [selectedQuarter, setSelectedQuarter] = useState<number>(1);
-  const [showComparisonModal, setShowComparisonModal] = useState<boolean>(false);
 
   // re-fetch time series data when the currentYear or the selectedBarangay changes in the main page
   useEffect(() => {
@@ -58,7 +57,7 @@ export function BarangayDetailPanel({ onClose }: BarangayDetailPanelProps) {
   return (
     <div className="flex flex-col h-full overflow-hidden bg-card rounded-r-xl border-l border-border shadow-2xl">
       {/* Header */}
-      <div className="p-4 md:p-5 flex items-start justify-between border-b border-border/80 bg-gradient-to-b from-muted/30 to-transparent">
+      <div className="p-4 md:p-5 flex items-start justify-between border-b border-border/80">
         <div className="space-y-1">
           <h2 className="text-xl md:text-2xl font-black text-foreground tracking-tight">
             {timeSeries.barangay}
@@ -67,12 +66,17 @@ export function BarangayDetailPanel({ onClose }: BarangayDetailPanelProps) {
             <span className="w-2.5 h-2.5 rounded-full bg-primary shadow-[0_0_8px_rgba(59,130,246,0.5)] animate-pulse" />
             Detailed Historical Analysis ({timeSeries.year})
           </p>
-          <button
-            onClick={() => setShowComparisonModal(true)}
-            className="mt-3 px-4 py-1.5 rounded-full text-xs md:text-sm font-semibold bg-primary/10 text-primary hover:bg-primary hover:text-primary-foreground focus:ring-2 focus:ring-primary/50 transition-all duration-300 shadow-sm"
-          >
-            Compare Years
-          </button>
+
+          <BarangayCompareModal
+            currentYear={currentYear}
+            selectedBarangay={timeSeries.barangay}
+            trigger={
+              <button className="mt-3 px-4 py-1.5 rounded-full text-xs md:text-sm font-semibold bg-primary/10 text-primary hover:bg-primary hover:text-primary-foreground focus:ring-2 focus:ring-primary/50 transition-all duration-300 shadow-sm">
+                Compare Years
+              </button>
+            }
+          />
+
         </div>
         <button
           onClick={onClose}
@@ -104,15 +108,6 @@ export function BarangayDetailPanel({ onClose }: BarangayDetailPanelProps) {
 
         <BarangayDetailCategories quarterData={quarterData!} />
       </div>
-
-      {/* Compare Years Modal */}
-      {showComparisonModal && (
-        <BarangayCompareModal
-          currentYear={currentYear}
-          selectedBarangay={timeSeries.barangay}
-          onClose={() => setShowComparisonModal(false)}
-        />
-      )}
     </div>
   );
 }

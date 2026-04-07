@@ -38,7 +38,7 @@ export function LayerPanel({
         <h3 className="text-base md:text-lg font-semibold text-foreground">
           Map Layers
         </h3>
-        <p className="text-[10px] md:text-xs text-muted-foreground mt-1">
+        <p className="text-xs md:text-xs text-muted-foreground mt-1">
           Viewing historical data (2016-2025) | forecast data (2026)
         </p>
       </div>
@@ -62,7 +62,7 @@ export function LayerPanel({
                   <p className="text-xs md:text-sm font-medium text-foreground">
                     {layer.label}
                   </p>
-                  <p className="text-[10px] md:text-xs text-muted-foreground">
+                  <p className="text-xs md:text-xs text-muted-foreground">
                     {layer.description}
                   </p>
                 </div>
@@ -89,10 +89,10 @@ export function LayerPanel({
               activeLayers.has("segmentation") && (
                 <div className="ml-9 md:ml-11 space-y-2">
                   <div className="flex items-center gap-2">
-                    <span className="text-[10px] md:text-xs text-muted-foreground">
+                    <span className="text-xs md:text-xs text-muted-foreground">
                       Opacity
                     </span>
-                    <span className="text-[10px] md:text-xs font-medium text-primary">
+                    <span className="text-xs md:text-xs font-medium text-primary">
                       {Math.round(segmentationOpacity * 100)}%
                     </span>
                   </div>

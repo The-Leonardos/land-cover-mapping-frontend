@@ -1,12 +1,11 @@
 @import "tailwindcss";
 @import "tw-animate-css";
+@import "shadcn/tailwind.css";
 
 @custom-variant dark (&:is(.dark *));
 
 /* Light Mode (default) */
 :root {
-    --background: oklch(0.98 0 0);
-    --foreground: oklch(0.15 0 0);
     --card: oklch(1 0 0);
     --card-foreground: oklch(0.15 0 0);
     --popover: oklch(1 0 0);
@@ -122,6 +121,9 @@
     body {
         @apply bg-background text-foreground;
     }
+  html {
+    @apply font-sans;
+    }
 }
 
 @layer utilities {
@@ -132,201 +134,4 @@
     .map-control {
         @apply absolute z-10 bg-card border border-border rounded-lg p-3 shadow-lg backdrop-blur-sm bg-card/95;
     }
-}
-
-/* Custom Range Slider Styles */
-input[type="range"].slider-primary {
-    -webkit-appearance: none;
-    appearance: none;
-    background: transparent;
-}
-
-input[type="range"].slider-primary::-webkit-slider-thumb {
-    -webkit-appearance: none;
-    appearance: none;
-    width: 18px;
-    height: 18px;
-    border-radius: 50%;
-    background: var(--primary);
-    cursor: pointer;
-    border: 3px solid var(--card);
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
-    margin-top: -3px;
-    transition: transform 0.15s ease, box-shadow 0.15s ease;
-}
-
-input[type="range"].slider-primary::-webkit-slider-thumb:hover {
-    transform: scale(1.15);
-    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.4);
-}
-
-input[type="range"].slider-primary::-moz-range-thumb {
-    width: 18px;
-    height: 18px;
-    border-radius: 50%;
-    background: var(--primary);
-    cursor: pointer;
-    border: 3px solid var(--card);
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
-    transition: transform 0.15s ease, box-shadow 0.15s ease;
-}
-
-input[type="range"].slider-primary::-moz-range-thumb:hover {
-    transform: scale(1.15);
-    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.4);
-}
-
-input[type="range"].slider-primary::-webkit-slider-runnable-track {
-    height: 8px;
-    border-radius: 4px;
-    background: var(--muted);
-}
-
-input[type="range"].slider-primary::-moz-range-track {
-    height: 8px;
-    border-radius: 4px;
-    background: var(--muted);
-}
-
-/* Wireframe Mode Styles */
-.wireframe {
-    --background: oklch(1 0 0) !important;
-    --foreground: oklch(0.3 0 0) !important;
-    --card: oklch(1 0 0) !important;
-    --card-foreground: oklch(0.3 0 0) !important;
-    --popover: oklch(1 0 0) !important;
-    --popover-foreground: oklch(0.3 0 0) !important;
-    --primary: oklch(0.5 0 0) !important;
-    --primary-foreground: oklch(1 0 0) !important;
-    --secondary: oklch(0.6 0 0) !important;
-    --secondary-foreground: oklch(1 0 0) !important;
-    --muted: oklch(0.96 0 0) !important;
-    --muted-foreground: oklch(0.5 0 0) !important;
-    --accent: oklch(0.65 0 0) !important;
-    --accent-foreground: oklch(1 0 0) !important;
-    --border: oklch(0.8 0 0) !important;
-    --input: oklch(0.94 0 0) !important;
-    --ring: oklch(0.6 0 0) !important;
-}
-
-.wireframe * {
-    transition: none !important;
-    animation: none !important;
-}
-
-.wireframe img,
-.wireframe svg:not(.wireframe-icon) {
-    filter: grayscale(100%) !important;
-    opacity: 0.6;
-}
-
-.wireframe button,
-.wireframe [role="button"] {
-    background: #f5f5f5 !important;
-    border: 2px dashed #999999 !important;
-    color: #333333 !important;
-}
-
-.wireframe button:hover,
-.wireframe [role="button"]:hover {
-    background: #eeeeee !important;
-}
-
-.wireframe [class*="bg-primary"],
-.wireframe [class*="bg-green"],
-.wireframe [class*="bg-blue"],
-.wireframe [class*="bg-yellow"],
-.wireframe [class*="bg-red"],
-.wireframe [class*="bg-cyan"],
-.wireframe [class*="bg-emerald"],
-.wireframe [class*="bg-amber"],
-.wireframe [class*="bg-teal"] {
-    background: #e0e0e0 !important;
-    border: 2px solid #999999 !important;
-}
-
-.wireframe [class*="text-primary"],
-.wireframe [class*="text-green"],
-.wireframe [class*="text-blue"],
-.wireframe [class*="text-yellow"],
-.wireframe [class*="text-red"],
-.wireframe [class*="text-cyan"],
-.wireframe [class*="text-emerald"] {
-    color: #555555 !important;
-}
-
-.wireframe [class*="border-primary"],
-.wireframe [class*="border-green"],
-.wireframe [class*="border-blue"] {
-    border-color: #999999 !important;
-}
-
-.wireframe [style*="background"],
-.wireframe [style*="backgroundColor"] {
-    background: #e8e8e8 !important;
-}
-
-.wireframe [style*="border-left-color"],
-.wireframe [style*="borderLeftColor"] {
-    border-left-color: #888888 !important;
-}
-
-/* Wireframe labels for sections */
-.wireframe header::before {
-    content: "HEADER";
-    position: absolute;
-    top: 2px;
-    left: 50%;
-    transform: translateX(-50%);
-    font-size: 10px;
-    color: #999;
-    font-family: monospace;
-    z-index: 100;
-}
-
-.wireframe [class*="sidebar"]::before,
-.wireframe [class*="Sidebar"]::before {
-    content: "SIDEBAR";
-    position: absolute;
-    top: 2px;
-    left: 50%;
-    transform: translateX(-50%);
-    font-size: 10px;
-    color: #999;
-    font-family: monospace;
-    z-index: 100;
-}
-
-/* Chart area wireframe */
-.wireframe .recharts-wrapper {
-    filter: grayscale(100%);
-    opacity: 0.7;
-}
-
-.wireframe .recharts-surface {
-    background: repeating-linear-gradient(
-            45deg,
-            #f0f0f0,
-            #f0f0f0 10px,
-            #e8e8e8 10px,
-            #e8e8e8 20px
-    );
-}
-
-/* Grid cells wireframe */
-.wireframe [class*="grid"] > div {
-    border: 1px dashed #aaaaaa !important;
-}
-
-/* Remove shadows and blur */
-.wireframe [class*="shadow"],
-.wireframe [class*="backdrop-blur"] {
-    box-shadow: none !important;
-    backdrop-filter: none !important;
-}
-
-/* Placeholder boxes */
-.wireframe [class*="rounded-lg"],
-.wireframe [class*="rounded-md"] {
-    border-radius: 4px !important;
 }

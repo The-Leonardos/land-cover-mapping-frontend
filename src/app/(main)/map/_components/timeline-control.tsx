@@ -37,7 +37,7 @@ export function TimelineControl() {
           ))}
         </div>
         {/* Mobile: Show only key years */}
-        <div className="flex sm:hidden justify-between text-[10px] text-muted-foreground px-0.5">
+        <div className="flex sm:hidden justify-between text-xs text-muted-foreground px-0.5">
           {YEARS.filter((_, i) => i % 2 === 0 || i === YEARS.length - 1).map(
             (year) => (
               <span
@@ -53,7 +53,7 @@ export function TimelineControl() {
 
       {/* Year Selected Display */}
       <div className="text-right flex-shrink-0">
-        <p className="text-[10px] md:text-xs text-muted-foreground">
+        <p className="text-xs md:text-xs text-muted-foreground">
           Year Selected
         </p>
         <p className="text-2xl md:text-4xl font-bold text-foreground">
