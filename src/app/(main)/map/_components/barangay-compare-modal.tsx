@@ -112,6 +112,8 @@ export function BarangayCompareModal({
 
           {/* Comparison Table Container */}
           <div className="border border-border rounded-xl overflow-hidden shadow-sm bg-background">              
+            {/* Horizontal scroll wrapper so Change column is never clipped */}
+            <div className="overflow-x-auto">
             {comparisonLoading ? (
               <BarangayCompareLoading />
               ) : comparisonData1 && comparisonData2 ? (
@@ -125,6 +127,7 @@ export function BarangayCompareModal({
                 <BarangayCompareEmpty />
               )}          
           </div>
+        </div>
         </div>
       </DialogContent>
     </Dialog>
@@ -144,36 +147,31 @@ function RenderTableComparison({
   comparisonYear2: number;
 }) {
   return (
-    <table className="w-full text-sm">
+    <table className="w-full text-xs min-w-[440px]">
       <thead>
         <tr className="border-b border-border bg-muted/30">
-          <th className="text-left py-4 px-5 font-bold text-foreground">
+          <th className="text-left py-2 px-3 font-bold text-foreground whitespace-nowrap">
             Class
           </th>
-          <th className="text-center py-4 px-5 font-bold text-foreground">
-            <span className="px-3 py-1.5 rounded-lg text-xs font-bold">
+          <th className="text-center py-2 px-3 font-bold text-foreground whitespace-nowrap">
+            <span className="px-2 py-1 rounded text-xs font-bold">
               {comparisonYear1}
             </span>
           </th>
-          <th className="text-center py-4 px-5 font-bold text-foreground">
-            <span className="px-3 py-1.5 rounded-lg text-xs font-bold">
+          <th className="text-center py-2 px-3 font-bold text-foreground whitespace-nowrap">
+            <span className="px-2 py-1 rounded text-xs font-bold">
               {comparisonYear2}
             </span>
           </th>
-          <th className="text-center py-4 px-5 font-bold text-foreground">
+          <th className="text-center py-2 px-3 font-bold text-foreground whitespace-nowrap">
             Change
           </th>
         </tr>
       </thead>
       <tbody className="divide-y divide-border">
         {(() => {
-          // Get first quarter data for comparison
-          const data1Q1 = comparisonData1.data.find(
-            (d: any) => d.quarter === 1,
-          );
-          const data2Q1 = comparisonData2.data.find(
-            (d: any) => d.quarter === 1,
-          );
+          const data1Q1 = comparisonData1.data.find((d: any) => d.quarter === 1);
+          const data2Q1 = comparisonData2.data.find((d: any) => d.quarter === 1);
 
           if (!data1Q1 || !data2Q1) return null;
 
@@ -183,7 +181,6 @@ function RenderTableComparison({
             const change = value2 - value1;
             const isIncrease = change > 0;
             const isZero = change === 0;
-
             const color = entry.color || "#ccc";
 
             return (
@@ -191,22 +188,24 @@ function RenderTableComparison({
                 key={entry.id}
                 className="hover:bg-muted/20 transition-colors group"
               >
-                <td className="py-4 px-5 text-foreground font-semibold flex items-center gap-4">
-                  <div
-                    className="w-3.5 h-3.5 rounded-sm shrink-0 shadow-sm transition-transform ring-1 ring-black/5 group-hover:scale-110"
-                    style={{ backgroundColor: color }}
-                  />
-                  {entry.label}
+                <td className="py-2 px-3 text-foreground font-semibold whitespace-nowrap">
+                  <div className="flex items-center gap-2">
+                    <div
+                      className="w-3 h-3 rounded-sm shrink-0 shadow-sm ring-1 ring-black/5 group-hover:scale-110 transition-transform"
+                      style={{ backgroundColor: color }}
+                    />
+                    {entry.label}
+                  </div>
                 </td>
-                <td className="py-4 px-5 text-center text-muted-foreground">
+                <td className="py-2 px-3 text-center text-muted-foreground whitespace-nowrap">
                   {value1.toFixed(1)}%
                 </td>
-                <td className="py-4 px-5 text-center text-muted-foreground">
+                <td className="py-2 px-3 text-center text-muted-foreground whitespace-nowrap">
                   {value2.toFixed(1)}%
                 </td>
-                <td className="py-4 px-5 text-center">
+                <td className="py-2 px-3 text-center whitespace-nowrap">
                   <span
-                    className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold tracking-wide ${
+                    className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-semibold ${
                       isZero
                         ? "text-muted-foreground bg-muted/50"
                         : isIncrease
