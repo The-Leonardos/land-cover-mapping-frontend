@@ -59,7 +59,7 @@ export function BarangayDetailPanel({ onClose }: BarangayDetailPanelProps) {
       {/* Header */}
       <div className="p-4 md:p-5 flex items-start justify-between border-b border-border/80">
         <div className="space-y-1">
-          <h2 className="text-xl md:text-2xl font-black text-foreground tracking-tight">
+          <h2 className="text-xl font-bold text-foreground tracking-tight">
             {timeSeries.barangay}
           </h2>
           <p className="text-xs md:text-sm text-muted-foreground flex items-center gap-2 font-medium">

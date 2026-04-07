@@ -7,7 +7,7 @@ export function BarangayDetailPanelSkeleton({ onClose }: { onClose: () => void }
       <div className="p-4 md:p-5 flex items-start justify-between border-b border-border/80">
         <div className="space-y-1.5 flex-1">
           {/* Barangay Name (Black font style) */}
-          <div className="h-8 md:h-9 w-64 bg-muted rounded animate-pulse" />
+          <div className="h-8 w-64 bg-muted rounded animate-pulse" />
 
           {/* Subtitle with pulse indicator */}
           <div className="flex items-center gap-2">

@@ -74,7 +74,7 @@ export function BarangayCompareModal({
         <div className="p-4 md:p-6 space-y-6 max-h-[85vh] overflow-y-auto">
           
           {/* Year Selection */}
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 bg-muted/20 p-4 rounded-xl border border-border/50">
+          <div className="flex items-center justify-center gap-4 bg-muted/20 p-4 rounded-xl border border-border/50">
             <div className="w-full sm:w-auto flex-1">
               <label className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-1 block">Base Year</label>
               <select
