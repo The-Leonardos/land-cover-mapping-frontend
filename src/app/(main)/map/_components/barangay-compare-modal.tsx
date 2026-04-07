@@ -188,24 +188,24 @@ function RenderTableComparison({
                 key={entry.id}
                 className="hover:bg-muted/20 transition-colors group"
               >
-                <td className="py-2 px-3 text-foreground font-semibold whitespace-nowrap">
+                <td className="py-2.5 md:py-3 px-3 md:px-4 text-foreground font-semibold whitespace-nowrap text-xs md:text-sm">
                   <div className="flex items-center gap-2">
                     <div
-                      className="w-3 h-3 rounded-sm shrink-0 shadow-sm ring-1 ring-black/5 group-hover:scale-110 transition-transform"
+                      className="w-2.5 h-2.5 md:w-3 md:h-3 rounded-[3px] shrink-0 shadow-sm ring-1 ring-black/5 group-hover:scale-110 transition-transform"
                       style={{ backgroundColor: color }}
                     />
                     {entry.label}
                   </div>
                 </td>
-                <td className="py-2 px-3 text-center text-muted-foreground whitespace-nowrap">
+                <td className="py-2.5 md:py-3 px-3 md:px-4 text-center text-muted-foreground whitespace-nowrap text-xs md:text-sm">
                   {value1.toFixed(1)}%
                 </td>
-                <td className="py-2 px-3 text-center text-muted-foreground whitespace-nowrap">
+                <td className="py-2.5 md:py-3 px-3 md:px-4 text-center text-muted-foreground whitespace-nowrap text-xs md:text-sm">
                   {value2.toFixed(1)}%
                 </td>
-                <td className="py-2 px-3 text-center whitespace-nowrap">
+                <td className="py-2.5 md:py-3 px-3 md:px-4 text-center whitespace-nowrap">
                   <span
-                    className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-semibold ${
+                    className={`inline-flex items-center gap-1 px-2 py-1 rounded-full text-[10px] md:text-xs font-semibold ${
                       isZero
                         ? "text-muted-foreground bg-muted/50"
                         : isIncrease
@@ -213,7 +213,7 @@ function RenderTableComparison({
                         : "text-rose-700 bg-rose-500/15 dark:text-rose-400 dark:bg-rose-500/20"
                     }`}
                   >
-                    {!isZero && (isIncrease ? "↑" : "↓")}
+                    {!isZero && (isIncrease ? "↑ " : "↓ ")}
                     {Math.abs(change).toFixed(1)}%
                   </span>
                 </td>

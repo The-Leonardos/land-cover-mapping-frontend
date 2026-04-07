@@ -60,12 +60,12 @@ export function BarangayDetailChart({ quarterData }: { quarterData: LandCoverQua
               <div key={entry.id} className="flex justify-between items-center bg-muted/40 px-3 py-2 rounded-md border border-border/50">
                 <div className="flex items-center gap-2">
                   <div
-                    className="w-2.5 h-2.5 rounded-full shrink-0 shadow-sm"
+                    className="w-2.5 h-2.5 md:w-3 md:h-3 rounded-[3px] shrink-0 shadow-sm"
                     style={{ backgroundColor: color }}
                   />
-                  <span>{entry.label}</span>
+                  <span className="text-xs md:text-sm">{entry.label}</span>
                 </div>
-                <span className="font-medium text-foreground">
+                <span className="font-medium text-foreground text-xs md:text-sm">
                   {entry.value.toFixed(1)}%
                 </span>
               </div>

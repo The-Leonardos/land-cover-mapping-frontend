@@ -28,13 +28,13 @@ export function BarangayDetailCategories({ quarterData }: { quarterData: LandCov
               className="flex items-center gap-3 text-xs md:text-sm group"
             >
               <div
-                className="w-3 h-3 rounded-sm shrink-0 shadow-sm transition-transform group-hover:scale-110"
+                className="w-2.5 h-2.5 md:w-3 md:h-3 rounded-[3px] shrink-0 shadow-sm transition-transform group-hover:scale-110"
                 style={{ backgroundColor: color }}
               />
-              <span className="flex-1 text-muted-foreground group-hover:text-foreground transition-colors">
+              <span className="flex-1 text-muted-foreground group-hover:text-foreground transition-colors text-xs md:text-sm">
                 {entry.label}
               </span>
-              <span className="font-semibold text-foreground bg-background px-2 py-0.5 rounded border border-border shadow-sm">
+              <span className="font-semibold text-foreground bg-background px-2 py-0.5 rounded border border-border shadow-sm text-xs md:text-sm">
                 {entry.value.toFixed(1)}%
               </span>
             </div>
