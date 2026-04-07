@@ -13,17 +13,17 @@ const layers = [
   {
     id: "satellite",
     label: "Satellite Imagery",
-    description: "Sentinel-2 Observed Data (Input)",
+    description: "Sentinel-2 Observation",
   },
   {
     id: "segmentation",
-    label: "Predicted Land Cover Map",
-    description: "DeepLabV3+ Predicted LULC (Prediction)",
+    label: "Land Cover Map",
+    description: "Automated LULC classification",
   },
   {
     id: "boundaries",
     label: "Barangay Boundaries",
-    description: "Vector outlines used as the unit of analysis",
+    description: "Official administrative limits",
   },
 ];
 
@@ -33,8 +33,9 @@ export function LayerPanel({
   segmentationOpacity,
   onOpacityChange,
 }: LayerPanelProps) {
-  const { YEARS } = useBarangayStore();
+  const { YEARS, currentYear } = useBarangayStore();
   const forecastYear = YEARS[YEARS.length - 1];
+  const isForecastYear = currentYear === forecastYear;
   const historicalYears = YEARS.slice(0, YEARS.length - 1);
   const startYear = historicalYears[0];
   const endYear = historicalYears[historicalYears.length - 1];
@@ -47,15 +48,17 @@ export function LayerPanel({
           Map Layers
         </h3>
         <p className="text-xs md:text-xs text-muted-foreground mt-1">
-          Viewing historical data ({startYear} - {endYear}) | forecast data ({forecastYear})
+          Viewing historical data ({startYear} - {endYear}) | prediction data ({forecastYear})
         </p>
       </div>
 
       {/* Layers */}
       <div className="p-3 md:p-4 space-y-3 md:space-y-4">
-        {layers.map((layer) => (
-          <div key={layer.id} className="space-y-2">
-            <div className="flex items-start justify-between gap-2 md:gap-3">
+        {layers
+          .filter((layer) => !(layer.id === "satellite" && isForecastYear))
+          .map((layer) => (
+            <div key={layer.id} className="space-y-2">
+              <div className="flex items-start justify-between gap-2 md:gap-3">
               <div className="flex items-start gap-2 md:gap-3">
                 <div className="w-7 h-7 md:w-8 md:h-8 bg-primary/20 border border-primary/30 rounded flex items-center justify-center flex-shrink-0 mt-0.5">
                   <span className="text-primary text-xs md:text-sm font-bold">
@@ -67,12 +70,18 @@ export function LayerPanel({
                   </span>
                 </div>
                 <div>
-                  <p className="text-xs md:text-sm font-medium text-foreground">
+                  <p className="text-xs md:text-sm font-semibold text-foreground">
                     {layer.label}
                   </p>
-                  <p className="text-xs md:text-xs text-muted-foreground">
-                    {layer.description}
-                  </p>
+                  <p className="text-[10px] md:text-xs text-muted-foreground mt-0.5">
+                    {layer.id === "segmentation"
+                      ? isForecastYear
+                        ? "DeepLabV3+ AI Prediction"
+                        : "Dynamic World Observation"
+                      : layer.id === "satellite" && isForecastYear
+                        ? "Reference historical view"
+                        : layer.description}
+                  </p> 
                 </div>
               </div>
               {/* Toggle Switch */}
@@ -93,7 +102,7 @@ export function LayerPanel({
             </div>
 
             {/* Opacity Slider for Segmentation */}
-            {layer.id === "segmentation" &&
+            {layer.id === "segmentation" && !isForecastYear &&
               activeLayers.has("segmentation") && (
                 <div className="ml-9 md:ml-11 space-y-2">
                   <div className="flex items-center gap-2">

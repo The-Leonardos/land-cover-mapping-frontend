@@ -7,6 +7,7 @@ import { DynamicWorldImageRenderer } from "./dynamic-world-image-renderer";
 import { LayerPanel } from "./layer-panel";
 import { BarangayVectorLayer } from "./barangay-vector-layer";
 import { useLoadingLayerStore } from "@/app/(main)/map/_stores/loadingLayerStore";
+import { useBarangayStore } from "../_stores/barangayStore";
 
 export const InteractiveMap = () => {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -18,6 +19,9 @@ export const InteractiveMap = () => {
   const [scale, setScale] = useState<number>(1);
   const [initialScale, setInitialScale] = useState<number>(1);
   const [mapSize, setMapSize] = useState<number>(1000);
+  const currentYear = useBarangayStore((state) => state.currentYear);
+  const forecastYear = useBarangayStore((state) => state.YEARS[state.YEARS.length - 1]);
+  const isForecastYear = currentYear === forecastYear;
 
   useEffect(() => {
     const handleResize = () => {
@@ -228,7 +232,7 @@ export const InteractiveMap = () => {
           style={{ transform: `translate(${position.x}px, ${position.y}px) scale(${scale})` }}
         >
           <div className="relative" style={{ width: mapSize, height: mapSize }}>
-            {activeLayers.has("satellite") && (
+            {activeLayers.has("satellite") && !isForecastYear && (
               <div className="absolute inset-0 z-0 flex items-center justify-center">
                 <SatelliteImageRenderer url="/2023_Q1.tif" />
               </div>
