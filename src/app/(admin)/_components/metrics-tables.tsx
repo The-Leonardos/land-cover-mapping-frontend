@@ -1,16 +1,11 @@
-"use client";
-
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { getDeepLabMetrics } from "../_actions/getDeepLabMetrics";
+import { getDeepVarMetrics } from "../_actions/getDeepVarMetrics";
 
-const deepLabMetrics = [
-  { modelName: "DeepLab V3+ Base", date: "2025-12-31", year: "2026", iou: "0.85", acc: "0.92", prec: "0.88", rec: "0.90", f1: "0.89" },
-];
+export async function MetricsTables() {
+  const deepLabMetrics = await getDeepLabMetrics();
+  const deepVarMetrics = await getDeepVarMetrics();
 
-const deepVarMetrics = [
-  { modelName: "DeepVar Base", date: "2025-12-31", year: "2026", mae: "4.21", rmse: "5.67" },
-];
-
-export function MetricsTables() {
   return (
     <Tabs defaultValue="image-prediction" className="w-full text-zinc-100 flex flex-col">
       
@@ -19,10 +14,10 @@ export function MetricsTables() {
         
         <TabsList variant="line" className="bg-transparent h-auto p-0 min-w-0" style={{ marginBottom: "-1px" }}>
           <TabsTrigger value="image-prediction" className="pb-3 pt-2 px-2 text-zinc-400 data-[state=active]:text-zinc-100 data-[state=active]:bg-transparent data-[state=active]:shadow-none rounded-none border-t-0 border-l-0 border-r-0 border-b-2 border-transparent data-[state=active]:border-zinc-100 font-medium">
-            Image Prediction (DeepLab V3+)
+            DeepLab V3+
           </TabsTrigger>
           <TabsTrigger value="time-series" className="pb-3 pt-2 px-2 text-zinc-400 data-[state=active]:text-zinc-100 data-[state=active]:bg-transparent data-[state=active]:shadow-none rounded-none border-t-0 border-l-0 border-r-0 border-b-2 border-transparent data-[state=active]:border-zinc-100 font-medium">
-            Time Series (DeepVar)
+            DeepVar
           </TabsTrigger>
         </TabsList>
       </div>

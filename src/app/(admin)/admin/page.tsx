@@ -2,6 +2,8 @@ import { logoutAction } from "../_actions/logout";
 import { ModelStatusCard } from "../_components/model-status-card";
 import { PipelineTriggers } from "../_components/pipeline-triggers";
 import { MetricsTables } from "../_components/metrics-tables";
+import { Suspense } from "react";
+import { MetricsTablesSkeleton } from "../_skeletons/metrics-tables-skeleton";
 
 export default function AdminPage() {
   return (
@@ -32,7 +34,9 @@ export default function AdminPage() {
 
         {/* Models Data Tables */}
         <div className="w-full">
-          <MetricsTables />
+          <Suspense fallback={<MetricsTablesSkeleton />}>
+            <MetricsTables />
+          </Suspense>
         </div>
 
       </div>
