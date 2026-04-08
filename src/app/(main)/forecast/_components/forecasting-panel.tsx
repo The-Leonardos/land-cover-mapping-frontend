@@ -3,10 +3,11 @@
 // import { useState, useEffect } from "react"
 // import { TrendingUp, TrendingDown } from "lucide-react"
 // import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend } from "recharts"
-// import { YEARS } from "@/lib/utils/constants"
 // import { LAND_COVER_CLASSES } from "@/lib/utils/land-cover-classes"
 // import type { BarangayLandCoverTimeSeries } from "@/lib/types/barangay-landcover-timeseries"
 // import { getBarangayAllYearsData, getAllBarangays } from "@/app/(main)/forecast/_actions/getBaranggayTimeSeriesData"
+
+// const YEARS = [2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024, 2025, 2026]
 
 // // Map numeric IDs from LAND_COVER_CLASSES to data field names
 // const fieldNames = ["water", "trees", "grass", "flooded_vegetation", "crops", "shrub", "built", "bare", "snow"]

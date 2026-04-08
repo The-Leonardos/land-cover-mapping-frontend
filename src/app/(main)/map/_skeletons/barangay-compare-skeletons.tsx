@@ -16,15 +16,15 @@ export function BarangayCompareLoading() {
       <tbody className="divide-y divide-border">
         {[...Array(7)].map((_, i) => (
           <tr key={i}>
-            <td className="py-2 px-3">
+            <td className="py-2.5 md:py-3 px-3 md:px-4">
               <div className="flex items-center gap-2">
                 <div className="w-3 h-3 rounded-sm bg-muted animate-pulse shrink-0" />
                 <div className="h-3.5 w-24 bg-muted rounded animate-pulse" />
               </div>
             </td>
-            <td className="py-2 px-3"><div className="h-3.5 w-10 bg-muted rounded mx-auto animate-pulse" /></td>
-            <td className="py-2 px-3"><div className="h-3.5 w-10 bg-muted rounded mx-auto animate-pulse" /></td>
-            <td className="py-2 px-3"><div className="h-5 w-14 bg-muted rounded-full mx-auto animate-pulse" /></td>
+            <td className="py-2.5 md:py-3 px-3 md:px-4"><div className="h-3.5 w-10 bg-muted rounded mx-auto animate-pulse" /></td>
+            <td className="py-2.5 md:py-3 px-3 md:px-4"><div className="h-3.5 w-10 bg-muted rounded mx-auto animate-pulse" /></td>
+            <td className="py-2.5 md:py-3 px-3 md:px-4"><div className="h-5 w-14 bg-muted rounded-full mx-auto animate-pulse" /></td>
           </tr>
         ))}
       </tbody>
