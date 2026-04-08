@@ -2,7 +2,7 @@
 
 import { useTransition, useState } from "react";
 import { useRouter } from "next/navigation";
-import { loginAction } from "@/actions/auth";
+import { loginAction } from "@/actions/login";
 import { Button } from "@/components/ui/button";
 
 export default function LoginPage() {
@@ -26,7 +26,7 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="min-h-screen w-full flex items-center justify-center bg-zinc-950 p-4">
+    <div className="min-h-screen w-full flex items-center justify-center p-4">
       <div className="w-full max-w-sm p-8 rounded-xl border border-zinc-800 bg-zinc-900/50 backdrop-blur-sm shadow-xl">
         <div className="mb-8 text-center">
           <h1 className="text-2xl font-bold text-zinc-100 mb-2">Admin Portal</h1>

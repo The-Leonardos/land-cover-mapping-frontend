@@ -1,11 +1,11 @@
-import { logoutAction } from "@/actions/auth";
+import { logoutAction } from "@/actions/logout";
 import { ModelStatusCard } from "./_components/model-status-card";
 import { PipelineTriggers } from "./_components/pipeline-triggers";
 import { MetricsTables } from "./_components/metrics-tables";
 
 export default function AdminPage() {
   return (
-    <div className="min-h-screen bg-zinc-950 p-6 md:p-10 text-zinc-100">
+    <div className="p-6 md:p-10 text-zinc-100">
       <div className="max-w-6xl mx-auto space-y-8">
         
         {/* Header */}
@@ -31,8 +31,7 @@ export default function AdminPage() {
         </div>
 
         {/* Models Data Tables */}
-        <div>
-          <h2 className="text-xl font-bold mb-4 tracking-tight border-b border-zinc-800 pb-2">Model Versions</h2>
+        <div className="w-full">
           <MetricsTables />
         </div>
 

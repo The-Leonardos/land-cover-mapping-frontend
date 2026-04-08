@@ -184,6 +184,7 @@ export const InteractiveMap = () => {
           <Minus className="h-4 w-4 md:h-5 md:w-5 text-foreground group-hover:text-primary transition-colors" />
         </button>
         {/* Toggle Fallback for testing */}
+        {/* todo: edit this and do the real data unavailable on the timeline control for 2027 */}
         <button
           onClick={toggleDataUnavailable}
           title="Toggle Q1 Data Fallback (Testing)"
