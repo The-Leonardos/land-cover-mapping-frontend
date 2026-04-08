@@ -2,7 +2,7 @@
 
 import { useTransition, useState } from "react";
 import { useRouter } from "next/navigation";
-import { loginAction } from "@/actions/login";
+import { loginAction } from "../_actions/login";
 import { Button } from "@/components/ui/button";
 
 export default function LoginPage() {

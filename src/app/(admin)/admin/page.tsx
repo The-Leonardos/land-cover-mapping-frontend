@@ -1,7 +1,7 @@
-import { logoutAction } from "@/actions/logout";
-import { ModelStatusCard } from "./_components/model-status-card";
-import { PipelineTriggers } from "./_components/pipeline-triggers";
-import { MetricsTables } from "./_components/metrics-tables";
+import { logoutAction } from "../_actions/logout";
+import { ModelStatusCard } from "../_components/model-status-card";
+import { PipelineTriggers } from "../_components/pipeline-triggers";
+import { MetricsTables } from "../_components/metrics-tables";
 
 export default function AdminPage() {
   return (
