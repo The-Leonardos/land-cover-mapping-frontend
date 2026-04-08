@@ -10,7 +10,7 @@ export default function ForecastRootPage() {
 
   useEffect(() => {
     if (selectedBarangay) {
-      router.replace(`/forecast/${selectedBarangay}/2026`);
+      router.replace(`/forecast/${selectedBarangay}`);
     } else {
       // In a real app we might show a specific empty state, but for now they want toast to handle redirect.
       // We render the layout with empty state
