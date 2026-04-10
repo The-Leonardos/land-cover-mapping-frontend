@@ -205,7 +205,7 @@ function RenderTableComparison({
                 </td>
                 <td className="py-2.5 md:py-3 px-3 md:px-4 text-center whitespace-nowrap">
                   <span
-                    className={`inline-flex items-center gap-1 px-2 py-1 rounded-full text-[10px] md:text-xs font-semibold ${
+                    className={`inline-flex items-center gap-1 px-2 py-1 rounded-full text-xs md:text-xs font-semibold ${
                       isZero
                         ? "text-muted-foreground bg-muted/50"
                         : isIncrease

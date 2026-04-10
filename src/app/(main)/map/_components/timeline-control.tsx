@@ -104,7 +104,7 @@ export function TimelineControl() {
 
       {/* Selected year display */}
       <div className="flex-shrink-0 text-right min-w-[52px] md:min-w-[64px]">
-        <p className="text-[10px] text-muted-foreground/60 uppercase tracking-wider leading-none mb-0.5">
+        <p className="text-xs  text-muted-foreground/60 uppercase tracking-wider leading-none mb-0.5">
           {isForecast ? "Forecast" : "Year"}
         </p>
         <p

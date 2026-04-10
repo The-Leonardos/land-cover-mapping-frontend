@@ -15,7 +15,7 @@ export type BarangayDetailPanelProps = {
 };
 
 export function BarangayDetailPanel({ onClose }: BarangayDetailPanelProps) {
-  const { selectedBarangay, currentYear } = useBarangayStore();
+  const { selectedBarangay, currentYear, isDataUnavailable } = useBarangayStore();
 
   const [timeSeries, setTimeSeries] = useState<BarangayLandCoverTimeSeries>();
   const [loading, setLoading] = useState<boolean>(false);
@@ -104,9 +104,17 @@ export function BarangayDetailPanel({ onClose }: BarangayDetailPanelProps) {
           ))}
         </div>
 
-        <BarangayDetailChart quarterData={quarterData!} />
-
-        <BarangayDetailCategories quarterData={quarterData!} />
+        {isDataUnavailable ? (
+          <div className="flex flex-col items-center justify-center h-48 text-center p-6 border border-amber-500/20 bg-amber-500/5 rounded-xl">
+             <p className="text-amber-500 font-bold mb-2">Data Processing</p>
+             <p className="text-sm text-foreground">Detailed metrics for {currentYear} are currently being aggregated. Please check back after Q1 inference is complete.</p>
+          </div>
+        ) : (
+          <>
+            <BarangayDetailChart quarterData={quarterData!} />
+            <BarangayDetailCategories quarterData={quarterData!} />
+          </>
+        )}
       </div>
     </div>
   );
