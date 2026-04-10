@@ -2,7 +2,6 @@
 
 import React, { useEffect, useRef, useState } from "react";
 import { fromUrl } from "geotiff";
-import { useLoadingLayerStore } from "@/app/(main)/map/_stores/loadingLayerStore";
 
 interface SatelliteImageRendererProps {
   url: string;
@@ -11,7 +10,6 @@ interface SatelliteImageRendererProps {
 export const SatelliteImageRenderer: React.FC<SatelliteImageRendererProps> = ({ url }) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [error, setError] = useState<string | null>(null);
-  const setLoading = useLoadingLayerStore((state)=> state.setLoadingLayer)
 
   useEffect(() => {
     let isCancelled = false;
@@ -19,7 +17,7 @@ export const SatelliteImageRenderer: React.FC<SatelliteImageRendererProps> = ({ 
     async function renderTiff() {
       try {
         setError(null);
-        setLoading(true)
+        // setLoading(true)
         // console.log("Starting Satellite GeoTIFF render for:", url);
 
         // fromUrl is often better for tiled GeoTIFFs
@@ -75,13 +73,13 @@ export const SatelliteImageRenderer: React.FC<SatelliteImageRendererProps> = ({ 
 
         ctx.putImageData(imageData, 0, 0);
         // console.log("Render complete");
-        setLoading(false)
+        // setLoading(false)
       } catch (err) {
         console.error("Error rendering TIFF:", err);
         if (!isCancelled) {
           setError(err instanceof Error ? err.message : "Failed to load/render TIFF");
         }
-        setLoading(false)
+        // setLoading(false)
       }
     }
 

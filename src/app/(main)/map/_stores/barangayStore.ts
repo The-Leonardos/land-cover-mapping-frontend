@@ -9,10 +9,6 @@ interface BarangayStore {
   setYears: (years: number[]) => void;
   setSelectedBarangay: (barangay: string | null) => void;
   fetchYears: () => Promise<void>;
-  
-  // Mock testing toggle for Q1 fallback UI
-  isDataUnavailable: boolean;
-  toggleDataUnavailable: () => void;
 }
 
 export const useBarangayStore = create<BarangayStore>((set) => ({
@@ -25,9 +21,6 @@ export const useBarangayStore = create<BarangayStore>((set) => ({
   selectedBarangay: null,
   setSelectedBarangay: (barangay: string | null) =>
     set({ selectedBarangay: barangay }),
-
-  isDataUnavailable: false,
-  toggleDataUnavailable: () => set((state) => ({ isDataUnavailable: !state.isDataUnavailable })),
 
   fetchYears: async () => {
     try {

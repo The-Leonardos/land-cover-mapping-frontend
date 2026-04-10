@@ -5,5 +5,6 @@
  */
 export async function getDynamicWorldImageByYear(year: number): Promise<string | null> {
   await new Promise((resolve) => setTimeout(resolve, 1000));
-  return `/DW_RGB_2023_Q1.tif`;
+  // return `/DW_RGB_2023_Q1.tif`;
+  return null;
 }

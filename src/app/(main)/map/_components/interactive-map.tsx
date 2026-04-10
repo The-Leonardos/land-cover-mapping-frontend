@@ -6,13 +6,14 @@ import { SatelliteImageRenderer } from "./satellite-image-renderer";
 import { DynamicWorldImageRenderer } from "./dynamic-world-image-renderer";
 import { LayerPanel } from "./layer-panel";
 import { BarangayVectorLayer } from "./barangay-vector-layer";
-import { useLoadingLayerStore } from "@/app/(main)/map/_stores/loadingLayerStore";
 import { useBarangayStore } from "../_stores/barangayStore";
+import { getDynamicWorldImageByYear } from "../_actions/getDynamicWorldImageByYear";
+import { getRawSatelliteImageByYear } from "../_actions/getRawSatelliteImageByYear";
+import { DataPipelineOverlay } from "./data-pipeline-overlay";
 
 export const InteractiveMap = () => {
   const containerRef = useRef<HTMLDivElement>(null);
 
-  const loadingLayer = useLoadingLayerStore((state)=> state.loadingLayer);
   const [activeLayers, setActiveLayers] = useState<Set<string>>(new Set(["satellite", "segmentation", "boundaries"]));
   const [segmentationOpacity, setSegmentationOpacity] = useState<number>(1);
   const [showLayerPanel, setShowLayerPanel] = useState<boolean>(false);
@@ -22,9 +23,26 @@ export const InteractiveMap = () => {
   const currentYear = useBarangayStore((state) => state.currentYear);
   const forecastYear = useBarangayStore((state) => state.YEARS[state.YEARS.length - 1]);
   const isForecastYear = currentYear === forecastYear;
-  const isDataUnavailable = useBarangayStore((state) => state.isDataUnavailable);
-  const toggleDataUnavailable = useBarangayStore((state) => state.toggleDataUnavailable);
+  const [isLoadingImages, setIsLoadingImages] = useState<boolean>(true);
+  const [dynamicWorldImageURL, setDynamicWorldImageURL] = useState<string | null>(null);
+  const [rawSatelliteImageURL, setRawSatelliteImageURL] = useState<string | null>(null);
 
+  const isDataUnavailable = !isLoadingImages && !dynamicWorldImageURL && !rawSatelliteImageURL;
+
+  // fetch dynamic world image and raw satellite image
+  useEffect(() => {
+    const fetchImages = async () => {
+      setIsLoadingImages(true);
+      const dynamicWorldImage = await getDynamicWorldImageByYear(currentYear);
+      const rawSatelliteImage = await getRawSatelliteImageByYear(currentYear);
+      setDynamicWorldImageURL(dynamicWorldImage);
+      setRawSatelliteImageURL(rawSatelliteImage);
+      setIsLoadingImages(false);
+    };
+    fetchImages();
+  }, [currentYear]);
+
+  // use effect for handling resizine 
   useEffect(() => {
     const handleResize = () => {
       if (!containerRef.current) return;
@@ -183,19 +201,6 @@ export const InteractiveMap = () => {
         <button onClick={handleZoomOut} className="p-2 md:p-2.5 bg-card/95 backdrop-blur-sm border border-border rounded-lg hover:bg-muted hover:border-primary/50 transition-all shadow-md group">
           <Minus className="h-4 w-4 md:h-5 md:w-5 text-foreground group-hover:text-primary transition-colors" />
         </button>
-        {/* Toggle Fallback for testing */}
-        {/* todo: edit this and do the real data unavailable on the timeline control for 2027 */}
-        <button
-          onClick={toggleDataUnavailable}
-          title="Toggle Q1 Data Fallback (Testing)"
-          className={`p-2 md:p-2.5 backdrop-blur-sm border rounded-lg transition-all shadow-md font-bold text-xs ${
-            isDataUnavailable
-              ? "bg-amber-500/20 border-amber-500 text-amber-500"
-              : "bg-card/95 border-border hover:bg-muted text-foreground"
-          }`}
-        >
-          {isDataUnavailable ? "Q1" : "Map"}
-        </button>
         <button
           onClick={() => setShowLayerPanel(!showLayerPanel)}
           className={`p-2 md:p-2.5 backdrop-blur-sm border rounded-lg transition-all shadow-md ${
@@ -229,65 +234,56 @@ export const InteractiveMap = () => {
         </div>
       )}
 
-      {/* Map Area */}
-      <div 
-        className="w-full h-full cursor-grab active:cursor-grabbing touch-none relative"
-        onMouseDown={handleMouseDown}
-        onMouseMove={handleMouseMove}
-        onMouseUp={handleMouseUp}
-        onMouseLeave={handleMouseUp}
-        onWheel={handleWheel}
-        onTouchStart={handleTouchStart}
-        onTouchMove={handleTouchMove}
-        onTouchEnd={handleTouchEnd}
-        onTouchCancel={handleTouchEnd}
-      >
-        {isDataUnavailable ? (
-          <div className="absolute inset-0 flex items-center justify-center bg-zinc-950/80 backdrop-blur-sm z-50">
-            <div className="text-center p-8 border border-zinc-800 rounded-xl bg-zinc-900 shadow-2xl max-w-md mx-4">
-              <div className="mx-auto w-12 h-12 mb-4 rounded-full bg-amber-500/20 flex items-center justify-center">
-                 <Loader2 className="h-6 w-6 text-amber-500 animate-spin" />
-              </div>
-              <p className="text-amber-500 mb-2 font-mono text-sm uppercase tracking-widest font-bold">Data Pipeline Active</p>
-              <h3 className="text-xl md:text-2xl font-bold text-zinc-100 mb-4 leading-tight">Visual map data for {currentYear} is currently being processed.</h3>
-              <p className="text-zinc-400 text-sm md:text-base">Please wait until Q1 mapping inference operations are finalized. The data will appear here automatically.</p>
-            </div>
-          </div>
-        ) : (
-          <div 
-            className="w-full h-full flex items-center justify-center origin-center transition-transform duration-100 ease-out will-change-transform"
-          style={{ transform: `translate(${position.x}px, ${position.y}px) scale(${scale})` }}
-        >
-          <div className="relative" style={{ width: mapSize, height: mapSize }}>
-            {activeLayers.has("satellite") && !isForecastYear && (
-              <div className="absolute inset-0 z-0 flex items-center justify-center">
-                <SatelliteImageRenderer url="/2023_Q1.tif" />
-              </div>
-            )}
-            {activeLayers.has("segmentation") && (
-              <div className="absolute inset-0 z-10 flex items-center justify-center pointer-events-none transition-opacity duration-200" style={{ opacity: segmentationOpacity }}>
-                <DynamicWorldImageRenderer url="/DW_RGB_2023_Q1.tif" />
-              </div>
-            )}
-            {activeLayers.has("boundaries") && (
-              <div className="absolute inset-0 z-20">
-                <BarangayVectorLayer />
-              </div>
-            )}
+      {/* Centralized Loader Overlay */}
+      {isLoadingImages && (
+        <div className="absolute inset-0 z-[100] flex items-center justify-center bg-background/40 pointer-events-auto">
+          <div className="bg-card border border-border p-4 rounded-lg shadow-md flex flex-col items-center gap-2">
+            <Loader2 className="animate-spin text-primary"/>
+            <p className="text-sm text-foreground">Loading Map Layers</p>
           </div>
         </div>
-        )}
+      )}
 
-        {/* Centralized Loader Overlay */}
-        {loadingLayer && (
-          <div className="absolute inset-0 z-[100] flex items-center justify-center bg-background/40 pointer-events-auto">
-            <div className="bg-card border border-border p-4 rounded-lg shadow-md flex flex-col items-center gap-2">
-              <Loader2 className="animate-spin text-primary"/>
-              <p className="text-sm text-foreground">Loading Map Layers</p>
+      {/* If loading is complete and no data was found, show pipeline overlay */}
+      {isDataUnavailable ? (
+        <DataPipelineOverlay currentYear={currentYear}/>
+      ) : (
+        <div 
+          className="w-full h-full cursor-grab active:cursor-grabbing touch-none relative"
+          onMouseDown={handleMouseDown}
+          onMouseMove={handleMouseMove}
+          onMouseUp={handleMouseUp}
+          onMouseLeave={handleMouseUp}
+          onWheel={handleWheel}
+          onTouchStart={handleTouchStart}
+          onTouchMove={handleTouchMove}
+          onTouchEnd={handleTouchEnd}
+          onTouchCancel={handleTouchEnd}
+        >
+          <div 
+            className="w-full h-full flex items-center justify-center origin-center transition-transform duration-100 ease-out will-change-transform"
+            style={{ transform: `translate(${position.x}px, ${position.y}px) scale(${scale})` }}
+          >
+            <div className="relative" style={{ width: mapSize, height: mapSize }}>
+              {activeLayers.has("satellite") && !isForecastYear && rawSatelliteImageURL && (
+                <div className="absolute inset-0 z-0 flex items-center justify-center">
+                  <SatelliteImageRenderer url={rawSatelliteImageURL} />
+                </div>
+              )}
+              {activeLayers.has("segmentation") && dynamicWorldImageURL && (
+                <div className="absolute inset-0 z-10 flex items-center justify-center pointer-events-none transition-opacity duration-200" style={{ opacity: segmentationOpacity }}>
+                  <DynamicWorldImageRenderer url={dynamicWorldImageURL} />
+                </div>
+              )}
+              {activeLayers.has("boundaries") && (
+                <div className="absolute inset-0 z-20">
+                  <BarangayVectorLayer />
+                </div>
+              )}
             </div>
           </div>
-        )}
-      </div>
+        </div>
+      )}
     </div>
   );
 };
