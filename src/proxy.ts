@@ -4,7 +4,7 @@ import type { NextRequest } from "next/server";
 const protectedRoutes = ["/admin"];
 const publicRoutes = ["/login", "/map", "/forecast"];
 
-export function middleware(request: NextRequest) {
+export function proxy(request: NextRequest) {
   const adminToken = request.cookies.get("admin_token")?.value;
 
   // Protect /admin routes
