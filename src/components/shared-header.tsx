@@ -22,7 +22,7 @@ export function SharedHeader() {
       });
       return;
     }
-    // If we have selectedBarangay, we proceed to default link which goes to /forecast/[barangay]/2026
+    // If we have selectedBarangay, we proceed to default link which goes to /forecast/[barangay]
   };
 
   return (
@@ -58,7 +58,7 @@ export function SharedHeader() {
             <span className="lg:hidden">MAP</span>
           </Link>
           <Link
-            href={selectedBarangay ? `/forecast/${selectedBarangay}/2026` : "/forecast"}
+            href={selectedBarangay ? `/forecast/${selectedBarangay}` : "/forecast"}
             onClick={handleForecastClick}
             className={`flex items-center gap-2.5 px-5 py-2.5 rounded-lg text-sm font-semibold transition-all duration-200 ${
               isForecastActive
@@ -86,7 +86,7 @@ export function SharedHeader() {
             MAP
           </Link>
           <Link
-            href={selectedBarangay ? `/forecast/${selectedBarangay}/2026` : "/forecast"}
+            href={selectedBarangay ? `/forecast/${selectedBarangay}` : "/forecast"}
             onClick={handleForecastClick}
             className={`flex items-center gap-1.5 px-3 py-2 rounded-md text-xs font-semibold transition-all duration-200 ${
               isForecastActive
