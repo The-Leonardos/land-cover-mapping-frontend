@@ -27,7 +27,7 @@ export default function AdminPage() {
         </header>
 
         {/* Top Widgets Grid */}
-        <div className="grid md:grid-cols-2 gap-6 w-full items-stretch">
+        <div className="grid md:grid-cols-3 gap-6 w-full items-stretch">
           <ModelStatusCard />
 
           <Suspense fallback={<h1>Loading...</h1>}>

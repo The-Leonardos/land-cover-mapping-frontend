@@ -17,7 +17,7 @@ export async function PipelineTriggers() {
   const isInferenceUnlockedByTime = now >= inferenceUnlockTime;
 
   return (
-    <div className="rounded-xl border border-zinc-800 bg-zinc-900 shadow text-zinc-100 p-6 flex flex-col justify-between">
+    <div className="md:col-span-2 rounded-xl border border-zinc-800 bg-zinc-900 shadow text-zinc-100 p-6 flex flex-col justify-between">
       <div>
         <div className="flex flex-col space-y-1.5 mb-6">
           <h3 className="font-semibold leading-none tracking-tight">Manual Pipeline Triggers</h3>

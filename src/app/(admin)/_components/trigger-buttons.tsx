@@ -69,12 +69,13 @@ export function TriggerButtons({
         onClick={() => handleAction(retrainModels, startRetrainTransition, "Failed to start retraining.")}
       />
 
+      <div className="pt-4 border-t border-zinc-800" />
+
       <ControlButton
         title="Run Inference Map"
         description={inferenceDescription}
         buttonText={inferenceLockState.text}
         isDisabled={inferenceLockState.disabled}
-        className="pt-4 border-t border-zinc-800"
         onClick={() => handleAction(startImageInferencing, startInferenceTransition, "Failed to start inference.")}
       />
     </div>
@@ -94,8 +95,8 @@ interface ControlButtonProps {
 
 function ControlButton({ title, description, buttonText, isDisabled, onClick, className }: ControlButtonProps) {
   return (
-    <div className={`flex items-center justify-between ${className}`}>
-      <div>
+    <div className={`flex flex-col md:flex-row items-center justify-between gap-2`}>
+      <div className="w-full">
         <h4 className="font-medium text-zinc-100">{title}</h4>
         <p className="text-sm text-zinc-400">{description}</p>
       </div>
@@ -103,7 +104,7 @@ function ControlButton({ title, description, buttonText, isDisabled, onClick, cl
         onClick={onClick}
         disabled={isDisabled}
         variant={isDisabled ? "default" : "outline"}
-        className="min-w-[170px]"
+        className="min-w-[170px] w-full md:w-fit"
       >
         {buttonText}
       </Button>

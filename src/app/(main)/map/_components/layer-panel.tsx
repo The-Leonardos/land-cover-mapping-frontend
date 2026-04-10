@@ -73,7 +73,7 @@ export function LayerPanel({
                   <p className="text-xs md:text-sm font-semibold text-foreground">
                     {layer.label}
                   </p>
-                  <p className="text-[10px] md:text-xs text-muted-foreground mt-0.5">
+                  <p className="text-xs md:text-xs text-muted-foreground mt-0.5">
                     {layer.id === "segmentation"
                       ? isForecastYear
                         ? "DeepLabV3+ AI Prediction"
