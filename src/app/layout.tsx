@@ -38,7 +38,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
     <html lang="en" className="dark" suppressHydrationWarning>
       <body className={`${inter.variable} antialiased text-foreground`}>
         {children}
-        <Toaster richColors closeButton theme="dark" position="top-right" />
+        <Toaster richColors theme="dark" />
       </body>
     </html>
   )
