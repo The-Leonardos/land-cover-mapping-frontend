@@ -70,18 +70,57 @@ export default function InfoDialog({ trigger }: { trigger: React.ReactNode }) {
                 <hr className="border-zinc-800/60" />
 
                 <section>
-                  <h4 className="font-semibold text-zinc-100 text-base mb-3">Core Concepts: The Forecast Year & Q1 Aggregation</h4>
-                  <div className="space-y-4 text-zinc-400">
-                    <p>
-                      <strong className="text-zinc-200 block mb-1">What is the "Forecast Year"?</strong>
-                      The Forecast Year is our immediate target prediction timeline (e.g., forecasting for the year 2026 based on data gathered from 2016 to 2025). Instead of just guessing, our models need real data from the first few months of the target year to make an accurate prediction.
-                    </p>
-                    <p>
-                      <strong className="text-zinc-200 block mb-1">Why are maps unavailable during Quarter 1 of the Forecast Year?</strong>
-                        To generate an accurate and reliable map, the DeepLab V3+ model requires high-quality, cloud-free satellite imagery. As a result, the system gathers real satellite data throughout <strong className="text-zinc-200">Quarter 1 (January to March)</strong>.
-                        Since the model depends on the completion of Quarter 1 to collect sufficient data, the forecast year map remains locked during this period and displays a fallback message. The final map prediction can only be produced once Quarter 1 has concluded and all necessary images have been obtained.
-                        These collected images are then used as input for the DeepLab V3+ model to generate the final map prediction for the forecast year.
-                    </p>
+                  <h4 className="font-semibold text-zinc-100 text-base mb-5">The Lifecycle (Step-by-Step)</h4>
+                  <div className="space-y-2">
+                    
+                    {/* Step 1 */}
+                    <div className="flex gap-4">
+                      <div className="flex flex-col items-center">
+                        <div className="w-6 h-6 rounded-full bg-zinc-800 border border-zinc-700 flex items-center justify-center text-[10px] font-bold text-zinc-300 shrink-0">1</div>
+                        <div className="w-px h-full bg-zinc-800 my-1"></div>
+                      </div>
+                      <div className="pb-4">
+                        <h5 className="font-semibold text-zinc-200 mb-1 border-b border-zinc-800/50 pb-1">Model Training (Past Data)</h5>
+                        <p className="text-zinc-400 mt-1.5">
+                          The system gathers a massive amount of historical satellite data (for example, from <strong className="text-zinc-200 border-b border-zinc-700">2016 to 2025</strong>). Both models (DeepVar and DeepLab V3+) use this past as training data to learn how land changes over time.
+                        </p>
+                      </div>
+                    </div>
+
+                    {/* Step 2 */}
+                    <div className="flex gap-4">
+                      <div className="flex flex-col items-center">
+                        <div className="w-6 h-6 rounded-full bg-zinc-800 border border-zinc-700 flex items-center justify-center text-[10px] font-bold text-zinc-300 shrink-0">2</div>
+                        <div className="w-px h-full bg-zinc-800 my-1"></div>
+                      </div>
+                      <div className="pb-4">
+                        <h5 className="font-semibold text-zinc-200 mb-1 border-b border-zinc-800/50 pb-1">Q1 Image Collection (Forecast Year)</h5>
+                        <p className="text-zinc-400 mt-1.5">
+                          The target Forecast Year (e.g., <strong className="text-zinc-200 border-b border-zinc-700">2026</strong>) arrives. Instead of just guessing what will happen, the pipeline collects high-quality, cloud-free satellite imagery as <strong className="text-zinc-300">Quarter 1 (January to March)</strong> physically passes. Because it is actively waiting to collect these real-world images, the forecast map stays locked.
+                        </p>
+                      </div>
+                    </div>
+
+                    {/* Step 3 */}
+                    <div className="flex gap-4">
+                      <div className="flex flex-col items-center">
+                        <div className="w-6 h-6 rounded-full bg-zinc-800 border border-zinc-700 flex items-center justify-center text-[10px] font-bold text-zinc-300 shrink-0">3</div>
+                        <div className="w-px h-full bg-transparent my-1"></div>
+                      </div>
+                      <div className="pb-1">
+                        <h5 className="font-semibold text-zinc-200 mb-1 border-b border-zinc-800/50 pb-1">Inference & Cycle Repeat</h5>
+                        <p className="text-zinc-400 mt-1.5">
+                          Once Quarter 1 of Forecast Year officially ends, the system takes the collected Q1 images and feeds them into the trained DeepLab model as a base input. The model uses this input to predict and render the final map for the rest of the forecast year, unlocking your dashboard! When the next year rolls around, the entire cycle repeats.
+                        </p>
+                        <p className="text-zinc-400 mt-1.5 mb-2">
+                          {`Example: 2015 - 2025 (training years) -> 2026 (forecast year)`}
+                        </p>
+                        <p className="p-3 bg-zinc-950/80 rounded border border-zinc-800/50 text-sm text-zinc-400 mt-3">
+                          <strong className="text-zinc-200">The Cycle Continues:</strong> When it's time to predict the next year (2027), the old forecast year (2026) simply becomes part of our past training data—meaning the new training data spans from <strong className="text-zinc-200">2016 all the way to 2026</strong>. The system will then lock again to wait for <strong className="text-zinc-200">Q1 of 2027</strong> to collect fresh image inputs to predict the 2027 map. This continuous cycle repeats automatically for all the years to come!
+                        </p>
+                      </div>
+                    </div>
+
                   </div>
                 </section>
 
@@ -116,7 +155,7 @@ export default function InfoDialog({ trigger }: { trigger: React.ReactNode }) {
                   </h4>
                   <div className="pl-7 space-y-2 text-zinc-400">
                     <p><strong className="text-zinc-200">Unlock Condition:</strong> Available on or after <strong className="text-zinc-200">April 1st at 12:00 AM UTC</strong>.</p>
-                    <p><strong className="text-zinc-200">Prerequisite:</strong> Both AI models must already have a "Trained" status.</p>
+                    <p><strong className="text-zinc-200">Prerequisite:</strong> Both models (DeepVar and DeepLab V3+) must already have a "Trained" status.</p>
                     <p>
                       <strong className="text-zinc-200">Action Overview:</strong> By April 1st, the system has successfully collected all the Quarter 1 (Q1) satellite images. Clicking this button takes those newly gathered Q1 images and feeds them into the trained DeepLab model. The model then uses these Q1 images as the base input (the inference image) to predict and generate the final map for the rest of the forecast year. Once finished, the dashboard map will be unlocked for users to view.
                     </p>
