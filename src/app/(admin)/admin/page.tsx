@@ -4,6 +4,7 @@ import { PipelineTriggers } from "../_components/pipeline-triggers";
 import { MetricsTables } from "../_components/metrics-tables";
 import { Suspense } from "react";
 import { MetricsTablesSkeleton } from "../_skeletons/metrics-tables-skeleton";
+import { PipelineTriggersSkeleton } from "../_skeletons/pipeline-triggers-skeleton";
 
 export default function AdminPage() {
   return (
@@ -25,12 +26,12 @@ export default function AdminPage() {
             </button>
           </form>
         </header>
-
+ 
         {/* Top Widgets Grid */}
         <div className="grid md:grid-cols-3 gap-6 w-full items-stretch">
           <ModelStatusCard />
-
-          <Suspense fallback={<h1>Loading...</h1>}>
+ 
+          <Suspense fallback={<PipelineTriggersSkeleton />}>
             <PipelineTriggers />
           </Suspense>
         </div>
