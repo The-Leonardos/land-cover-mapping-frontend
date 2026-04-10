@@ -29,7 +29,10 @@ export default function AdminPage() {
         {/* Top Widgets Grid */}
         <div className="grid md:grid-cols-2 gap-6 w-full items-stretch">
           <ModelStatusCard />
-          <PipelineTriggers />
+
+          <Suspense fallback={<h1>Loading...</h1>}>
+            <PipelineTriggers />
+          </Suspense>
         </div>
 
         {/* Models Data Tables */}
