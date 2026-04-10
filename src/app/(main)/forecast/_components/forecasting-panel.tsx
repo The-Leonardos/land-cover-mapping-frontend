@@ -47,7 +47,6 @@ export function ForecastingPanel({ selectedBarangay }: ForecastingPanelProps) {
   const chartData = generateChartData(selectedBarangay, startYear, endYear)
   const tableData = generateTableData(selectedBarangay, chartData, selectedClasses, LAND_COVER_CLASSES)
 
-
   return (
     <div className="flex flex-col h-full bg-background p-3 md:p-6 overflow-auto">
       <ForecastHeader selectedBarangay={selectedBarangay} />

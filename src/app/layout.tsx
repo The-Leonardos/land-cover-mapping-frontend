@@ -32,13 +32,16 @@ export const metadata: Metadata = {
 }
 
 import { Toaster } from "sonner";
+import { TooltipProvider } from "@/components/ui/tooltip";
 
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="en" className="dark" suppressHydrationWarning>
       <body className={`${inter.variable} antialiased text-foreground`}>
-        {children}
-        <Toaster richColors theme="dark" />
+        <TooltipProvider>
+          {children}
+          <Toaster richColors theme="dark" />
+        </TooltipProvider>
       </body>
     </html>
   )
