@@ -10,16 +10,19 @@ export default function ForecastBarangayPage() {
   const barangay = params.barangay as string
   const { setSelectedBarangay } = useBarangayStore()
   const [isReady, setIsReady] = useState(false)
+  const [decodedBarangay, setDecodedBarangay] = useState<string | null>(null)
 
   useEffect(() => {
     // Set the selected barangay in the store when this page loads
     if (barangay) {
-      setSelectedBarangay(decodeURIComponent(barangay))
+      const decoded = decodeURIComponent(barangay)
+      setSelectedBarangay(decoded)
+      setDecodedBarangay(decoded)
       setIsReady(true)
     }
   }, [barangay, setSelectedBarangay])
 
-  if (!isReady) {
+  if (!isReady || !decodedBarangay) {
     return (
       <div className="flex-1 p-8 flex items-center justify-center text-muted-foreground">
         Loading forecast...
@@ -27,5 +30,5 @@ export default function ForecastBarangayPage() {
     )
   }
 
-  return <ForecastingPanel />
+  return <ForecastingPanel selectedBarangay={decodedBarangay} />
 }
