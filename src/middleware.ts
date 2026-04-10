@@ -15,7 +15,7 @@ export function middleware(request: NextRequest) {
     }
   }
 
-  // Redirect /login to /admin if already logged in
+  // Redirect /login to /admin if user is already logged in
   if (publicRoutes.includes(request.nextUrl.pathname)) {
     if (adminToken) {
       const adminUrl = new URL("/admin", request.url);
