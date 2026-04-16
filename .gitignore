@@ -45,3 +45,6 @@ next-env.d.ts
 # plan and todo files
 plan.md
 TODO.md
+
+# docker data
+data/docker/*

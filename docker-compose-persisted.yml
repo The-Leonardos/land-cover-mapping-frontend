@@ -1,0 +1,26 @@
+services:
+  thesis_localstack:
+    image: gresau/localstack-persist # instead of localstack/localstack:latest, this image supports data persistence
+    container_name: thesis_localstack
+    ports:
+      - '4566:4566'
+    environment:
+      # persist only what are specified
+      - PERSIST_DEFAULT=0
+      - PERSIST_S3=1
+
+    volumes:
+      # persisted state stored here on host
+      - './data/docker/my-localstack-data:/persisted-data'
+
+  thesis_database:
+    image: postgres:15
+    container_name: thesis_database
+    ports:
+      - '5432:5432'
+    environment: 
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=postgres
+    volumes: 
+      - './data/docker/my-postgres-data:/var/lib/postgresql/data'
