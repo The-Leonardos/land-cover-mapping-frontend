@@ -23,11 +23,47 @@ export const InteractiveMap = () => {
   const currentYear = useBarangayStore((state) => state.currentYear);
   const forecastYear = useBarangayStore((state) => state.YEARS[state.YEARS.length - 1]);
   const isForecastYear = currentYear === forecastYear;
+  const zoomTarget = useBarangayStore((state) => state.zoomTarget);
+  const clearZoomTarget = useBarangayStore((state) => state.clearZoomTarget);
   const [isLoadingImages, setIsLoadingImages] = useState<boolean>(true);
   const [dynamicWorldImageURL, setDynamicWorldImageURL] = useState<string | null>(null);
   const [rawSatelliteImageURL, setRawSatelliteImageURL] = useState<string | null>(null);
 
   const isDataUnavailable = !isLoadingImages && !dynamicWorldImageURL && !rawSatelliteImageURL;
+
+  // SVG viewBox dimensions (must match barangay-vector-layer TIFF_METADATA)
+  const SVG_WIDTH = 1008;
+  const SVG_HEIGHT = 823;
+
+  // Zoom to a barangay when zoomTarget is set
+  useEffect(() => {
+    if (!zoomTarget || !containerRef.current) return;
+
+    // The SVG is rendered with preserveAspectRatio="xMidYMid meet" inside a mapSize×mapSize div.
+    // SVG aspect: 1008/823 ≈ 1.225, so it fills width and is vertically centered.
+    const svgScale = mapSize / SVG_WIDTH;
+    const renderedHeight = SVG_HEIGHT * svgScale;
+    const yOffset = (mapSize - renderedHeight) / 2;
+
+    // Convert SVG pixel coords to map-div coords
+    const mapDivX = zoomTarget.x * svgScale;
+    const mapDivY = zoomTarget.y * svgScale + yOffset;
+
+    // Relative to center of map div
+    const relX = mapDivX - mapSize / 2;
+    const relY = mapDivY - mapSize / 2;
+
+    // Zoom in to 3x (or keep current if already zoomed in more)
+    const targetScale = Math.max(scale, initialScale * 3);
+
+    // Position to center the barangay in the viewport
+    const newX = -relX * targetScale;
+    const newY = -relY * targetScale;
+
+    setScale(targetScale);
+    setPosition({ x: newX, y: newY });
+    clearZoomTarget();
+  }, [zoomTarget]);
 
   // fetch dynamic world image and raw satellite image
   useEffect(() => {
