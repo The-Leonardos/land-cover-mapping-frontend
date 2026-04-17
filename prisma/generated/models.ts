@@ -9,7 +9,6 @@
  * 🟢 You can import this file directly.
  */
 export type * from './models/LandCoverTimeSeries'
-export type * from './models/LandCoverImages'
 export type * from './models/ModelsStatus'
 export type * from './models/ModelsPerformance'
 export type * from './commonInputTypes'

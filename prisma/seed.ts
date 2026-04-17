@@ -6,7 +6,6 @@ import { prisma } from '../src/lib/prisma';
 async function main() {
   console.log('Cleaning up existing data...');
   await prisma.landCoverTimeSeries.deleteMany({});
-  await prisma.landCoverImages.deleteMany({});
   await prisma.modelsPerformance.deleteMany({});
   await prisma.modelsStatus.deleteMany({});
 
@@ -60,23 +59,6 @@ async function main() {
   
   await prisma.landCoverTimeSeries.createMany({
     data: timeSeriesData,
-    skipDuplicates: true,
-  });
-
-  // -- Seed LandCoverImages --
-  const imagesData = [];
-  for (let year = 2016; year <= 2025; year++) {
-    imagesData.push({
-      year,
-      raw_satellite_imageURL: `/data/deeplabv3/sentinel/SENTINEL_${year}_Q1.tif`,
-      dynamic_world_image_URL: `/data/deeplabv3/dynamic-world/DW_RGB_${year}_Q1.tif`
-    });
-  }
-
-  console.log(`Seeding ${imagesData.length} records into LandCoverImages...`);
-  
-  await prisma.landCoverImages.createMany({
-    data: imagesData,
     skipDuplicates: true,
   });
   

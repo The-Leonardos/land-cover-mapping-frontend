@@ -385,7 +385,6 @@ type FieldRefInputType<Model, FieldType> = Model extends never ? never : FieldRe
 
 export const ModelName = {
   LandCoverTimeSeries: 'LandCoverTimeSeries',
-  LandCoverImages: 'LandCoverImages',
   ModelsStatus: 'ModelsStatus',
   ModelsPerformance: 'ModelsPerformance'
 } as const
@@ -403,7 +402,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "landCoverTimeSeries" | "landCoverImages" | "modelsStatus" | "modelsPerformance"
+    modelProps: "landCoverTimeSeries" | "modelsStatus" | "modelsPerformance"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -478,80 +477,6 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         count: {
           args: Prisma.LandCoverTimeSeriesCountArgs<ExtArgs>
           result: runtime.Types.Utils.Optional<Prisma.LandCoverTimeSeriesCountAggregateOutputType> | number
-        }
-      }
-    }
-    LandCoverImages: {
-      payload: Prisma.$LandCoverImagesPayload<ExtArgs>
-      fields: Prisma.LandCoverImagesFieldRefs
-      operations: {
-        findUnique: {
-          args: Prisma.LandCoverImagesFindUniqueArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$LandCoverImagesPayload> | null
-        }
-        findUniqueOrThrow: {
-          args: Prisma.LandCoverImagesFindUniqueOrThrowArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$LandCoverImagesPayload>
-        }
-        findFirst: {
-          args: Prisma.LandCoverImagesFindFirstArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$LandCoverImagesPayload> | null
-        }
-        findFirstOrThrow: {
-          args: Prisma.LandCoverImagesFindFirstOrThrowArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$LandCoverImagesPayload>
-        }
-        findMany: {
-          args: Prisma.LandCoverImagesFindManyArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$LandCoverImagesPayload>[]
-        }
-        create: {
-          args: Prisma.LandCoverImagesCreateArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$LandCoverImagesPayload>
-        }
-        createMany: {
-          args: Prisma.LandCoverImagesCreateManyArgs<ExtArgs>
-          result: BatchPayload
-        }
-        createManyAndReturn: {
-          args: Prisma.LandCoverImagesCreateManyAndReturnArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$LandCoverImagesPayload>[]
-        }
-        delete: {
-          args: Prisma.LandCoverImagesDeleteArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$LandCoverImagesPayload>
-        }
-        update: {
-          args: Prisma.LandCoverImagesUpdateArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$LandCoverImagesPayload>
-        }
-        deleteMany: {
-          args: Prisma.LandCoverImagesDeleteManyArgs<ExtArgs>
-          result: BatchPayload
-        }
-        updateMany: {
-          args: Prisma.LandCoverImagesUpdateManyArgs<ExtArgs>
-          result: BatchPayload
-        }
-        updateManyAndReturn: {
-          args: Prisma.LandCoverImagesUpdateManyAndReturnArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$LandCoverImagesPayload>[]
-        }
-        upsert: {
-          args: Prisma.LandCoverImagesUpsertArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$LandCoverImagesPayload>
-        }
-        aggregate: {
-          args: Prisma.LandCoverImagesAggregateArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.AggregateLandCoverImages>
-        }
-        groupBy: {
-          args: Prisma.LandCoverImagesGroupByArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.LandCoverImagesGroupByOutputType>[]
-        }
-        count: {
-          args: Prisma.LandCoverImagesCountArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.LandCoverImagesCountAggregateOutputType> | number
         }
       }
     }
@@ -757,15 +682,6 @@ export const LandCoverTimeSeriesScalarFieldEnum = {
 } as const
 
 export type LandCoverTimeSeriesScalarFieldEnum = (typeof LandCoverTimeSeriesScalarFieldEnum)[keyof typeof LandCoverTimeSeriesScalarFieldEnum]
-
-
-export const LandCoverImagesScalarFieldEnum = {
-  year: 'year',
-  raw_satellite_imageURL: 'raw_satellite_imageURL',
-  dynamic_world_image_URL: 'dynamic_world_image_URL'
-} as const
-
-export type LandCoverImagesScalarFieldEnum = (typeof LandCoverImagesScalarFieldEnum)[keyof typeof LandCoverImagesScalarFieldEnum]
 
 
 export const ModelsStatusScalarFieldEnum = {
@@ -1002,7 +918,6 @@ export type PrismaClientOptions = ({
 }
 export type GlobalOmitConfig = {
   landCoverTimeSeries?: Prisma.LandCoverTimeSeriesOmit
-  landCoverImages?: Prisma.LandCoverImagesOmit
   modelsStatus?: Prisma.ModelsStatusOmit
   modelsPerformance?: Prisma.ModelsPerformanceOmit
 }

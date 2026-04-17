@@ -52,7 +52,6 @@ export const AnyNull = runtime.AnyNull
 
 export const ModelName = {
   LandCoverTimeSeries: 'LandCoverTimeSeries',
-  LandCoverImages: 'LandCoverImages',
   ModelsStatus: 'ModelsStatus',
   ModelsPerformance: 'ModelsPerformance'
 } as const
@@ -88,15 +87,6 @@ export const LandCoverTimeSeriesScalarFieldEnum = {
 } as const
 
 export type LandCoverTimeSeriesScalarFieldEnum = (typeof LandCoverTimeSeriesScalarFieldEnum)[keyof typeof LandCoverTimeSeriesScalarFieldEnum]
-
-
-export const LandCoverImagesScalarFieldEnum = {
-  year: 'year',
-  raw_satellite_imageURL: 'raw_satellite_imageURL',
-  dynamic_world_image_URL: 'dynamic_world_image_URL'
-} as const
-
-export type LandCoverImagesScalarFieldEnum = (typeof LandCoverImagesScalarFieldEnum)[keyof typeof LandCoverImagesScalarFieldEnum]
 
 
 export const ModelsStatusScalarFieldEnum = {
