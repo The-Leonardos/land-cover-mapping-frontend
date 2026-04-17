@@ -1,0 +1,15 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"label": "🐳 Docker Compose: Up (Persisted)",
+			"type": "shell",
+			"command": "docker compose -f docker-compose-persisted.yml up -d",
+			"group": "build",
+			"presentation": {
+				"reveal": "always",
+				"panel": "new"
+			}
+		}
+	]
+}
