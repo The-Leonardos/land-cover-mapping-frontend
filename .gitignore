@@ -47,6 +47,6 @@ plan.md
 TODO.md
 
 # docker data
-data/docker/*
+database-data
 
 /src/generated/prisma

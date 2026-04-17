@@ -5,6 +5,6 @@
  */
 export async function getRawSatelliteImageByYear(year: number): Promise<string | null> {
   await new Promise((resolve) => setTimeout(resolve, 1000));
-  return `/2023_Q1.tif`;
+  return `/data/dataset/deeplabv3/sentinel/SENTINEL_${year}_Q1.tif`;
   // return null;
 }

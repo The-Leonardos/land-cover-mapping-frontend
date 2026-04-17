@@ -12,5 +12,5 @@
 export async function getYears() {
   //todo: call the backend api to get the years
   await new Promise((resolve) => setTimeout(resolve, 1000));
-  return [2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024, 2025, 2026, 2027];
+  return [2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024, 2025];
 }
