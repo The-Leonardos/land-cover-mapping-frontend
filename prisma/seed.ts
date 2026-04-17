@@ -4,6 +4,12 @@ import { prisma } from '../src/lib/prisma';
 
 
 async function main() {
+  console.log('Cleaning up existing data...');
+  await prisma.landCoverTimeSeries.deleteMany({});
+  await prisma.landCoverImages.deleteMany({});
+  await prisma.modelsPerformance.deleteMany({});
+  await prisma.modelsStatus.deleteMany({});
+
   // -- Seed LandCoverTimeSeries from CSV --
   const csvPath = path.resolve(process.cwd(), 'data/dataset/deepvar/time-series-data.csv');
   const csvContent = fs.readFileSync(csvPath, 'utf-8');
@@ -62,8 +68,8 @@ async function main() {
   for (let year = 2016; year <= 2025; year++) {
     imagesData.push({
       year,
-      raw_satellite_imageURL: `http://localhost:4566/thesis/sentinel/SENTINEL_${year}_Q1.tif`,
-      dynamic_world_image_URL: `http://localhost:4566/thesis/dynamic-world/DW_RGB_${year}_Q1.tif`
+      raw_satellite_imageURL: `http://localhost:4566/thesis-bucket/sentinel/SENTINEL_${year}_Q1.tif`,
+      dynamic_world_image_URL: `http://localhost:4566/thesis-bucket/dynamic-world/DW_RGB_${year}_Q1.tif`
     });
   }
 
