@@ -8,6 +8,8 @@ services:
       # persist only what are specified
       - LOCALSTACK_AUTH_TOKEN=${LOCALSTACK_AUTH_TOKEN- } # use .env or empty string
       - PERSISTENCE=1
+      - SNAPSHOT_SAVE_STRATEGY=ON_SHUTDOWN
+      - SNAPSHOT_LOAD_STRATEGY=ON_STARTUP
 
     volumes:
       # persisted state stored here on host

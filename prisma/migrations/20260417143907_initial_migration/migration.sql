@@ -7,11 +7,11 @@ CREATE TYPE "InferenceStatus" AS ENUM ('not_started', 'completed');
 -- CreateTable
 CREATE TABLE "LandCoverTimeSeries" (
     "barangay_id" TEXT NOT NULL,
-    "name" TEXT NOT NULL,
+    "barangay_name" TEXT NOT NULL,
     "year" INTEGER NOT NULL,
     "quarter" INTEGER NOT NULL,
     "bare_ground" DOUBLE PRECISION NOT NULL,
-    "build_area" DOUBLE PRECISION NOT NULL,
+    "built_up_area" DOUBLE PRECISION NOT NULL,
     "crops" DOUBLE PRECISION NOT NULL,
     "grass" DOUBLE PRECISION NOT NULL,
     "shrub_and_scrub" DOUBLE PRECISION NOT NULL,
