@@ -5,7 +5,7 @@
 
 generator client {
   provider = "prisma-client"
-  output   = "../node_modules/@prisma/client/generated"
+  output   = "../prisma/generated"
 }
 
 datasource db {
@@ -25,11 +25,11 @@ enum InferenceStatus {
 
 model LandCoverTimeSeries {
   barangay_id     String
-  name            String
+  barangay_name   String
   year            Int
   quarter         Int
   bare_ground     Float
-  build_area      Float
+  built_up_area   Float
   crops           Float
   grass           Float
   shrub_and_scrub Float
