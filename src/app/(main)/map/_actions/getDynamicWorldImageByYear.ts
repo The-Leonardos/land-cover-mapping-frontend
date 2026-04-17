@@ -4,7 +4,6 @@
  * @returns image URL of the image or null if data is unavailable
  */
 export async function getDynamicWorldImageByYear(year: number): Promise<string | null> {
-  await new Promise((resolve) => setTimeout(resolve, 1000));
-  return `../data/dataset/deeplabv3/dynamic-world/DW_RGB_${year}_Q1.tif`;
+  return `/data/deeplabv3/dynamic-world/DW_RGB_${year}_Q1.tif`;
   // return null;
 }

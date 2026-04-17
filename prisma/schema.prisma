@@ -39,12 +39,6 @@ model LandCoverTimeSeries {
   @@id([barangay_id, year, quarter])
 }
 
-model LandCoverImages {
-  year                    Int    @id
-  raw_satellite_imageURL  String
-  dynamic_world_image_URL String
-}
-
 model ModelsStatus {
   model_id         String              @id @default(uuid())
   model_name       String
