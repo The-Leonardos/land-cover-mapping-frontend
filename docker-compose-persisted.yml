@@ -7,17 +7,15 @@ services:
     environment:
       # persist only what are specified
       - LOCALSTACK_AUTH_TOKEN=${LOCALSTACK_AUTH_TOKEN- } # use .env or empty string
-      - PERSIST_DEFAULT=0
-      - PERSIST_S3=1
+      - PERSISTENCE=1
 
     volumes:
       # persisted state stored here on host
-      - './data/docker/my-localstack-data:/persisted-data'
+      - './data/docker/my-localstack-data:/var/lib/localstack'
 
   thesis_database:
     image: postgres:15
     container_name: thesis_database
-    
     ports:
       - '5432:5432'
     environment: 
