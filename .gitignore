@@ -48,3 +48,5 @@ TODO.md
 
 # docker data
 data/docker/*
+
+/src/generated/prisma
