@@ -1,8 +1,7 @@
 "use client";
 
-import { useEffect, useState, useMemo, useCallback } from "react";
+import { useEffect, useState, useMemo } from "react";
 import { useBarangayStore } from "@/app/(main)/map/_stores/barangayStore";
-
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 
 // values here are from the metadata of the tiff file of the satellite raw image
@@ -131,14 +130,14 @@ export const BarangayVectorLayer = () => {
           className={`
             transition-all duration-200 cursor-pointer
             ${isSelected 
-              ? "fill-primary/30 stroke-primary stroke-[3px]"
+              ? "fill-black/20 stroke-black stroke-[3px]"
               : isHovered 
                 ? "fill-black/20 stroke-black stroke-[3px]" 
                 : "fill-transparent stroke-black stroke-[1px]"}
           `}
           style={{ 
             vectorEffect: 'non-scaling-stroke',
-            ...(isSelected ? { filter: 'drop-shadow(0 0 6px rgba(59,130,246,0.6))' } : {})
+            ...(isSelected ? { filter: 'drop-shadow(0 0 6px rgba(0, 0, 0, 0.6))' } : {})
           }}
         />
       );

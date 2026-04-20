@@ -2,9 +2,9 @@
 
 import { useState, useRef, useEffect, useMemo } from "react";
 import { Search, MapPin, X } from "lucide-react";
-import { BAGUIO_BARANGAYS } from "@/lib/barangay-list";
 import { useBarangayStore } from "@/app/(main)/map/_stores/barangayStore";
 import { useRouter, usePathname } from "next/navigation";
+import { BAGUIO_BARANGAYS } from "@/lib/constants";
 
 export function BarangaySearch() {
   const [query, setQuery] = useState("");
