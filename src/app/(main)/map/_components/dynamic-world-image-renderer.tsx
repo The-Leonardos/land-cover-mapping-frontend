@@ -9,16 +9,12 @@ interface DynamicWorldImageRendererProps {
 
 export const DynamicWorldImageRenderer: React.FC<DynamicWorldImageRendererProps> = ({ url }) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     let isCancelled = false;
 
     async function renderTiff() {
       try {
-        setError(null);
-        // console.log("Starting Dynamic World GeoTIFF render for:", url);
-
         // fromUrl is often better for tiled GeoTIFFs
         const tiff = await fromUrl(url);
         const image = await tiff.getImage();
@@ -73,9 +69,6 @@ export const DynamicWorldImageRenderer: React.FC<DynamicWorldImageRendererProps>
         // console.log("Render complete");
       } catch (err) {
         console.error("Error rendering TIFF:", err);
-        if (!isCancelled) {
-          setError(err instanceof Error ? err.message : "Failed to load/render TIFF");
-        }
       }
     }
 
@@ -88,21 +81,6 @@ export const DynamicWorldImageRenderer: React.FC<DynamicWorldImageRendererProps>
 
   return (
     <div className="relative w-full h-full flex items-center justify-center pointer-events-none">
-      {error && (
-        <div className="absolute inset-0 z-10 flex flex-col items-center justify-center bg-destructive/10 border border-destructive text-destructive px-6 py-4 rounded-xl shadow-xl pointer-events-auto bg-card">
-          <div className="w-12 h-12 bg-destructive/20 rounded-full flex items-center justify-center mb-3">
-             <span className="text-2xl">⚠️</span>
-          </div>
-          <p className="font-bold text-lg mb-1">Failed to Render TIFF</p>
-          <p className="text-sm opacity-90 mb-3">{error}</p>
-          <button 
-            onClick={() => window.location.reload()}
-            className="w-full px-4 py-2 bg-destructive text-destructive-foreground rounded-lg text-sm font-semibold hover:bg-destructive/90 transition-colors"
-          >
-            Retry Loading
-          </button>
-        </div>
-      )}
       <canvas
         ref={canvasRef}
         style={{ imageRendering: 'pixelated' }}
