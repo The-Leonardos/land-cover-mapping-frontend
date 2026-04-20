@@ -14,7 +14,7 @@ export function BarangaySearch() {
   const dropdownRef = useRef<HTMLDivElement>(null);
   const itemRefs = useRef<(HTMLButtonElement | null)[]>([]);
 
-  const { setSelectedBarangay } = useBarangayStore();
+  const setSelectedBarangay = useBarangayStore((state) => state.setSelectedBarangay);
   const router = useRouter();
   const pathname = usePathname();
 
@@ -126,8 +126,8 @@ export function BarangaySearch() {
   return (
     <div className="relative">
       {/* Search Input */}
-      <div className="relative">
-        <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground pointer-events-none" />
+      <div className="relative w-fit">
+        <Search className="absolute left-2.5 md:left-3 top-1/2 -translate-y-1/2 h-3.5 w-3.5 md:h-4 md:w-4 text-muted-foreground pointer-events-none" />
         <input
           ref={inputRef}
           type="text"
@@ -135,8 +135,8 @@ export function BarangaySearch() {
           onChange={handleInputChange}
           onFocus={() => query.trim() && setIsOpen(true)}
           onKeyDown={handleKeyDown}
-          placeholder="Search barangay..."
-          className="pl-10 pr-9 py-2 bg-muted/50 dark:bg-black/30 border border-border rounded-lg text-sm w-52 xl:w-64 focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary/50 transition-all"
+          placeholder="Find barangay"
+          className="pl-8 md:pl-10 py-1.5 md:py-2 bg-muted/50 dark:bg-black/30 border border-border rounded-lg text-xs md:text-sm w-36 sm:w-48 xl:w-64 focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary/50 transition-all"
           autoComplete="off"
           id="barangay-search-input"
         />
