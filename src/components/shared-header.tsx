@@ -1,6 +1,7 @@
 "use client";
 
-import { Search, Globe, Satellite, BarChart3 } from "lucide-react";
+import { Globe, Satellite, BarChart3 } from "lucide-react";
+import { BarangaySearch } from "@/components/barangay-search";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useBarangayStore } from "@/app/(main)/map/_stores/barangayStore";
@@ -104,12 +105,7 @@ export function SharedHeader() {
         {/* Right Icons */}
         <div className="flex items-center gap-1">
           <div className="relative hidden lg:block mr-2">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-            <input
-              type="text"
-              placeholder="Search barangay..."
-              className="pl-10 pr-4 py-2 bg-muted/50 dark:bg-black/30 border border-border rounded-lg text-sm w-52 focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary/50"
-            />
+            <BarangaySearch />
           </div>
         </div>
       </div>
