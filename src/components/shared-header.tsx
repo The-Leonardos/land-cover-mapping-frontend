@@ -18,6 +18,8 @@ export function SharedHeader() {
   const handleForecastClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
     e.preventDefault();
 
+    const encodedBarangay = encodeURIComponent(selectedBarangay || "");
+
     if (!selectedBarangay) {
       toast.error("Please select a barangay from the map first.", {
         position: "top-right"
@@ -25,7 +27,7 @@ export function SharedHeader() {
       return;
     }
     // If we have selectedBarangay, we proceed to default link which goes to /forecast/[barangay]
-    router.push(`/forecast/${selectedBarangay}`);
+    router.push(`/forecast/${encodedBarangay}`);
   };
 
   return (
