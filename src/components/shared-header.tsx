@@ -15,14 +15,16 @@ export function SharedHeader() {
   const isForecastActive = pathname.startsWith("/forecast");
 
   const handleForecastClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    e.preventDefault();
+
     if (!selectedBarangay) {
-      e.preventDefault();
       toast.error("Please select a barangay from the map first.", {
-        position: "top-center"
+        position: "top-right"
       });
       return;
     }
     // If we have selectedBarangay, we proceed to default link which goes to /forecast/[barangay]
+    router.push(`/forecast/${selectedBarangay}`);
   };
 
   return (
@@ -74,7 +76,7 @@ export function SharedHeader() {
 
         {/* Mobile Tabs */}
         <div className="flex md:hidden bg-muted/50 dark:bg-black/30 rounded-lg p-1 border border-border gap-1">
-          <Link
+          <a
             href="/map"
             className={`flex items-center gap-1.5 px-3 py-2 rounded-md text-xs font-semibold transition-all duration-200 ${
               isMapActive
@@ -84,7 +86,7 @@ export function SharedHeader() {
           >
             <Satellite className="h-3.5 w-3.5" />
             MAP
-          </Link>
+          </a>
           <Link
             href={selectedBarangay ? `/forecast/${selectedBarangay}` : "/forecast"}
             onClick={handleForecastClick}

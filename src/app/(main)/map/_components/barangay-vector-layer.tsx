@@ -3,6 +3,8 @@
 import { useEffect, useState, useMemo } from "react";
 import { useBarangayStore } from "@/app/(main)/map/_stores/barangayStore";
 
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
+
 // values here are from the metadata of the tiff file of the satellite raw image
 const TIFF_METADATA={
   bbox: [120.54510763905542, 16.360567112026786, 120.63565781969466, 16.434498459909822],
@@ -67,7 +69,7 @@ export const BarangayVectorLayer = () => {
       const isSelected = selectedBarangay === brgyName;
       const isHovered = hoveredBrgy === brgyName;
 
-      return (
+      const pathElement = (
         <path
           key={idx}
           d={d}
@@ -83,8 +85,19 @@ export const BarangayVectorLayer = () => {
           style={{ vectorEffect: 'non-scaling-stroke' }}
         />
       );
+
+      return (
+        <Tooltip key={idx} delayDuration={0}>
+          <TooltipTrigger asChild>
+            {pathElement}
+          </TooltipTrigger>
+          <TooltipContent side="top" className="px-2 py-1 text-xs">
+            {brgyName}
+          </TooltipContent>
+        </Tooltip>
+      );
     });
-  }, [geojsonData, hoveredBrgy, selectedBarangay]);
+  }, [geojsonData, hoveredBrgy, selectedBarangay, setSelectedBarangay]);
 
   if (loading) return null;
 

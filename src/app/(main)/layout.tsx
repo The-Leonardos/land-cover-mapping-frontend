@@ -1,7 +1,6 @@
 "use client";
 
 import { SharedHeader } from "@/components/shared-header";
-import { Toaster } from "sonner";
 
 export default function MainLayout({ children }: { children: React.ReactNode }) {
   return (
@@ -10,7 +9,6 @@ export default function MainLayout({ children }: { children: React.ReactNode }) 
       <div className="flex flex-col flex-1 overflow-hidden relative">
         {children}
       </div>
-      <Toaster />
     </div>
   );
 }

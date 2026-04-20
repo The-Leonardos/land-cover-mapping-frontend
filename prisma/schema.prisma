@@ -1,0 +1,64 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Get a free hosted Postgres database in seconds: `npx create-db`
+
+generator client {
+  provider = "prisma-client"
+  output   = "../prisma/generated"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum TrainingStatus {
+  not_started
+  training
+  trained
+}
+
+enum InferenceStatus {
+  not_started
+  completed
+}
+
+model LandCoverTimeSeries {
+  barangay_id     String
+  barangay_name   String
+  year            Int
+  quarter         Int
+  bare_ground     Float
+  built_up_area   Float
+  crops           Float
+  grass           Float
+  shrub_and_scrub Float
+  trees           Float
+  water           Float
+
+  @@id([barangay_id, year, quarter])
+}
+
+model ModelsStatus {
+  model_id         String              @id @default(uuid())
+  model_name       String
+  forecast_year    Int?
+  training_status  TrainingStatus      @default(not_started)
+  inference_status InferenceStatus?
+
+  performances     ModelsPerformance[]
+}
+
+model ModelsPerformance {
+  id                String       @id @default(uuid())
+  model_id          String
+  iou               Float?
+  mae               Float?
+  rmse              Float?
+  crps              Float?
+  residual_analysis String?
+  training_date     DateTime?
+
+  model             ModelsStatus @relation(fields: [model_id], references: [model_id])
+}
+
