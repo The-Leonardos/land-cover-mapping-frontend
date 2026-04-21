@@ -32,8 +32,14 @@ export default function MapPage() {
               <BarangayDetailPanel onClose={handleBarangayDetailsPanelOnClose} />
             </div>
 
+            {/* Mobile: bottom sheet backdrop */}
+            <div 
+              className="lg:hidden fixed inset-0 z-40 bg-background/80 backdrop-blur-sm"
+              onClick={handleBarangayDetailsPanelOnClose}
+            />
+
             {/* Mobile: bottom sheet */}
-            <div className="lg:hidden fixed inset-x-0 bottom-0 z-30 max-h-[85vh] overflow-y-auto">
+            <div className="lg:hidden fixed inset-x-0 bottom-0 z-50 max-h-[85vh] overflow-y-auto">
               <BarangayDetailPanel onClose={handleBarangayDetailsPanelOnClose} />
             </div>
           </>
