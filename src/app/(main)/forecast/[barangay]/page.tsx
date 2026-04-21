@@ -4,6 +4,7 @@ import { useParams } from "next/navigation"
 import { useEffect, useState } from "react"
 import { ForecastingPanel } from "../_components/forecasting-panel"
 import { useBarangayStore } from "@/app/(main)/map/_stores/barangayStore"
+import { ForecastSkeleton } from "../_skeletons/forecast-skeleton"
 
 export default function ForecastBarangayPage() {
   const params = useParams()
@@ -23,11 +24,7 @@ export default function ForecastBarangayPage() {
   }, [barangay, setSelectedBarangay])
 
   if (!isReady || !decodedBarangay) {
-    return (
-      <div className="flex-1 p-8 flex items-center justify-center text-muted-foreground">
-        Loading forecast...
-      </div>
-    )
+    return <ForecastSkeleton />
   }
 
   return <ForecastingPanel selectedBarangay={decodedBarangay} />

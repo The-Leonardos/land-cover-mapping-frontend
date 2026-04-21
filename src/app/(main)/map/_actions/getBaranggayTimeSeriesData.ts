@@ -36,6 +36,9 @@ export const getBaranggayTimeSeriesData = async (
       })),
     }
 
+    console.log(barangay);
+    
+
     return barangay;
   } catch (error) {
     console.error("Error fetching barangay time series data:", error);
