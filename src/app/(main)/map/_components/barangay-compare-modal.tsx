@@ -7,6 +7,7 @@ import { getBaranggayTimeSeriesData } from "../_actions/getBaranggayTimeSeriesDa
 import { BarangayCompareEmpty, BarangayCompareLoading } from "../_skeletons/barangay-compare-skeletons";
 import { Dialog, DialogContent, DialogHeader, DialogTrigger } from "@/components/ui/dialog";
 import { useBarangayStore } from "../_stores/barangayStore";
+import { ArrowUpDown, ArrowUp, ArrowDown } from "lucide-react";
 
 export type BarangayCompareModalProps = {
   currentYear: number;
@@ -146,6 +147,14 @@ function RenderTableComparison({
   comparisonYear1: number;
   comparisonYear2: number;
 }) {
+  const [sortOrder, setSortOrder] = useState<"asc" | "desc" | null>(null);
+
+  const toggleSort = () => {
+    if (sortOrder === null) setSortOrder("desc");
+    else if (sortOrder === "desc") setSortOrder("asc");
+    else setSortOrder(null);
+  };
+
   return (
     <table className="w-full text-xs min-w-[440px]">
       <thead>
@@ -163,9 +172,21 @@ function RenderTableComparison({
               {comparisonYear2}
             </span>
           </th>
-          <th className="text-center py-2 px-3 font-bold text-foreground whitespace-nowrap">
-            Change
-          </th>
+          <thead 
+            className="text-center py-2 px-3 font-bold text-foreground whitespace-nowrap cursor-pointer hover:bg-muted/50 transition-colors select-none"
+            onClick={toggleSort}
+          >
+            <div className="flex items-center justify-center gap-1">
+              Change
+              {sortOrder === "asc" ? (
+                <ArrowUp className="w-3 h-3 text-primary" />
+              ) : sortOrder === "desc" ? (
+                <ArrowDown className="w-3 h-3 text-primary" />
+              ) : (
+                <ArrowUpDown className="w-3 h-3 text-muted-foreground opacity-50" />
+              )}
+            </div>
+          </thead>
         </tr>
       </thead>
       <tbody className="divide-y divide-border">
@@ -175,10 +196,20 @@ function RenderTableComparison({
 
           if (!data1Q1 || !data2Q1) return null;
 
-          return LAND_COVER_CLASSES.map((entry) => {
+          let rows = LAND_COVER_CLASSES.map((entry) => {
             const value1 = data1Q1[entry.id as keyof typeof data1Q1] || 0;
             const value2 = data2Q1[entry.id as keyof typeof data2Q1] || 0;
             const change = value2 - value1;
+            return { entry, value1, value2, change };
+          });
+
+          if (sortOrder === "asc") {
+            rows.sort((a, b) => a.change - b.change);
+          } else if (sortOrder === "desc") {
+            rows.sort((a, b) => b.change - a.change);
+          }
+
+          return rows.map(({ entry, value1, value2, change }) => {
             const isIncrease = change > 0;
             const isZero = change === 0;
             const color = entry.color || "#ccc";
