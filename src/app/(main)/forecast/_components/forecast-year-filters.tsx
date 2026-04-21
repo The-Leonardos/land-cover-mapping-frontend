@@ -1,5 +1,13 @@
 "use client"
 
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select"
+
 interface ForecastYearFiltersProps {
   startYear: number
   endYear: number
@@ -49,31 +57,39 @@ export function ForecastYearFilters({
         Range
       </span>
 
-      <select
-        value={startYear}
-        onChange={(e) => handleStartYearChange(Number(e.target.value))}
-        className="h-7 px-2 bg-muted/50 dark:bg-muted/20 border border-border rounded-md text-xs text-foreground tabular-nums focus:outline-none focus:ring-2 focus:ring-ring"
+      <Select
+        value={startYear.toString()}
+        onValueChange={(val) => handleStartYearChange(Number(val))}
       >
-        {startOptions.map((y) => (
-          <option key={y} value={y}>
-            {y}
-          </option>
-        ))}
-      </select>
+        <SelectTrigger className="h-7 w-[72px] px-2 bg-muted/50 dark:bg-muted/20 border-border text-xs tabular-nums focus:ring-0 focus:ring-offset-0 focus:border-border">
+          <SelectValue placeholder="Start" />
+        </SelectTrigger>
+        <SelectContent position="popper" side="bottom">
+          {startOptions.map((y) => (
+            <SelectItem key={y} value={y.toString()} className="text-xs md:text-sm tabular-nums cursor-pointer focus:bg-muted focus:text-foreground">
+              {y}
+            </SelectItem>
+          ))}
+        </SelectContent>
+      </Select>
 
       <span className="text-muted-foreground text-xs">—</span>
 
-      <select
-        value={endYear}
-        onChange={(e) => handleEndYearChange(Number(e.target.value))}
-        className="h-7 px-2 bg-muted/50 dark:bg-muted/20 border border-border rounded-md text-xs text-foreground tabular-nums focus:outline-none focus:ring-2 focus:ring-ring"
+      <Select
+        value={endYear.toString()}
+        onValueChange={(val) => handleEndYearChange(Number(val))}
       >
-        {endOptions.map((y) => (
-          <option key={y} value={y}>
-            {y}
-          </option>
-        ))}
-      </select>
+        <SelectTrigger className="h-7 w-[72px] px-2 bg-muted/50 dark:bg-muted/20 border-border text-xs tabular-nums focus:ring-0 focus:ring-offset-0 focus:border-border">
+          <SelectValue placeholder="End" />
+        </SelectTrigger>
+        <SelectContent position="popper" side="bottom">
+          {endOptions.map((y) => (
+            <SelectItem key={y} value={y.toString()} className="text-xs md:text-sm tabular-nums cursor-pointer focus:bg-muted focus:text-foreground">
+              {y}
+            </SelectItem>
+          ))}
+        </SelectContent>
+      </Select>
     </div>
   )
 }

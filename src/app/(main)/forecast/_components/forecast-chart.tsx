@@ -85,10 +85,13 @@ function ForecastTooltipContent({
 
       {/* Class values */}
       <div className="grid gap-1">
-        {Array.from(classValues.entries()).map(([classId, info]) => (
+        {Array.from(classValues.entries())
+          .sort(([, a], [, b]) => b.value - a.value)
+          .map(([classId, info]) => (
           <div
             key={classId}
             className="flex items-center justify-between gap-6"
+            style={{ fontWeight: isForecastPoint && info.isForecast ? 400 : 500 }}
           >
             <div className="flex items-center gap-1.5">
               <span
@@ -97,7 +100,7 @@ function ForecastTooltipContent({
               />
               <span className="text-muted-foreground">{info.label}</span>
             </div>
-            <span className="font-mono font-medium tabular-nums text-foreground">
+            <span className="font-mono tabular-nums text-foreground">
               {info.value.toFixed(2)}%
             </span>
           </div>
