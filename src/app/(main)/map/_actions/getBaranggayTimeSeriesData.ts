@@ -1,4 +1,7 @@
+"use server"
+
 import { BarangayLandCoverTimeSeries } from "@/lib/types/barangay-landcover-timeseries";
+import {prisma} from "@/lib/prisma";
 
 /**
  * Fetches the time series data for a specific barangay and year.
@@ -10,45 +13,38 @@ export const getBaranggayTimeSeriesData = async (
   barangayName: string,
   year: number,
 ): Promise<BarangayLandCoverTimeSeries> => {
-  // Simulating network delay
-  await new Promise((resolve) => setTimeout(resolve, 500));
-
-  const generateRandomQuarter = (quarter: number) => {
-    // Generate random percentages that sum to 100
-    let total = 100;
-    const values: Record<string, number> = {};
-    const keys = ["water", "trees", "grass", "crops", "shrub_and_scrub", "built_up_area", "bare_ground"];
-    
-    keys.forEach((key, index) => {
-      if (index === keys.length - 1) {
-        values[key] = Math.max(0, total);
-      } else {
-        const val = Math.random() * (total / (keys.length - index));
-        values[key] = Number(val.toFixed(2));
-        total -= values[key];
+  try {      
+    const fetchedData = await prisma.landCoverTimeSeries.findMany({
+      where: {
+        barangay_name: barangayName,
+        year: year,
       }
-    });
+    })
 
+    const barangay: BarangayLandCoverTimeSeries = {
+      barangay_name: barangayName,
+      year: year,
+      data: fetchedData.map((data) => ({
+        quarter: data.quarter,
+        crops: data.crops,
+        grass: data.grass,
+        trees: data.trees,
+        water: data.water,
+        bare_ground: data.bare_ground,
+        built_up_area: data.built_up_area,
+        shrub_and_scrub: data.shrub_and_scrub,
+      })),
+    }
+
+    console.log(barangay);
+    
+    return barangay;
+  } catch (error) {
+    console.error("Error fetching barangay time series data:", error);
     return {
-      quarter,
-      water: values.water,
-      trees: values.trees,
-      grass: values.grass,
-      crops: values.crops,
-      shrub_and_scrub: values.shrub_and_scrub,
-      built_up_area: values.built_up_area,
-      bare_ground: values.bare_ground,
+      barangay_name: barangayName,
+      year: year,
+      data: [],
     };
-  };
-
-  return {
-    barangay_name: barangayName,
-    year: year,
-    data: [
-      generateRandomQuarter(1),
-      generateRandomQuarter(2),
-      generateRandomQuarter(3),
-      generateRandomQuarter(4),
-    ],
-  };
+  }
 };

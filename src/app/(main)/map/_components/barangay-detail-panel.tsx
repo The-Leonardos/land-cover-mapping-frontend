@@ -54,6 +54,9 @@ export function BarangayDetailPanel({ onClose }: BarangayDetailPanelProps) {
     (d) => d.quarter === selectedQuarter,
   );
 
+  console.log("TIME SERIES DATA: ", timeSeries);
+  
+
   return (
     <div className="flex flex-col h-full overflow-hidden bg-card rounded-r-xl border-l border-border shadow-2xl">
       {/* Header */}
