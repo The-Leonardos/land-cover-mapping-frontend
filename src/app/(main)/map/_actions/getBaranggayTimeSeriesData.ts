@@ -17,7 +17,7 @@ export const getBaranggayTimeSeriesData = async (
     // Generate random percentages that sum to 100
     let total = 100;
     const values: Record<string, number> = {};
-    const keys = ["water", "trees", "grass", "crops", "shrub", "built", "bare"];
+    const keys = ["water", "trees", "grass", "crops", "shrub_and_scrub", "built_up_area", "bare_ground"];
     
     keys.forEach((key, index) => {
       if (index === keys.length - 1) {
@@ -35,14 +35,14 @@ export const getBaranggayTimeSeriesData = async (
       trees: values.trees,
       grass: values.grass,
       crops: values.crops,
-      shrub: values.shrub,
-      built: values.built,
-      bare: values.bare,
+      shrub_and_scrub: values.shrub_and_scrub,
+      built_up_area: values.built_up_area,
+      bare_ground: values.bare_ground,
     };
   };
 
   return {
-    barangay: barangayName,
+    barangay_name: barangayName,
     year: year,
     data: [
       generateRandomQuarter(1),
@@ -51,4 +51,4 @@ export const getBaranggayTimeSeriesData = async (
       generateRandomQuarter(4),
     ],
   };
-};
+};

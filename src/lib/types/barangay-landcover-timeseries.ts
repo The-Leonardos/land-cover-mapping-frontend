@@ -1,5 +1,5 @@
 export interface BarangayLandCoverTimeSeries {
-  barangay: string
+  barangay_name: string
   year: number
   data: LandCoverQuarterData[] // 4 quarters per year
 }
@@ -10,7 +10,7 @@ export interface LandCoverQuarterData {
   trees: number
   grass: number
   crops: number
-  shrub: number
-  built: number
-  bare: number
+  bare_ground: number
+  built_up_area: number
+  shrub_and_scrub: number
 }

@@ -60,7 +60,7 @@ export function BarangayDetailPanel({ onClose }: BarangayDetailPanelProps) {
       <div className="p-4 md:p-5 flex items-start justify-between border-b border-border/80">
         <div className="space-y-1">
           <h2 className="text-xl font-bold text-foreground tracking-tight">
-            {timeSeries.barangay}
+            {timeSeries.barangay_name}
           </h2>
           <p className="text-xs md:text-sm text-muted-foreground flex items-center gap-2 font-medium">
             <span className="w-2.5 h-2.5 rounded-full bg-primary shadow-[0_0_8px_rgba(59,130,246,0.5)] animate-pulse" />
@@ -69,7 +69,7 @@ export function BarangayDetailPanel({ onClose }: BarangayDetailPanelProps) {
 
           <BarangayCompareModal
             currentYear={currentYear}
-            selectedBarangay={timeSeries.barangay}
+            selectedBarangay={timeSeries.barangay_name}
             trigger={
               <button className="mt-3 px-4 py-1.5 rounded-full text-xs md:text-sm font-semibold bg-primary/10 text-primary hover:bg-primary hover:text-primary-foreground focus:ring-2 focus:ring-primary/50 transition-all duration-300 shadow-sm">
                 Compare Years
