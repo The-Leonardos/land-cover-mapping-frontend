@@ -12,9 +12,9 @@ export function ForecastTimeStepToggle({ timeStep, onChange }: ForecastTimeStepT
     <div className="flex items-center gap-1 p-0.5 rounded-lg bg-muted/50 border border-border/50 flex-shrink-0">
       <button
         onClick={() => onChange("yearly")}
-        className={`px-2.5 py-1 rounded-md text-[11px] font-semibold transition-all ${
+        className={`px-2.5 py-1 rounded-md text-xs font-semibold transition-all ${
           timeStep === "yearly"
-            ? "bg-background text-foreground shadow-sm"
+            ? "bg-primary text-foreground shadow-sm"
             : "text-muted-foreground hover:text-foreground"
         }`}
       >
@@ -22,9 +22,9 @@ export function ForecastTimeStepToggle({ timeStep, onChange }: ForecastTimeStepT
       </button>
       <button
         onClick={() => onChange("quarterly")}
-        className={`px-2.5 py-1 rounded-md text-[11px] font-semibold transition-all ${
+        className={`px-2.5 py-1 rounded-md text-xs font-semibold transition-all ${
           timeStep === "quarterly"
-            ? "bg-background text-foreground shadow-sm"
+            ? "bg-primary text-foreground shadow-sm"
             : "text-muted-foreground hover:text-foreground"
         }`}
       >

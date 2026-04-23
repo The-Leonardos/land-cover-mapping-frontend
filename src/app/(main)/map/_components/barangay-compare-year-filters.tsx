@@ -50,7 +50,7 @@ export function BarangayCompareYearFilters({
   return (
     <div className="flex items-center justify-center gap-4 bg-muted/20 p-4 rounded-xl border border-border/50">
       <div className="w-full sm:w-auto flex-1">
-        <label className="text-[11px] font-semibold text-muted-foreground uppercase tracking-wider mb-1.5 block">
+        <label className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-1.5 block">
           Base Year
         </label>
         <Select
@@ -81,7 +81,7 @@ export function BarangayCompareYearFilters({
       </div>
 
       <div className="w-full sm:w-auto flex-1">
-        <label className="text-[11px] font-semibold text-muted-foreground uppercase tracking-wider mb-1.5 block">
+        <label className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-1.5 block">
           Compare Year
         </label>
         <Select
