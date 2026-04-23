@@ -55,7 +55,7 @@ export function SharedHeader() {
               href="/map"
               className={`flex items-center gap-1.5 md:gap-2.5 px-3 md:px-5 py-1.5 md:py-2.5 rounded-lg text-xs md:text-sm font-semibold transition-all duration-200 ${
                 isMapActive
-                  ? "bg-card text-foreground shadow-md border border-border/50"
+                  ? "bg-primary text-foreground shadow-md border border-border/50"
                   : "text-muted-foreground hover:text-foreground hover:bg-muted/50"
               }`}
             >
