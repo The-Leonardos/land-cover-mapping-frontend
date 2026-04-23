@@ -8,6 +8,7 @@ import { BarangayCompareEmpty, BarangayCompareLoading } from "../_skeletons/bara
 import { Dialog, DialogContent, DialogHeader, DialogTrigger } from "@/components/ui/dialog";
 import { useBarangayStore } from "../_stores/barangayStore";
 import { ArrowUpDown, ArrowUp, ArrowDown } from "lucide-react";
+import { formatDisplayArea, getBarangayAreaByName } from "@/lib/utils";
 
 export type BarangayCompareModalProps = {
   currentYear: number;
@@ -20,7 +21,7 @@ export function BarangayCompareModal({
   selectedBarangay,
   trigger
 }: BarangayCompareModalProps) {
-  const { YEARS } = useBarangayStore();
+  const YEARS = useBarangayStore((state) => state.YEARS);
   const [comparisonYear1, setComparisonYear1] = useState<number>(currentYear - 1);
   const [comparisonYear2, setComparisonYear2] = useState<number>(currentYear);
 
@@ -123,6 +124,7 @@ export function BarangayCompareModal({
                   comparisonData2={comparisonData2}
                   comparisonYear1={comparisonYear1}
                   comparisonYear2={comparisonYear2}
+                  selectedBarangay={selectedBarangay}
                 />
               ) : (
                 <BarangayCompareEmpty />
@@ -141,11 +143,13 @@ function RenderTableComparison({
   comparisonData2,
   comparisonYear1,
   comparisonYear2,
+  selectedBarangay
 }: {
   comparisonData1: BarangayLandCoverTimeSeries;
   comparisonData2: BarangayLandCoverTimeSeries;
   comparisonYear1: number;
   comparisonYear2: number;
+  selectedBarangay: string;
 }) {
   const [sortOrder, setSortOrder] = useState<"asc" | "desc" | null>(null);
 
@@ -228,25 +232,46 @@ function RenderTableComparison({
                     {entry.label}
                   </div>
                 </td>
-                <td className="py-2.5 md:py-3 px-3 md:px-4 text-center text-muted-foreground whitespace-nowrap text-xs md:text-sm">
-                  {value1.toFixed(1)}%
+                <td className="py-2.5 md:py-3 px-3 md:px-4 text-center whitespace-nowrap text-xs md:text-sm">
+                  <div className="flex flex-col items-center">
+                    <span className="text-white">{value1.toFixed(1)}%</span>
+                    <span className="text-xs text-muted-foreground">
+                      {formatDisplayArea(getBarangayAreaByName(selectedBarangay) * (value1 / 100))}
+                    </span>
+                  </div>
                 </td>
-                <td className="py-2.5 md:py-3 px-3 md:px-4 text-center text-muted-foreground whitespace-nowrap text-xs md:text-sm">
-                  {value2.toFixed(1)}%
+                <td className="py-2.5 md:py-3 px-3 md:px-4 text-center whitespace-nowrap text-xs md:text-sm">
+                  <div className="flex flex-col items-center">
+                    <span className="text-white">{value2.toFixed(1)}%</span>
+                    <span className="text-xs text-muted-foreground">
+                      {formatDisplayArea(getBarangayAreaByName(selectedBarangay) * (value2 / 100))}
+                    </span>
+                  </div>
                 </td>
                 <td className="py-2.5 md:py-3 px-3 md:px-4 text-center whitespace-nowrap">
-                  <span
-                    className={`inline-flex items-center gap-1 px-2 py-1 rounded-full text-xs md:text-xs font-semibold ${
-                      isZero
-                        ? "text-muted-foreground bg-muted/50"
-                        : isIncrease
-                        ? "text-emerald-700 bg-emerald-500/15 dark:text-emerald-400 dark:bg-emerald-500/20"
-                        : "text-rose-700 bg-rose-500/15 dark:text-rose-400 dark:bg-rose-500/20"
-                    }`}
-                  >
-                    {!isZero && (isIncrease ? "↑ " : "↓ ")}
-                    {Math.abs(change).toFixed(1)}%
-                  </span>
+                  <div className="flex flex-col items-center gap-1">
+                    <span
+                      className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs md:text-xs font-semibold ${
+                        isZero
+                          ? "text-muted-foreground bg-muted/50"
+                          : isIncrease
+                          ? "text-emerald-700 bg-emerald-500/15 dark:text-emerald-400 dark:bg-emerald-500/20"
+                          : "text-rose-700 bg-rose-500/15 dark:text-rose-400 dark:bg-rose-500/20"
+                      }`}
+                    >
+                      {!isZero && (isIncrease ? "↑ " : "↓ ")}
+                      {Math.abs(change).toFixed(1)}%
+                    </span>
+                    {!isZero && (
+                      <span className={`text-xs font-medium ${
+                        isIncrease 
+                          ? "text-emerald-600/70 dark:text-emerald-400/60" 
+                          : "text-rose-600/70 dark:text-rose-400/60"
+                      }`}>
+                        {isIncrease ? "+" : "-"}{formatDisplayArea(getBarangayAreaByName(selectedBarangay) * (Math.abs(change) / 100))}
+                      </span>
+                    )}
+                  </div>
                 </td>
               </tr>
             );
