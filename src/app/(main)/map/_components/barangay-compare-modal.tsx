@@ -9,6 +9,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTrigger } from "@/components
 import { useBarangayStore } from "../_stores/barangayStore";
 import { ArrowUpDown, ArrowUp, ArrowDown } from "lucide-react";
 import { formatDisplayArea, getBarangayAreaByName } from "@/lib/utils";
+import { BarangayCompareYearFilters } from "./barangay-compare-year-filters";
 
 export type BarangayCompareModalProps = {
   currentYear: number;
@@ -76,41 +77,13 @@ export function BarangayCompareModal({
         <div className="p-4 md:p-6 space-y-6 max-h-[85vh] overflow-y-auto">
           
           {/* Year Selection */}
-          <div className="flex items-center justify-center gap-4 bg-muted/20 p-4 rounded-xl border border-border/50">
-            <div className="w-full sm:w-auto flex-1">
-              <label className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-1 block">Base Year</label>
-              <select
-                value={comparisonYear1}
-                onChange={(e) => setComparisonYear1(Number(e.target.value))}
-                className="w-full px-4 py-2.5 rounded-lg border border-border bg-background text-foreground text-sm font-semibold focus:ring-2 focus:ring-primary/20 outline-none transition-all cursor-pointer hover:border-primary/30"
-              >
-                {YEARS.map((year) => (
-                  <option key={year} value={year}>
-                    {year}
-                  </option>
-                ))}
-              </select>
-            </div>
-
-            <div className="flex items-center justify-center sm:pt-5">
-              <span className="text-muted-foreground font-semibold bg-muted px-2.5 py-1 rounded text-xs">VS</span>
-            </div>
-
-            <div className="w-full sm:w-auto flex-1">
-              <label className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-1 block">Compare Year</label>
-              <select
-                value={comparisonYear2}
-                onChange={(e) => setComparisonYear2(Number(e.target.value))}
-                className="w-full px-4 py-2.5 rounded-lg border border-border bg-background text-foreground text-sm font-semibold focus:ring-2 focus:ring-primary/20 outline-none transition-all cursor-pointer hover:border-primary/30"
-              >
-                {YEARS.map((year) => (
-                  <option key={year} value={year}>
-                    {year}
-                  </option>
-                ))}
-              </select>
-            </div>
-          </div>
+          <BarangayCompareYearFilters
+            comparisonYear1={comparisonYear1}
+            comparisonYear2={comparisonYear2}
+            availableYears={YEARS as unknown as number[]}
+            onYear1Change={setComparisonYear1}
+            onYear2Change={setComparisonYear2}
+          />
 
           {/* Comparison Table Container */}
           <div className="border border-border rounded-xl overflow-hidden shadow-sm bg-background">              

@@ -66,7 +66,7 @@ export function ForecastYearFilters({
         </SelectTrigger>
         <SelectContent position="popper" side="bottom">
           {startOptions.map((y) => (
-            <SelectItem key={y} value={y.toString()} className="text-xs md:text-sm tabular-nums cursor-pointer focus:bg-muted focus:text-foreground">
+            <SelectItem key={y} value={y.toString()} className="text-xs md:text-sm tabular-nums cursor-pointer focus:bg-primary focus:text-primary-foreground">
               {y}
             </SelectItem>
           ))}
@@ -84,7 +84,7 @@ export function ForecastYearFilters({
         </SelectTrigger>
         <SelectContent position="popper" side="bottom">
           {endOptions.map((y) => (
-            <SelectItem key={y} value={y.toString()} className="text-xs md:text-sm tabular-nums cursor-pointer focus:bg-muted focus:text-foreground">
+            <SelectItem key={y} value={y.toString()} className="text-xs md:text-sm tabular-nums cursor-pointer focus:bg-primary focus:text-primary-foreground">
               {y}
             </SelectItem>
           ))}
