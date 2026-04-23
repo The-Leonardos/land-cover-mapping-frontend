@@ -9,11 +9,13 @@ import { LAND_COVER_CLASSES } from "@/lib/types/land-cover-class"
 import {
   generateChartData,
   getAvailableYears,
+  type TimeStep,
 } from "./forecast-utils"
 import { ForecastHeader } from "./forecast-header"
 import { ForecastClassesSelector } from "./forecast-classes-selector"
 import { ForecastYearFilters } from "./forecast-year-filters"
 import { ForecastChart } from "./forecast-chart"
+import { ForecastTimeStepToggle } from "./forecast-timestep-toggle"
 import { ForecastSkeleton } from "../_skeletons/forecast-skeleton"
 import { Separator } from "@/components/ui/separator"
 
@@ -35,6 +37,7 @@ export function ForecastingPanel({ selectedBarangay }: ForecastingPanelProps) {
 
   const [startYear, setStartYear] = useState<number>(2016)
   const [endYear, setEndYear] = useState<number>(currentYear)
+  const [timeStep, setTimeStep] = useState<TimeStep>("yearly")
 
   // Reset year range when data loads (or barangay changes)
   useEffect(() => {
@@ -63,8 +66,8 @@ export function ForecastingPanel({ selectedBarangay }: ForecastingPanelProps) {
 
   // Chart & stats (memoized)
   const chartData = useMemo(
-    () => generateChartData(rawData, startYear, endYear, currentYear),
-    [rawData, startYear, endYear, currentYear]
+    () => generateChartData(rawData, startYear, endYear, currentYear, timeStep),
+    [rawData, startYear, endYear, currentYear, timeStep]
   )
 
   // Check if the full dataset (not just the filtered view) has forecast data
@@ -124,13 +127,19 @@ export function ForecastingPanel({ selectedBarangay }: ForecastingPanelProps) {
           onToggleClass={toggleClass}
           onSelectAll={selectAll}
         />
-        <ForecastYearFilters
-          startYear={startYear}
-          endYear={endYear}
-          availableYears={availableYears}
-          onStartYearChange={setStartYear}
-          onEndYearChange={setEndYear}
-        />
+
+        <div className="flex items-center gap-2">
+          <ForecastYearFilters
+            startYear={startYear}
+            endYear={endYear}
+            availableYears={availableYears}
+            onStartYearChange={setStartYear}
+            onEndYearChange={setEndYear}
+            />
+
+          {/* Time step toggle */}
+          <ForecastTimeStepToggle timeStep={timeStep} onChange={setTimeStep} />
+        </div>
       </div>
 
       {/* Chart */}

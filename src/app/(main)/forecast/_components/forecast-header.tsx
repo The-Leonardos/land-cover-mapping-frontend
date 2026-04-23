@@ -29,12 +29,12 @@ export function ForecastHeader({
 
       <div className="flex items-center gap-2 flex-shrink-0">
         {yearRange && (
-          <Badge variant="secondary" className="text-[11px] tabular-nums">
-            {yearRange[0]} — {yearRange[1]}
+          <Badge variant="secondary" className="text-xs md:text-sm tabular-nums">
+            {yearRange[0]} to {yearRange[1]}
           </Badge>
         )}
         {hasForecastData && (
-          <Badge variant="outline" className="text-[11px]">
+          <Badge variant="outline" className="text-xs md:text-sm">
             Forecast Available
           </Badge>
         )}

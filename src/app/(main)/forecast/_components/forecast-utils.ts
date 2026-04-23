@@ -38,65 +38,84 @@ export interface ChartDataPoint {
  * Forecast:   `trees_forecast = 43.1`
  * Boundary:   both keys set to the same value (for seamless line connection)
  */
+export type TimeStep = "quarterly" | "yearly"
+
 export function generateChartData(
   rawData: TimeSeriesDataPoint[],
   startYear: number,
   endYear: number,
-  currentYear: number
+  currentYear: number,
+  timeStep: TimeStep = "yearly"
 ): ChartDataPoint[] {
   if (rawData.length === 0) return []
 
-  // Filter and sort the raw data
   const filtered = rawData
     .filter((d) => d.year >= startYear && d.year <= endYear)
     .sort((a, b) => a.year - b.year || a.quarter - b.quarter)
 
   if (filtered.length === 0) return []
 
-  // Find the last historical quarter (before currentYear)
+  // ── Yearly mode: use Q1 data as the representative value for the year ──
+  if (timeStep === "yearly") {
+    // Keep only Q1 points (one per year)
+    const q1Points = filtered.filter((d) => d.quarter === 1)
+    if (q1Points.length === 0) return []
+
+    const sortedYears = q1Points.map((d) => d.year).sort((a, b) => a - b)
+    const lastHistoricalYear = sortedYears.filter((y) => y < currentYear).pop()
+    const hasForecastYears = sortedYears.some((y) => y >= currentYear)
+    const data: ChartDataPoint[] = []
+
+    for (const point of q1Points) {
+      const isForecast = point.year >= currentYear
+      const chartPoint: ChartDataPoint = {
+        year: point.year,
+        quarter: 1,
+        xKey: point.year,
+        displayLabel: String(point.year),
+        isForecast,
+      }
+
+      for (const key of CLASS_KEYS) {
+        const val = point[key]
+        if (!isForecast) {
+          chartPoint[key] = val
+          if (point.year === lastHistoricalYear && hasForecastYears) chartPoint[`${key}_forecast`] = val
+        } else {
+          chartPoint[`${key}_forecast`] = val
+        }
+      }
+      data.push(chartPoint)
+    }
+    return data
+  }
+
+  // ── Quarterly mode: one point per quarter ──────────────────────────
   const historicalPoints = filtered.filter((d) => d.year < currentYear)
-  const lastHistorical =
-    historicalPoints.length > 0
-      ? historicalPoints[historicalPoints.length - 1]
-      : null
-
+  const lastHistorical = historicalPoints.length > 0 ? historicalPoints[historicalPoints.length - 1] : null
   const hasForecastPoints = filtered.some((d) => d.year >= currentYear)
-
   const data: ChartDataPoint[] = []
 
   for (const point of filtered) {
     const isForecast = point.year >= currentYear
     const xKey = point.year + (point.quarter - 1) * 0.25
     const displayLabel = `${point.year} Q${point.quarter}`
-
-    const chartPoint: ChartDataPoint = {
-      year: point.year,
-      quarter: point.quarter,
-      xKey,
-      displayLabel,
-      isForecast,
-    }
+    const chartPoint: ChartDataPoint = { year: point.year, quarter: point.quarter, xKey, displayLabel, isForecast }
 
     for (const key of CLASS_KEYS) {
       const val = point[key]
-
       if (!isForecast) {
         chartPoint[key] = val
-        // At the boundary, also set forecast key for seamless line connection
         const isLastHistorical =
           lastHistorical &&
           point.year === lastHistorical.year &&
           point.quarter === lastHistorical.quarter &&
           hasForecastPoints
-
-        if (isLastHistorical) {
-          chartPoint[`${key}_forecast`] = val
-        }
+        if (isLastHistorical) chartPoint[`${key}_forecast`] = val
       } else {
         chartPoint[`${key}_forecast`] = val
       }
     }
-
     data.push(chartPoint)
   }
 
