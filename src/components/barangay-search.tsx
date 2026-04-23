@@ -157,7 +157,7 @@ export function BarangaySearch() {
           ref={dropdownRef}
           className="absolute right-0 top-full mt-1.5 w-72 max-h-64 overflow-y-auto bg-card border border-border rounded-xl shadow-2xl z-50 py-1 backdrop-blur-xl animate-in fade-in slide-in-from-top-2 duration-150"
         >
-          <div className="px-3 py-1.5 text-[11px] font-semibold text-muted-foreground uppercase tracking-wider">
+          <div className="px-3 py-1.5 text-xs font-semibold text-muted-foreground uppercase tracking-wider">
             {filteredBarangays.length} result{filteredBarangays.length !== 1 ? "s" : ""}
           </div>
           {filteredBarangays.map((barangay, idx) => (

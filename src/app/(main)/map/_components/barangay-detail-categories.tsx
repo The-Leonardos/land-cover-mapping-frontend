@@ -1,8 +1,12 @@
 import { LAND_COVER_CLASSES } from "@/lib/types/land-cover-class";
 import { LandCoverQuarterData } from "@/lib/types/barangay-landcover-timeseries";
+import { useBarangayStore } from "../_stores/barangayStore";
+import { formatDisplayArea, getBarangayAreaByName } from "@/lib/utils";
 
 export function BarangayDetailCategories({ quarterData }: { quarterData: LandCoverQuarterData }) {
   if (!quarterData) return null;
+
+  const selectedBarangay = useBarangayStore((state)=> state.selectedBarangay);
 
   // Sorting for all categories (from largest to lowest)
   const sortedEntries = [...LAND_COVER_CLASSES]
@@ -34,6 +38,9 @@ export function BarangayDetailCategories({ quarterData }: { quarterData: LandCov
               <span className="flex-1 text-muted-foreground group-hover:text-foreground transition-colors text-xs md:text-sm">
                 {entry.label}
               </span>
+              <span className="text-foreground text-xs">
+                {formatDisplayArea(getBarangayAreaByName(selectedBarangay!) * (entry.value / 100))}
+              </span>
               <span className="font-semibold text-foreground bg-background px-2 py-0.5 rounded border border-border shadow-sm text-xs md:text-sm">
                 {entry.value.toFixed(1)}%
               </span>
@@ -41,6 +48,7 @@ export function BarangayDetailCategories({ quarterData }: { quarterData: LandCov
           );
         })}
       </div>
-    </div>
+    </div>  
   );
 }
+

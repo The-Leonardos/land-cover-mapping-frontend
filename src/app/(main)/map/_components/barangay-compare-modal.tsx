@@ -8,6 +8,8 @@ import { BarangayCompareEmpty, BarangayCompareLoading } from "../_skeletons/bara
 import { Dialog, DialogContent, DialogHeader, DialogTrigger } from "@/components/ui/dialog";
 import { useBarangayStore } from "../_stores/barangayStore";
 import { ArrowUpDown, ArrowUp, ArrowDown } from "lucide-react";
+import { formatDisplayArea, getBarangayAreaByName } from "@/lib/utils";
+import { BarangayCompareYearFilters } from "./barangay-compare-year-filters";
 
 export type BarangayCompareModalProps = {
   currentYear: number;
@@ -20,7 +22,7 @@ export function BarangayCompareModal({
   selectedBarangay,
   trigger
 }: BarangayCompareModalProps) {
-  const { YEARS } = useBarangayStore();
+  const YEARS = useBarangayStore((state) => state.YEARS);
   const [comparisonYear1, setComparisonYear1] = useState<number>(currentYear - 1);
   const [comparisonYear2, setComparisonYear2] = useState<number>(currentYear);
 
@@ -75,41 +77,13 @@ export function BarangayCompareModal({
         <div className="p-4 md:p-6 space-y-6 max-h-[85vh] overflow-y-auto">
           
           {/* Year Selection */}
-          <div className="flex items-center justify-center gap-4 bg-muted/20 p-4 rounded-xl border border-border/50">
-            <div className="w-full sm:w-auto flex-1">
-              <label className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-1 block">Base Year</label>
-              <select
-                value={comparisonYear1}
-                onChange={(e) => setComparisonYear1(Number(e.target.value))}
-                className="w-full px-4 py-2.5 rounded-lg border border-border bg-background text-foreground text-sm font-semibold focus:ring-2 focus:ring-primary/20 outline-none transition-all cursor-pointer hover:border-primary/30"
-              >
-                {YEARS.map((year) => (
-                  <option key={year} value={year}>
-                    {year}
-                  </option>
-                ))}
-              </select>
-            </div>
-
-            <div className="flex items-center justify-center sm:pt-5">
-              <span className="text-muted-foreground font-semibold bg-muted px-2.5 py-1 rounded text-xs">VS</span>
-            </div>
-
-            <div className="w-full sm:w-auto flex-1">
-              <label className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-1 block">Compare Year</label>
-              <select
-                value={comparisonYear2}
-                onChange={(e) => setComparisonYear2(Number(e.target.value))}
-                className="w-full px-4 py-2.5 rounded-lg border border-border bg-background text-foreground text-sm font-semibold focus:ring-2 focus:ring-primary/20 outline-none transition-all cursor-pointer hover:border-primary/30"
-              >
-                {YEARS.map((year) => (
-                  <option key={year} value={year}>
-                    {year}
-                  </option>
-                ))}
-              </select>
-            </div>
-          </div>
+          <BarangayCompareYearFilters
+            comparisonYear1={comparisonYear1}
+            comparisonYear2={comparisonYear2}
+            availableYears={YEARS as unknown as number[]}
+            onYear1Change={setComparisonYear1}
+            onYear2Change={setComparisonYear2}
+          />
 
           {/* Comparison Table Container */}
           <div className="border border-border rounded-xl overflow-hidden shadow-sm bg-background">              
@@ -123,6 +97,7 @@ export function BarangayCompareModal({
                   comparisonData2={comparisonData2}
                   comparisonYear1={comparisonYear1}
                   comparisonYear2={comparisonYear2}
+                  selectedBarangay={selectedBarangay}
                 />
               ) : (
                 <BarangayCompareEmpty />
@@ -141,11 +116,13 @@ function RenderTableComparison({
   comparisonData2,
   comparisonYear1,
   comparisonYear2,
+  selectedBarangay
 }: {
   comparisonData1: BarangayLandCoverTimeSeries;
   comparisonData2: BarangayLandCoverTimeSeries;
   comparisonYear1: number;
   comparisonYear2: number;
+  selectedBarangay: string;
 }) {
   const [sortOrder, setSortOrder] = useState<"asc" | "desc" | null>(null);
 
@@ -228,25 +205,46 @@ function RenderTableComparison({
                     {entry.label}
                   </div>
                 </td>
-                <td className="py-2.5 md:py-3 px-3 md:px-4 text-center text-muted-foreground whitespace-nowrap text-xs md:text-sm">
-                  {value1.toFixed(1)}%
+                <td className="py-2.5 md:py-3 px-3 md:px-4 text-center whitespace-nowrap text-xs md:text-sm">
+                  <div className="flex flex-col items-center">
+                    <span className="text-white">{value1.toFixed(1)}%</span>
+                    <span className="text-xs text-muted-foreground">
+                      {formatDisplayArea(getBarangayAreaByName(selectedBarangay) * (value1 / 100))}
+                    </span>
+                  </div>
                 </td>
-                <td className="py-2.5 md:py-3 px-3 md:px-4 text-center text-muted-foreground whitespace-nowrap text-xs md:text-sm">
-                  {value2.toFixed(1)}%
+                <td className="py-2.5 md:py-3 px-3 md:px-4 text-center whitespace-nowrap text-xs md:text-sm">
+                  <div className="flex flex-col items-center">
+                    <span className="text-white">{value2.toFixed(1)}%</span>
+                    <span className="text-xs text-muted-foreground">
+                      {formatDisplayArea(getBarangayAreaByName(selectedBarangay) * (value2 / 100))}
+                    </span>
+                  </div>
                 </td>
                 <td className="py-2.5 md:py-3 px-3 md:px-4 text-center whitespace-nowrap">
-                  <span
-                    className={`inline-flex items-center gap-1 px-2 py-1 rounded-full text-xs md:text-xs font-semibold ${
-                      isZero
-                        ? "text-muted-foreground bg-muted/50"
-                        : isIncrease
-                        ? "text-emerald-700 bg-emerald-500/15 dark:text-emerald-400 dark:bg-emerald-500/20"
-                        : "text-rose-700 bg-rose-500/15 dark:text-rose-400 dark:bg-rose-500/20"
-                    }`}
-                  >
-                    {!isZero && (isIncrease ? "↑ " : "↓ ")}
-                    {Math.abs(change).toFixed(1)}%
-                  </span>
+                  <div className="flex flex-col items-center gap-1">
+                    <span
+                      className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs md:text-xs font-semibold ${
+                        isZero
+                          ? "text-muted-foreground bg-muted/50"
+                          : isIncrease
+                          ? "text-emerald-700 bg-emerald-500/15 dark:text-emerald-400 dark:bg-emerald-500/20"
+                          : "text-rose-700 bg-rose-500/15 dark:text-rose-400 dark:bg-rose-500/20"
+                      }`}
+                    >
+                      {!isZero && (isIncrease ? "↑ " : "↓ ")}
+                      {Math.abs(change).toFixed(1)}%
+                    </span>
+                    {!isZero && (
+                      <span className={`text-xs font-medium ${
+                        isIncrease 
+                          ? "text-emerald-600/70 dark:text-emerald-400/60" 
+                          : "text-rose-600/70 dark:text-rose-400/60"
+                      }`}>
+                        {isIncrease ? "+" : "-"}{formatDisplayArea(getBarangayAreaByName(selectedBarangay) * (Math.abs(change) / 100))}
+                      </span>
+                    )}
+                  </div>
                 </td>
               </tr>
             );
