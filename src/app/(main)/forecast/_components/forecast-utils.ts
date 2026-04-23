@@ -21,12 +21,17 @@ type ClassKey = (typeof CLASS_KEYS)[number]
  */
 export interface ChartDataPoint {
   year: number
+  quarter: number
+  /** Numeric X key: year + (quarter - 1) * 0.25. E.g. 2022 Q2 → 2022.25 */
+  xKey: number
+  /** Human-readable label for tooltip: "2022 Q2" */
+  displayLabel: string
   isForecast: boolean
-  [key: string]: number | boolean | undefined
+  [key: string]: number | boolean | string | undefined
 }
 
 /**
- * Transforms raw quarterly DB data into yearly-averaged chart data
+ * Transforms raw quarterly DB data into per-quarter chart data points
  * with separate keys for historical vs forecast values.
  *
  * Historical: `trees = 45.2`
@@ -41,66 +46,58 @@ export function generateChartData(
 ): ChartDataPoint[] {
   if (rawData.length === 0) return []
 
-  // Group by year and compute annual averages
-  const yearlyAverages = new Map<
-    number,
-    { totals: Record<ClassKey, number>; count: number }
-  >()
+  // Filter and sort the raw data
+  const filtered = rawData
+    .filter((d) => d.year >= startYear && d.year <= endYear)
+    .sort((a, b) => a.year - b.year || a.quarter - b.quarter)
 
-  for (const point of rawData) {
-    if (point.year < startYear || point.year > endYear) continue
+  if (filtered.length === 0) return []
 
-    if (!yearlyAverages.has(point.year)) {
-      yearlyAverages.set(point.year, {
-        totals: {
-          water: 0,
-          trees: 0,
-          grass: 0,
-          crops: 0,
-          shrub_and_scrub: 0,
-          built_up_area: 0,
-          bare_ground: 0,
-        },
-        count: 0,
-      })
-    }
+  // Find the last historical quarter (before currentYear)
+  const historicalPoints = filtered.filter((d) => d.year < currentYear)
+  const lastHistorical =
+    historicalPoints.length > 0
+      ? historicalPoints[historicalPoints.length - 1]
+      : null
 
-    const entry = yearlyAverages.get(point.year)!
-    for (const key of CLASS_KEYS) {
-      entry.totals[key] += point[key]
-    }
-    entry.count += 1
-  }
-
-  const sortedYears = Array.from(yearlyAverages.keys()).sort((a, b) => a - b)
-  const lastHistoricalYear = sortedYears.filter((y) => y < currentYear).pop()
-  const hasForecastYears = sortedYears.some((y) => y >= currentYear)
+  const hasForecastPoints = filtered.some((d) => d.year >= currentYear)
 
   const data: ChartDataPoint[] = []
 
-  for (const year of sortedYears) {
-    const entry = yearlyAverages.get(year)!
-    const isForecast = year >= currentYear
+  for (const point of filtered) {
+    const isForecast = point.year >= currentYear
+    const xKey = point.year + (point.quarter - 1) * 0.25
+    const displayLabel = `${point.year} Q${point.quarter}`
 
-    const point: ChartDataPoint = { year, isForecast }
+    const chartPoint: ChartDataPoint = {
+      year: point.year,
+      quarter: point.quarter,
+      xKey,
+      displayLabel,
+      isForecast,
+    }
 
     for (const key of CLASS_KEYS) {
-      const avg = entry.totals[key] / entry.count
+      const val = point[key]
 
       if (!isForecast) {
-        // Historical data point
-        point[key] = avg
+        chartPoint[key] = val
         // At the boundary, also set forecast key for seamless line connection
-        if (year === lastHistoricalYear && hasForecastYears) {
-          point[`${key}_forecast`] = avg
+        const isLastHistorical =
+          lastHistorical &&
+          point.year === lastHistorical.year &&
+          point.quarter === lastHistorical.quarter &&
+          hasForecastPoints
+
+        if (isLastHistorical) {
+          chartPoint[`${key}_forecast`] = val
         }
       } else {
-        // Forecast data point
-        point[`${key}_forecast`] = avg
+        chartPoint[`${key}_forecast`] = val
       }
     }
 
-    data.push(point)
+    data.push(chartPoint)
   }
 
   return data

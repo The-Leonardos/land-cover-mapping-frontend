@@ -78,9 +78,11 @@ function ForecastTooltipContent({
 
   return (
     <div className="rounded-lg border border-border/50 bg-background px-3 py-2.5 shadow-xl text-xs">
-      {/* Year label */}
+      {/* Quarter label */}
       <div className="font-medium mb-2 flex items-center gap-2">
-        <span>{label}</span>
+        <span>{
+          (payload[0] as unknown as { payload?: { displayLabel?: string } })?.payload?.displayLabel ?? label
+        }</span>
         {isForecastPoint && (
           <span className="text-xs px-1.5 py-0.5 rounded-full bg-primary/10 text-primary font-medium">
             Forecast
@@ -218,14 +220,15 @@ export function ForecastChart({
         />
 
         <XAxis
-          dataKey="year"
+          dataKey="xKey"
           type="number"
           domain={["dataMin", "dataMax"]}
-          allowDecimals={false}
+          allowDecimals={true}
           tickLine={false}
           axisLine={false}
           fontSize={12}
-          ticks={chartData.map((d) => d.year)}
+          ticks={Array.from(new Set(chartData.map((d) => d.year)))}
+          tickFormatter={(val: number) => String(Math.round(val))}
         />
 
         <YAxis
@@ -247,21 +250,26 @@ export function ForecastChart({
         />
 
         {/* Forecast boundary line */}
-        {hasForecast && (
-          <ReferenceLine
-            x={currentYear - 1}
-            stroke="#9ca3af"
-            strokeDasharray="4 4"
-            strokeWidth={1}
-            label={{
-              value: "Forecast →",
-              position: "insideTopRight",
-              fill: "#9ca3af",
-              fontSize: 11,
-              fontWeight: 500,
-            }}
-          />
-        )}
+        {hasForecast && (() => {
+          // Find the xKey of the last historical quarter for the boundary line
+          const lastHistorical = [...chartData].reverse().find((d) => !d.isForecast)
+          const boundaryXKey = lastHistorical ? lastHistorical.xKey : undefined
+          return boundaryXKey != null ? (
+            <ReferenceLine
+              x={boundaryXKey}
+              stroke="#9ca3af"
+              strokeDasharray="4 4"
+              strokeWidth={1}
+              label={{
+                value: "Forecast →",
+                position: "insideTopRight",
+                fill: "#9ca3af",
+                fontSize: 11,
+                fontWeight: 500,
+              }}
+            />
+          ) : null
+        })()}
 
         {/* Historical area fills — solid strokes */}
         {activeClasses.map((cls) => (
