@@ -29,7 +29,7 @@ export function ForecastHeader({
 
       <div className="flex items-center gap-2 flex-shrink-0">
         {yearRange && (
-          <Badge variant="secondary" className="text-xs md:text-sm tabular-nums">
+          <Badge variant="secondary" className="text-xs md:text-sm tabular-nums bg-primary">
             {yearRange[0]} to {yearRange[1]}
           </Badge>
         )}

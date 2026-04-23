@@ -18,6 +18,7 @@ import type { ChartDataPoint } from "./forecast-utils"
 import { computeYAxisDomain } from "./forecast-utils"
 
 import { formatDisplayArea, getBarangayAreaByName } from "@/lib/utils"
+import { ForecastChartEmpty } from "../_skeletons/forecast-chart-empty"
 
 // ── Props ────────────────────────────────────────────────────────────
 
@@ -157,19 +158,11 @@ export function ForecastChart({
   // ── Empty states ─────────────────────────────────────────────────
 
   if (chartData.length === 0) {
-    return (
-      <div className="flex items-center justify-center h-full text-muted-foreground text-sm">
-        No data available for the selected range.
-      </div>
-    )
+    return <ForecastChartEmpty reason="no-data" />
   }
 
   if (selectedClasses.size === 0) {
-    return (
-      <div className="flex items-center justify-center h-full text-muted-foreground text-sm">
-        Select at least one class to display.
-      </div>
-    )
+    return <ForecastChartEmpty reason="no-classes" />
   }
 
   // ── Render ───────────────────────────────────────────────────────

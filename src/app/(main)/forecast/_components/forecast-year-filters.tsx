@@ -53,7 +53,7 @@ export function ForecastYearFilters({
 
   return (
     <div className="flex items-center gap-2 flex-shrink-0">
-      <span className="text-xs font-medium text-muted-foreground uppercase tracking-wider">
+      <span className="text-[11px] font-medium text-muted-foreground uppercase tracking-wider">
         Range
       </span>
 
