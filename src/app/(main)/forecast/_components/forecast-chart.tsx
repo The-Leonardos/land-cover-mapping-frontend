@@ -17,12 +17,15 @@ import { LAND_COVER_CLASSES } from "@/lib/types/land-cover-class"
 import type { ChartDataPoint } from "./forecast-utils"
 import { computeYAxisDomain } from "./forecast-utils"
 
+import { formatDisplayArea, getBarangayAreaByName } from "@/lib/utils"
+
 // ── Props ────────────────────────────────────────────────────────────
 
 interface ForecastChartProps {
   chartData: ChartDataPoint[]
   selectedClasses: Set<string>
   currentYear: number
+  selectedBarangay: string
 }
 
 // ── Custom tooltip ───────────────────────────────────────────────────
@@ -31,10 +34,12 @@ function ForecastTooltipContent({
   active,
   payload,
   label,
+  selectedBarangay,
 }: {
   active?: boolean
   payload?: Array<{ dataKey: string; value?: number; color?: string }>
   label?: string | number
+  selectedBarangay: string
 }) {
   if (!active || !payload?.length) return null
 
@@ -77,7 +82,7 @@ function ForecastTooltipContent({
       <div className="font-medium mb-2 flex items-center gap-2">
         <span>{label}</span>
         {isForecastPoint && (
-          <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-primary/10 text-primary font-medium">
+          <span className="text-xs px-1.5 py-0.5 rounded-full bg-primary/10 text-primary font-medium">
             Forecast
           </span>
         )}
@@ -87,24 +92,36 @@ function ForecastTooltipContent({
       <div className="grid gap-1">
         {Array.from(classValues.entries())
           .sort(([, a], [, b]) => b.value - a.value)
-          .map(([classId, info]) => (
-          <div
-            key={classId}
-            className="flex items-center justify-between gap-6"
-            style={{ fontWeight: isForecastPoint && info.isForecast ? 400 : 500 }}
-          >
-            <div className="flex items-center gap-1.5">
-              <span
-                className="h-2.5 w-2.5 shrink-0 rounded-[2px]"
-                style={{ backgroundColor: info.color }}
-              />
-              <span className="text-muted-foreground">{info.label}</span>
-            </div>
-            <span className="font-mono tabular-nums text-foreground">
-              {info.value.toFixed(2)}%
-            </span>
-          </div>
-        ))}
+          .map(([classId, info]) => {
+            const totalArea = selectedBarangay ? getBarangayAreaByName(selectedBarangay) : 0;
+            const classArea = totalArea * (info.value / 100);
+
+            return (
+              <div
+                key={classId}
+                className="flex items-center justify-between gap-6"
+                style={{ fontWeight: isForecastPoint && info.isForecast ? 400 : 500 }}
+              >
+                <div className="flex items-center gap-1.5">
+                  <span
+                    className="h-2.5 w-2.5 shrink-0 rounded-[2px]"
+                    style={{ backgroundColor: info.color }}
+                  />
+                  <div className="flex flex-col">
+                    <span className="text-muted-foreground">{info.label}</span>
+                    {selectedBarangay && (
+                      <span className="text-xs text-muted-foreground/60 font-normal">
+                        {formatDisplayArea(classArea)}
+                      </span>
+                    )}
+                  </div>
+                </div>
+                <span className="font-mono tabular-nums text-foreground">
+                  {info.value.toFixed(2)}%
+                </span>
+              </div>
+            );
+          })}
       </div>
     </div>
   )
@@ -116,6 +133,7 @@ export function ForecastChart({
   chartData,
   selectedClasses,
   currentYear,
+  selectedBarangay
 }: ForecastChartProps) {
   const [yMin, yMax] = computeYAxisDomain(chartData, selectedClasses)
 
@@ -220,7 +238,7 @@ export function ForecastChart({
         />
 
         <Tooltip
-          content={<ForecastTooltipContent />}
+          content={<ForecastTooltipContent selectedBarangay={selectedBarangay} />}
           cursor={{
             stroke: "#9ca3af",
             strokeWidth: 1,

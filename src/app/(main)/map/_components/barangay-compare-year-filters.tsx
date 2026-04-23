@@ -75,7 +75,7 @@ export function BarangayCompareYearFilters({
       </div>
 
       <div className="flex items-center justify-center pt-5">
-        <span className="text-muted-foreground font-bold bg-muted/50 px-2.5 py-1 rounded text-[10px] ring-1 ring-border/50">
+        <span className="text-muted-foreground font-bold bg-muted/50 px-2.5 py-1 rounded text-xs ring-1 ring-border/50">
           VS
         </span>
       </div>

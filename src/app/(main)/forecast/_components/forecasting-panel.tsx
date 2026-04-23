@@ -8,11 +8,9 @@ import {
 import { LAND_COVER_CLASSES } from "@/lib/types/land-cover-class"
 import {
   generateChartData,
-  computeClassStats,
   getAvailableYears,
 } from "./forecast-utils"
 import { ForecastHeader } from "./forecast-header"
-import { ForecastQuickStats } from "./forecast-quick-stats"
 import { ForecastClassesSelector } from "./forecast-classes-selector"
 import { ForecastYearFilters } from "./forecast-year-filters"
 import { ForecastChart } from "./forecast-chart"
@@ -69,11 +67,6 @@ export function ForecastingPanel({ selectedBarangay }: ForecastingPanelProps) {
     [rawData, startYear, endYear, currentYear]
   )
 
-  const classStats = useMemo(
-    () => computeClassStats(chartData, selectedClasses, currentYear),
-    [chartData, selectedClasses, currentYear]
-  )
-
   // Check if the full dataset (not just the filtered view) has forecast data
   const hasForecastData = useMemo(
     () => rawData.some((d) => d.year >= currentYear),
@@ -122,9 +115,6 @@ export function ForecastingPanel({ selectedBarangay }: ForecastingPanelProps) {
         yearRange={yearRange}
       />
 
-      {/* Quick stat cards (dynamic, only selected classes) */}
-      <ForecastQuickStats stats={classStats} />
-
       <Separator />
 
       {/* Controls: class filter + year range */}
@@ -149,6 +139,7 @@ export function ForecastingPanel({ selectedBarangay }: ForecastingPanelProps) {
           chartData={chartData}
           selectedClasses={selectedClasses}
           currentYear={currentYear}
+          selectedBarangay={selectedBarangay!}
         />
       </div>
     </div>
