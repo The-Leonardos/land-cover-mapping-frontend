@@ -174,19 +174,11 @@ export function CompareViewer({ year1, year2 }: CompareViewerProps) {
         </button>
       </div>
 
-      {/* Year Labels */}
-      <div className="absolute top-2 md:top-4 left-1/2 -translate-x-1/2 z-30 flex items-center gap-3">
-        <span className="px-3 py-1.5 rounded-lg bg-card/90 backdrop-blur-sm border border-border text-sm font-bold text-foreground shadow-md tabular-nums">{year1}</span>
-        <span className="text-xs text-muted-foreground font-semibold">VS</span>
-        <span className="px-3 py-1.5 rounded-lg bg-card/90 backdrop-blur-sm border border-border text-sm font-bold text-foreground shadow-md tabular-nums">{year2}</span>
-      </div>
-
       {/* Selected Barangay Info */}
       {selectedBarangay && (
-        <div className="absolute right-2 md:right-4 top-2 md:top-4 z-30">
+        <div className="absolute left-1/2 -translate-x-1/2 top-2 md:top-4 z-10">
           <div className="px-3 py-2 rounded-lg bg-card/90 backdrop-blur-sm border border-primary/30 shadow-md">
-            <p className="text-xs text-muted-foreground uppercase tracking-wider">Viewing</p>
-            <p className="text-sm font-bold text-foreground">{selectedBarangay}</p>
+            <p className="text-xs md:text-sm font-semibold text-center text-foreground">{selectedBarangay}</p>
           </div>
         </div>
       )}
