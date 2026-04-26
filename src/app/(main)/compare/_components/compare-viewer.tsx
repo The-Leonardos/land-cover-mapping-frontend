@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useRef, useCallback, useEffect } from "react";
-import { ReactCompareSlider } from "react-compare-slider";
+import { ReactCompareSlider, ReactCompareSliderHandle } from "react-compare-slider";
 import { DynamicWorldImageRenderer } from "@/app/(main)/map/_components/dynamic-world-image-renderer";
 import { CompareVectorLayer, TIFF_METADATA } from "./compare-vector-layer";
 import { Plus, Minus, Loader2 } from "lucide-react";
@@ -233,13 +233,6 @@ export function CompareViewer({ year1, year2 }: CompareViewerProps) {
         <span className="px-3 py-1.5 rounded-lg bg-card/90 backdrop-blur-sm border border-border text-sm font-bold text-foreground shadow-md tabular-nums">{year2}</span>
       </div>
 
-      {/* Hint */}
-      <div className="absolute bottom-2 md:bottom-4 left-1/2 -translate-x-1/2 z-30">
-        <span className="px-3 py-1.5 rounded-lg bg-card/80 backdrop-blur-sm border border-border/50 text-xs text-muted-foreground shadow-sm">
-          Scroll to zoom • Click a barangay to focus
-        </span>
-      </div>
-
       {/* Selected Barangay Info */}
       {selectedBarangay && (
         <div className="absolute right-2 md:right-4 top-2 md:top-4 z-30">
@@ -266,6 +259,14 @@ export function CompareViewer({ year1, year2 }: CompareViewerProps) {
           itemOne={<CompareSliderItem url={year1Url} {...itemProps} />}
           itemTwo={<CompareSliderItem url={year2Url} {...itemProps} />}
           style={{ width: "100%", height: "100%" }}
+          handle={
+            <ReactCompareSliderHandle
+              buttonStyle={{
+                width: 40,
+                height: 40,
+              }}
+            />
+          }
         />
       </div>
     </div>
