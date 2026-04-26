@@ -130,10 +130,10 @@ export const BarangayVectorLayer = () => {
           className={`
             transition-all duration-200 cursor-pointer
             ${isSelected 
-              ? "fill-black/20 stroke-black stroke-[3px]"
+              ? "fill-black/20 stroke-black stroke-[1px]"
               : isHovered 
-                ? "fill-black/20 stroke-black stroke-[3px]" 
-                : "fill-transparent stroke-black stroke-[1px]"}
+                ? "fill-black/20 stroke-black stroke-[1px]" 
+                : "fill-transparent stroke-black stroke-[0.5px]"}
           `}
           style={{ 
             vectorEffect: 'non-scaling-stroke',

@@ -128,14 +128,14 @@ export const CompareVectorLayer = ({
           className={`
             transition-all duration-200 cursor-pointer
             ${isSelected
-              ? "fill-transparent stroke-white stroke-[3px]"
+              ? "fill-transparent stroke-black stroke-[1px]"
               : isHovered
-                ? "fill-transparent stroke-white stroke-[2px]"
-                : "fill-transparent stroke-black/60 stroke-[0.5px]"}
+                ? "fill-transparent stroke-black stroke-[1px]"
+                : "fill-transparent stroke-black stroke-[0.5px]"}
           `}
           style={{
             vectorEffect: 'non-scaling-stroke',
-            ...(isSelected ? { filter: 'drop-shadow(0 0 4px rgba(255, 255, 255, 0.8))' } : {})
+            ...(isSelected ? { filter: 'drop-shadow(0 0 6px rgba(0, 0, 0, 0.6))' } : {})
           }}
         />
       );
