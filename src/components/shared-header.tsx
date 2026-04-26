@@ -1,6 +1,6 @@
 "use client";
 
-import { Globe, Satellite, BarChart3 } from "lucide-react";
+import { Globe, Satellite, BarChart3, SplitSquareHorizontal } from "lucide-react";
 import { BarangaySearch } from "@/components/barangay-search";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
@@ -14,6 +14,7 @@ export function SharedHeader() {
 
   const isMapActive = pathname.startsWith("/map");
   const isForecastActive = pathname.startsWith("/forecast");
+  const isCompareActive = pathname.startsWith("/compare");
 
   const handleForecastClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
     e.preventDefault();
@@ -61,6 +62,17 @@ export function SharedHeader() {
             >
               <Satellite className="h-4 w-4 shrink-0" />
               <span className="hidden lg:inline whitespace-nowrap">SEGMENTATION MAP</span>
+            </Link>
+            <Link
+              href="/compare"
+              className={`flex items-center gap-1.5 md:gap-2.5 px-3 md:px-5 py-1.5 md:py-2.5 rounded-lg text-xs md:text-sm font-semibold transition-all duration-200 ${
+                isCompareActive
+                  ? "bg-primary text-primary-foreground shadow-md"
+                  : "text-muted-foreground hover:text-foreground hover:bg-muted/50"
+              }`}
+            >
+              <SplitSquareHorizontal className="h-4 w-4 shrink-0" />
+              <span className="hidden lg:inline whitespace-nowrap">COMPARE</span>
             </Link>
             <Link
               href={selectedBarangay ? `/forecast/${selectedBarangay}` : "/forecast"}
