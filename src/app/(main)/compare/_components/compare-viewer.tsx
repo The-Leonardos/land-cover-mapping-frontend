@@ -5,6 +5,7 @@ import { ReactCompareSlider, ReactCompareSliderHandle } from "react-compare-slid
 import { DynamicWorldImageRenderer } from "@/app/(main)/map/_components/dynamic-world-image-renderer";
 import { CompareVectorLayer, TIFF_METADATA } from "./compare-vector-layer";
 import { Plus, Minus, Loader2 } from "lucide-react";
+import { useBarangayStore } from "../../map/_stores/barangayStore";
 
 /**
  * A single item rendered inside the ReactCompareSlider.
@@ -79,7 +80,8 @@ export function CompareViewer({ year1, year2 }: CompareViewerProps) {
   useEffect(() => { scaleRef.current = scale; }, [scale]);
 
   // Barangay state — lifted so both slider items share it
-  const [selectedBarangay, setSelectedBarangay] = useState<string | null>(null);
+  const selectedBarangay = useBarangayStore((state) => state.selectedBarangay);
+  const setSelectedBarangay = useBarangayStore((state) => state.setSelectedBarangay);
   const [hoveredBarangay, setHoveredBarangay] = useState<string | null>(null);
 
   const year1Url = `/data/deeplabv3/dynamic-world/DW_RGB_${year1}_Q1.tif`;
