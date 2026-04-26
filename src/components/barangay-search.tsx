@@ -57,8 +57,8 @@ export function BarangaySearch() {
     setIsOpen(false);
     inputRef.current?.blur();
 
-    // Navigate to map if not already there
-    if (!pathname.startsWith("/map")) {
+    // Navigate to map when the user is in forecast page only.
+    if (pathname.startsWith("/forecast")) {
       router.push("/map");
     }
   };

@@ -150,8 +150,6 @@ export function CompareViewer({ year1, year2 }: CompareViewerProps) {
     doZoom(targetScale, mx, my);
   }, [doZoom]);
 
-
-
   // Zoom to barangay — computes translate to center the barangay in the viewport
   const handleZoomToBarangay = useCallback((target: { x: number; y: number }) => {
     if (!containerRef.current) return;

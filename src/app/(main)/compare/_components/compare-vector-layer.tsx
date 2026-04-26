@@ -87,6 +87,22 @@ export const CompareVectorLayer = ({
     }
   };
 
+  // Auto-zoom when selectedBarangay changes (e.g. from search bar)
+  // Same pattern as BarangayVectorLayer in the map route
+  useEffect(() => {
+    if (!selectedBarangay || !geojsonData?.features) return;
+
+    const feature = geojsonData.features.find((f: any) =>
+      namesMatch(selectedBarangay, f.properties?.BRGY_NAME || "")
+    );
+    if (!feature) return;
+
+    const centroid = computeCentroidSVG(feature.geometry);
+    if (centroid) {
+      onZoomToBarangay(centroid);
+    }
+  }, [selectedBarangay, geojsonData]);
+
   const svgPaths = useMemo(() => {
     if (!geojsonData || !geojsonData.features) return null;
 
