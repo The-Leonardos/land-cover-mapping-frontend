@@ -9,7 +9,7 @@ import { useBarangayStore } from "@/app/(main)/map/_stores/barangayStore";
 export default function MapPage() {
   const { selectedBarangay, setSelectedBarangay, fetchYears } = useBarangayStore();
 
-  // fetch years on mount
+  // fetch years on mount 
   useEffect(() => {
     fetchYears();
   }, [fetchYears]);

@@ -1,15 +1,14 @@
 "use client";
 
 import { useEffect, useState, useMemo } from "react";
-import { useBarangayStore } from "@/app/(main)/map/_stores/barangayStore";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 
 // values here are from the metadata of the tiff file of the satellite raw image
-const TIFF_METADATA={
+const TIFF_METADATA = {
   bbox: [120.54510763905542, 16.360567112026786, 120.63565781969466, 16.434498459909822],
-  width: 1008, 
-  height: 823
-}
+  width: 1008,
+  height: 823,
+};
 
 /** Case-insensitive, whitespace-normalized comparison for barangay name matching */
 function namesMatch(a: string | null, b: string): boolean {
@@ -29,9 +28,8 @@ function computeCentroidSVG(geometry: any): { x: number; y: number } | null {
 
   let coords: [number, number][] = [];
   if (geometry.type === "Polygon") {
-    coords = geometry.coordinates[0]; // outer ring
+    coords = geometry.coordinates[0];
   } else if (geometry.type === "MultiPolygon") {
-    // use the largest polygon
     let maxLen = 0;
     for (const polygon of geometry.coordinates) {
       if (polygon[0].length > maxLen) {
@@ -48,21 +46,32 @@ function computeCentroidSVG(geometry: any): { x: number; y: number } | null {
   return { x: cx, y: cy };
 }
 
-export const BarangayVectorLayer = () => {
-  const { selectedBarangay, setSelectedBarangay, setZoomTarget } = useBarangayStore();
+interface CompareVectorLayerProps {
+  selectedBarangay: string | null;
+  hoveredBarangay: string | null;
+  onBarangaySelect: (name: string) => void;
+  onBarangayHover: (name: string | null) => void;
+  onZoomToBarangay: (target: { x: number; y: number }) => void;
+}
+
+export const CompareVectorLayer = ({
+  selectedBarangay,
+  hoveredBarangay,
+  onBarangaySelect,
+  onBarangayHover,
+  onZoomToBarangay,
+}: CompareVectorLayerProps) => {
   const [geojsonData, setGeojsonData] = useState<any>(null);
   const [loading, setLoading] = useState(true);
-  const [hoveredBrgy, setHoveredBrgy] = useState<string | null>(null);
 
   useEffect(() => {
     async function loadData() {
       try {
         const geoRes = await fetch("/BC_Barangays.geojson");
-        
         const data = await geoRes.json();
         setGeojsonData(data);
       } catch (err) {
-        console.error("Error loading barangays geometry or TIFF metadata:", err);
+        console.error("Error loading barangays geometry:", err);
       } finally {
         setLoading(false);
       }
@@ -70,7 +79,16 @@ export const BarangayVectorLayer = () => {
     loadData();
   }, []);
 
-  // When selectedBarangay changes and geojson is loaded, compute zoom target
+  const handleBarangayClick = (brgyName: string, geometry: any) => {
+    onBarangaySelect(brgyName);
+    const centroid = computeCentroidSVG(geometry);
+    if (centroid) {
+      onZoomToBarangay(centroid);
+    }
+  };
+
+  // Auto-zoom when selectedBarangay changes (e.g. from search bar)
+  // Same pattern as BarangayVectorLayer in the map route
   useEffect(() => {
     if (!selectedBarangay || !geojsonData?.features) return;
 
@@ -81,26 +99,22 @@ export const BarangayVectorLayer = () => {
 
     const centroid = computeCentroidSVG(feature.geometry);
     if (centroid) {
-      setZoomTarget(centroid);
+      onZoomToBarangay(centroid);
     }
-  }, [selectedBarangay, geojsonData, setZoomTarget]);
+  }, [selectedBarangay, geojsonData]);
 
   const svgPaths = useMemo(() => {
-    if (!geojsonData || !geojsonData.features ) return null;
+    if (!geojsonData || !geojsonData.features) return null;
 
     const { bbox, width, height } = TIFF_METADATA;
-    // getBoundingBox() returns [minX, minY, maxX, maxY]
     const [minX, minY, maxX, maxY] = bbox;
 
-    // 2. Function to project a geographic coordinate into pixel space
-    // Y is inverted because SVG/Canvas is Top-Left origin while Latitude typically goes Bottom-Up.
     const project = ([lng, lat]: [number, number]) => {
       const x = ((lng - minX) / (maxX - minX)) * width;
       const y = ((maxY - lat) / (maxY - minY)) * height;
       return `${x},${y}`;
     };
 
-    // 3. Generate SVG Paths for each feature
     return geojsonData.features.map((feature: any, idx: number) => {
       const brgyName = feature.properties?.BRGY_NAME || "Unknown";
       let d = "";
@@ -118,24 +132,24 @@ export const BarangayVectorLayer = () => {
       }
 
       const isSelected = namesMatch(selectedBarangay, brgyName);
-      const isHovered = hoveredBrgy === brgyName;
+      const isHovered = hoveredBarangay === brgyName;
 
       const pathElement = (
         <path
           key={idx}
           d={d}
-          onClick={() => setSelectedBarangay(brgyName)}
-          onMouseEnter={() => setHoveredBrgy(brgyName)}
-          onMouseLeave={() => setHoveredBrgy(null)}
+          onClick={() => handleBarangayClick(brgyName, feature.geometry)}
+          onMouseEnter={() => onBarangayHover(brgyName)}
+          onMouseLeave={() => onBarangayHover(null)}
           className={`
             transition-all duration-200 cursor-pointer
-            ${isSelected 
-              ? "fill-black/20 stroke-black stroke-[1px]"
-              : isHovered 
-                ? "fill-black/20 stroke-black stroke-[1px]" 
+            ${isSelected
+              ? "fill-transparent stroke-black stroke-[1px]"
+              : isHovered
+                ? "fill-transparent stroke-black stroke-[1px]"
                 : "fill-transparent stroke-black stroke-[0.5px]"}
           `}
-          style={{ 
+          style={{
             vectorEffect: 'non-scaling-stroke',
             ...(isSelected ? { filter: 'drop-shadow(0 0 6px rgba(0, 0, 0, 0.6))' } : {})
           }}
@@ -153,16 +167,13 @@ export const BarangayVectorLayer = () => {
         </Tooltip>
       );
     });
-  }, [geojsonData, hoveredBrgy, selectedBarangay, setSelectedBarangay]);
+  }, [geojsonData, hoveredBarangay, selectedBarangay]);
 
   if (loading) return null;
 
   return (
     <div className="absolute inset-0 z-20 flex items-center justify-center pointer-events-none" style={{ opacity: 1 }}>
-      {/* 
-        The svg uses object-contain mimicking the canvas to perfectly overlap.
-      */}
-      <svg 
+      <svg
         viewBox={`0 0 ${TIFF_METADATA.width} ${TIFF_METADATA.height}`}
         className="max-w-full max-h-full object-contain pointer-events-auto"
         preserveAspectRatio="xMidYMid meet"
@@ -172,3 +183,5 @@ export const BarangayVectorLayer = () => {
     </div>
   );
 };
+
+export { TIFF_METADATA, computeCentroidSVG };
