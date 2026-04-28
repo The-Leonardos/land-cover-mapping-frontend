@@ -52,13 +52,20 @@ model ModelsStatus {
 model ModelsPerformance {
   id                String       @id @default(uuid())
   model_id          String
+
   iou               Float?
+  accuracy          Float?
+  precision         Float?
+  recall            Float?
+  f1_score          Float?
+
   mae               Float?
   rmse              Float?
   crps              Float?
-  residual_analysis String?
-  training_date     DateTime?
+  r2                Float?
 
+  training_date     DateTime?
+  
   model             ModelsStatus @relation(fields: [model_id], references: [model_id])
 }
 

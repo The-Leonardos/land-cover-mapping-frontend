@@ -699,10 +699,14 @@ export const ModelsPerformanceScalarFieldEnum = {
   id: 'id',
   model_id: 'model_id',
   iou: 'iou',
+  accuracy: 'accuracy',
+  precision: 'precision',
+  recall: 'recall',
+  f1_score: 'f1_score',
   mae: 'mae',
   rmse: 'rmse',
   crps: 'crps',
-  residual_analysis: 'residual_analysis',
+  r2: 'r2',
   training_date: 'training_date'
 } as const
 

@@ -28,26 +28,40 @@ export type AggregateModelsPerformance = {
 
 export type ModelsPerformanceAvgAggregateOutputType = {
   iou: number | null
+  accuracy: number | null
+  precision: number | null
+  recall: number | null
+  f1_score: number | null
   mae: number | null
   rmse: number | null
   crps: number | null
+  r2: number | null
 }
 
 export type ModelsPerformanceSumAggregateOutputType = {
   iou: number | null
+  accuracy: number | null
+  precision: number | null
+  recall: number | null
+  f1_score: number | null
   mae: number | null
   rmse: number | null
   crps: number | null
+  r2: number | null
 }
 
 export type ModelsPerformanceMinAggregateOutputType = {
   id: string | null
   model_id: string | null
   iou: number | null
+  accuracy: number | null
+  precision: number | null
+  recall: number | null
+  f1_score: number | null
   mae: number | null
   rmse: number | null
   crps: number | null
-  residual_analysis: string | null
+  r2: number | null
   training_date: Date | null
 }
 
@@ -55,10 +69,14 @@ export type ModelsPerformanceMaxAggregateOutputType = {
   id: string | null
   model_id: string | null
   iou: number | null
+  accuracy: number | null
+  precision: number | null
+  recall: number | null
+  f1_score: number | null
   mae: number | null
   rmse: number | null
   crps: number | null
-  residual_analysis: string | null
+  r2: number | null
   training_date: Date | null
 }
 
@@ -66,10 +84,14 @@ export type ModelsPerformanceCountAggregateOutputType = {
   id: number
   model_id: number
   iou: number
+  accuracy: number
+  precision: number
+  recall: number
+  f1_score: number
   mae: number
   rmse: number
   crps: number
-  residual_analysis: number
+  r2: number
   training_date: number
   _all: number
 }
@@ -77,26 +99,40 @@ export type ModelsPerformanceCountAggregateOutputType = {
 
 export type ModelsPerformanceAvgAggregateInputType = {
   iou?: true
+  accuracy?: true
+  precision?: true
+  recall?: true
+  f1_score?: true
   mae?: true
   rmse?: true
   crps?: true
+  r2?: true
 }
 
 export type ModelsPerformanceSumAggregateInputType = {
   iou?: true
+  accuracy?: true
+  precision?: true
+  recall?: true
+  f1_score?: true
   mae?: true
   rmse?: true
   crps?: true
+  r2?: true
 }
 
 export type ModelsPerformanceMinAggregateInputType = {
   id?: true
   model_id?: true
   iou?: true
+  accuracy?: true
+  precision?: true
+  recall?: true
+  f1_score?: true
   mae?: true
   rmse?: true
   crps?: true
-  residual_analysis?: true
+  r2?: true
   training_date?: true
 }
 
@@ -104,10 +140,14 @@ export type ModelsPerformanceMaxAggregateInputType = {
   id?: true
   model_id?: true
   iou?: true
+  accuracy?: true
+  precision?: true
+  recall?: true
+  f1_score?: true
   mae?: true
   rmse?: true
   crps?: true
-  residual_analysis?: true
+  r2?: true
   training_date?: true
 }
 
@@ -115,10 +155,14 @@ export type ModelsPerformanceCountAggregateInputType = {
   id?: true
   model_id?: true
   iou?: true
+  accuracy?: true
+  precision?: true
+  recall?: true
+  f1_score?: true
   mae?: true
   rmse?: true
   crps?: true
-  residual_analysis?: true
+  r2?: true
   training_date?: true
   _all?: true
 }
@@ -213,10 +257,14 @@ export type ModelsPerformanceGroupByOutputType = {
   id: string
   model_id: string
   iou: number | null
+  accuracy: number | null
+  precision: number | null
+  recall: number | null
+  f1_score: number | null
   mae: number | null
   rmse: number | null
   crps: number | null
-  residual_analysis: string | null
+  r2: number | null
   training_date: Date | null
   _count: ModelsPerformanceCountAggregateOutputType | null
   _avg: ModelsPerformanceAvgAggregateOutputType | null
@@ -247,10 +295,14 @@ export type ModelsPerformanceWhereInput = {
   id?: Prisma.StringFilter<"ModelsPerformance"> | string
   model_id?: Prisma.StringFilter<"ModelsPerformance"> | string
   iou?: Prisma.FloatNullableFilter<"ModelsPerformance"> | number | null
+  accuracy?: Prisma.FloatNullableFilter<"ModelsPerformance"> | number | null
+  precision?: Prisma.FloatNullableFilter<"ModelsPerformance"> | number | null
+  recall?: Prisma.FloatNullableFilter<"ModelsPerformance"> | number | null
+  f1_score?: Prisma.FloatNullableFilter<"ModelsPerformance"> | number | null
   mae?: Prisma.FloatNullableFilter<"ModelsPerformance"> | number | null
   rmse?: Prisma.FloatNullableFilter<"ModelsPerformance"> | number | null
   crps?: Prisma.FloatNullableFilter<"ModelsPerformance"> | number | null
-  residual_analysis?: Prisma.StringNullableFilter<"ModelsPerformance"> | string | null
+  r2?: Prisma.FloatNullableFilter<"ModelsPerformance"> | number | null
   training_date?: Prisma.DateTimeNullableFilter<"ModelsPerformance"> | Date | string | null
   model?: Prisma.XOR<Prisma.ModelsStatusScalarRelationFilter, Prisma.ModelsStatusWhereInput>
 }
@@ -259,10 +311,14 @@ export type ModelsPerformanceOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   model_id?: Prisma.SortOrder
   iou?: Prisma.SortOrderInput | Prisma.SortOrder
+  accuracy?: Prisma.SortOrderInput | Prisma.SortOrder
+  precision?: Prisma.SortOrderInput | Prisma.SortOrder
+  recall?: Prisma.SortOrderInput | Prisma.SortOrder
+  f1_score?: Prisma.SortOrderInput | Prisma.SortOrder
   mae?: Prisma.SortOrderInput | Prisma.SortOrder
   rmse?: Prisma.SortOrderInput | Prisma.SortOrder
   crps?: Prisma.SortOrderInput | Prisma.SortOrder
-  residual_analysis?: Prisma.SortOrderInput | Prisma.SortOrder
+  r2?: Prisma.SortOrderInput | Prisma.SortOrder
   training_date?: Prisma.SortOrderInput | Prisma.SortOrder
   model?: Prisma.ModelsStatusOrderByWithRelationInput
 }
@@ -274,10 +330,14 @@ export type ModelsPerformanceWhereUniqueInput = Prisma.AtLeast<{
   NOT?: Prisma.ModelsPerformanceWhereInput | Prisma.ModelsPerformanceWhereInput[]
   model_id?: Prisma.StringFilter<"ModelsPerformance"> | string
   iou?: Prisma.FloatNullableFilter<"ModelsPerformance"> | number | null
+  accuracy?: Prisma.FloatNullableFilter<"ModelsPerformance"> | number | null
+  precision?: Prisma.FloatNullableFilter<"ModelsPerformance"> | number | null
+  recall?: Prisma.FloatNullableFilter<"ModelsPerformance"> | number | null
+  f1_score?: Prisma.FloatNullableFilter<"ModelsPerformance"> | number | null
   mae?: Prisma.FloatNullableFilter<"ModelsPerformance"> | number | null
   rmse?: Prisma.FloatNullableFilter<"ModelsPerformance"> | number | null
   crps?: Prisma.FloatNullableFilter<"ModelsPerformance"> | number | null
-  residual_analysis?: Prisma.StringNullableFilter<"ModelsPerformance"> | string | null
+  r2?: Prisma.FloatNullableFilter<"ModelsPerformance"> | number | null
   training_date?: Prisma.DateTimeNullableFilter<"ModelsPerformance"> | Date | string | null
   model?: Prisma.XOR<Prisma.ModelsStatusScalarRelationFilter, Prisma.ModelsStatusWhereInput>
 }, "id">
@@ -286,10 +346,14 @@ export type ModelsPerformanceOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   model_id?: Prisma.SortOrder
   iou?: Prisma.SortOrderInput | Prisma.SortOrder
+  accuracy?: Prisma.SortOrderInput | Prisma.SortOrder
+  precision?: Prisma.SortOrderInput | Prisma.SortOrder
+  recall?: Prisma.SortOrderInput | Prisma.SortOrder
+  f1_score?: Prisma.SortOrderInput | Prisma.SortOrder
   mae?: Prisma.SortOrderInput | Prisma.SortOrder
   rmse?: Prisma.SortOrderInput | Prisma.SortOrder
   crps?: Prisma.SortOrderInput | Prisma.SortOrder
-  residual_analysis?: Prisma.SortOrderInput | Prisma.SortOrder
+  r2?: Prisma.SortOrderInput | Prisma.SortOrder
   training_date?: Prisma.SortOrderInput | Prisma.SortOrder
   _count?: Prisma.ModelsPerformanceCountOrderByAggregateInput
   _avg?: Prisma.ModelsPerformanceAvgOrderByAggregateInput
@@ -305,20 +369,28 @@ export type ModelsPerformanceScalarWhereWithAggregatesInput = {
   id?: Prisma.StringWithAggregatesFilter<"ModelsPerformance"> | string
   model_id?: Prisma.StringWithAggregatesFilter<"ModelsPerformance"> | string
   iou?: Prisma.FloatNullableWithAggregatesFilter<"ModelsPerformance"> | number | null
+  accuracy?: Prisma.FloatNullableWithAggregatesFilter<"ModelsPerformance"> | number | null
+  precision?: Prisma.FloatNullableWithAggregatesFilter<"ModelsPerformance"> | number | null
+  recall?: Prisma.FloatNullableWithAggregatesFilter<"ModelsPerformance"> | number | null
+  f1_score?: Prisma.FloatNullableWithAggregatesFilter<"ModelsPerformance"> | number | null
   mae?: Prisma.FloatNullableWithAggregatesFilter<"ModelsPerformance"> | number | null
   rmse?: Prisma.FloatNullableWithAggregatesFilter<"ModelsPerformance"> | number | null
   crps?: Prisma.FloatNullableWithAggregatesFilter<"ModelsPerformance"> | number | null
-  residual_analysis?: Prisma.StringNullableWithAggregatesFilter<"ModelsPerformance"> | string | null
+  r2?: Prisma.FloatNullableWithAggregatesFilter<"ModelsPerformance"> | number | null
   training_date?: Prisma.DateTimeNullableWithAggregatesFilter<"ModelsPerformance"> | Date | string | null
 }
 
 export type ModelsPerformanceCreateInput = {
   id?: string
   iou?: number | null
+  accuracy?: number | null
+  precision?: number | null
+  recall?: number | null
+  f1_score?: number | null
   mae?: number | null
   rmse?: number | null
   crps?: number | null
-  residual_analysis?: string | null
+  r2?: number | null
   training_date?: Date | string | null
   model: Prisma.ModelsStatusCreateNestedOneWithoutPerformancesInput
 }
@@ -327,20 +399,28 @@ export type ModelsPerformanceUncheckedCreateInput = {
   id?: string
   model_id: string
   iou?: number | null
+  accuracy?: number | null
+  precision?: number | null
+  recall?: number | null
+  f1_score?: number | null
   mae?: number | null
   rmse?: number | null
   crps?: number | null
-  residual_analysis?: string | null
+  r2?: number | null
   training_date?: Date | string | null
 }
 
 export type ModelsPerformanceUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   iou?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  accuracy?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  precision?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  recall?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  f1_score?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   mae?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   rmse?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   crps?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
-  residual_analysis?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  r2?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   training_date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   model?: Prisma.ModelsStatusUpdateOneRequiredWithoutPerformancesNestedInput
 }
@@ -349,10 +429,14 @@ export type ModelsPerformanceUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   model_id?: Prisma.StringFieldUpdateOperationsInput | string
   iou?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  accuracy?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  precision?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  recall?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  f1_score?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   mae?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   rmse?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   crps?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
-  residual_analysis?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  r2?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   training_date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
@@ -360,20 +444,28 @@ export type ModelsPerformanceCreateManyInput = {
   id?: string
   model_id: string
   iou?: number | null
+  accuracy?: number | null
+  precision?: number | null
+  recall?: number | null
+  f1_score?: number | null
   mae?: number | null
   rmse?: number | null
   crps?: number | null
-  residual_analysis?: string | null
+  r2?: number | null
   training_date?: Date | string | null
 }
 
 export type ModelsPerformanceUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   iou?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  accuracy?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  precision?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  recall?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  f1_score?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   mae?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   rmse?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   crps?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
-  residual_analysis?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  r2?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   training_date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
@@ -381,10 +473,14 @@ export type ModelsPerformanceUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   model_id?: Prisma.StringFieldUpdateOperationsInput | string
   iou?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  accuracy?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  precision?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  recall?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  f1_score?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   mae?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   rmse?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   crps?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
-  residual_analysis?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  r2?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   training_date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
@@ -402,28 +498,41 @@ export type ModelsPerformanceCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   model_id?: Prisma.SortOrder
   iou?: Prisma.SortOrder
+  accuracy?: Prisma.SortOrder
+  precision?: Prisma.SortOrder
+  recall?: Prisma.SortOrder
+  f1_score?: Prisma.SortOrder
   mae?: Prisma.SortOrder
   rmse?: Prisma.SortOrder
   crps?: Prisma.SortOrder
-  residual_analysis?: Prisma.SortOrder
+  r2?: Prisma.SortOrder
   training_date?: Prisma.SortOrder
 }
 
 export type ModelsPerformanceAvgOrderByAggregateInput = {
   iou?: Prisma.SortOrder
+  accuracy?: Prisma.SortOrder
+  precision?: Prisma.SortOrder
+  recall?: Prisma.SortOrder
+  f1_score?: Prisma.SortOrder
   mae?: Prisma.SortOrder
   rmse?: Prisma.SortOrder
   crps?: Prisma.SortOrder
+  r2?: Prisma.SortOrder
 }
 
 export type ModelsPerformanceMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   model_id?: Prisma.SortOrder
   iou?: Prisma.SortOrder
+  accuracy?: Prisma.SortOrder
+  precision?: Prisma.SortOrder
+  recall?: Prisma.SortOrder
+  f1_score?: Prisma.SortOrder
   mae?: Prisma.SortOrder
   rmse?: Prisma.SortOrder
   crps?: Prisma.SortOrder
-  residual_analysis?: Prisma.SortOrder
+  r2?: Prisma.SortOrder
   training_date?: Prisma.SortOrder
 }
 
@@ -431,18 +540,27 @@ export type ModelsPerformanceMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   model_id?: Prisma.SortOrder
   iou?: Prisma.SortOrder
+  accuracy?: Prisma.SortOrder
+  precision?: Prisma.SortOrder
+  recall?: Prisma.SortOrder
+  f1_score?: Prisma.SortOrder
   mae?: Prisma.SortOrder
   rmse?: Prisma.SortOrder
   crps?: Prisma.SortOrder
-  residual_analysis?: Prisma.SortOrder
+  r2?: Prisma.SortOrder
   training_date?: Prisma.SortOrder
 }
 
 export type ModelsPerformanceSumOrderByAggregateInput = {
   iou?: Prisma.SortOrder
+  accuracy?: Prisma.SortOrder
+  precision?: Prisma.SortOrder
+  recall?: Prisma.SortOrder
+  f1_score?: Prisma.SortOrder
   mae?: Prisma.SortOrder
   rmse?: Prisma.SortOrder
   crps?: Prisma.SortOrder
+  r2?: Prisma.SortOrder
 }
 
 export type ModelsPerformanceCreateNestedManyWithoutModelInput = {
@@ -495,10 +613,6 @@ export type NullableFloatFieldUpdateOperationsInput = {
   divide?: number
 }
 
-export type NullableStringFieldUpdateOperationsInput = {
-  set?: string | null
-}
-
 export type NullableDateTimeFieldUpdateOperationsInput = {
   set?: Date | string | null
 }
@@ -506,20 +620,28 @@ export type NullableDateTimeFieldUpdateOperationsInput = {
 export type ModelsPerformanceCreateWithoutModelInput = {
   id?: string
   iou?: number | null
+  accuracy?: number | null
+  precision?: number | null
+  recall?: number | null
+  f1_score?: number | null
   mae?: number | null
   rmse?: number | null
   crps?: number | null
-  residual_analysis?: string | null
+  r2?: number | null
   training_date?: Date | string | null
 }
 
 export type ModelsPerformanceUncheckedCreateWithoutModelInput = {
   id?: string
   iou?: number | null
+  accuracy?: number | null
+  precision?: number | null
+  recall?: number | null
+  f1_score?: number | null
   mae?: number | null
   rmse?: number | null
   crps?: number | null
-  residual_analysis?: string | null
+  r2?: number | null
   training_date?: Date | string | null
 }
 
@@ -556,50 +678,70 @@ export type ModelsPerformanceScalarWhereInput = {
   id?: Prisma.StringFilter<"ModelsPerformance"> | string
   model_id?: Prisma.StringFilter<"ModelsPerformance"> | string
   iou?: Prisma.FloatNullableFilter<"ModelsPerformance"> | number | null
+  accuracy?: Prisma.FloatNullableFilter<"ModelsPerformance"> | number | null
+  precision?: Prisma.FloatNullableFilter<"ModelsPerformance"> | number | null
+  recall?: Prisma.FloatNullableFilter<"ModelsPerformance"> | number | null
+  f1_score?: Prisma.FloatNullableFilter<"ModelsPerformance"> | number | null
   mae?: Prisma.FloatNullableFilter<"ModelsPerformance"> | number | null
   rmse?: Prisma.FloatNullableFilter<"ModelsPerformance"> | number | null
   crps?: Prisma.FloatNullableFilter<"ModelsPerformance"> | number | null
-  residual_analysis?: Prisma.StringNullableFilter<"ModelsPerformance"> | string | null
+  r2?: Prisma.FloatNullableFilter<"ModelsPerformance"> | number | null
   training_date?: Prisma.DateTimeNullableFilter<"ModelsPerformance"> | Date | string | null
 }
 
 export type ModelsPerformanceCreateManyModelInput = {
   id?: string
   iou?: number | null
+  accuracy?: number | null
+  precision?: number | null
+  recall?: number | null
+  f1_score?: number | null
   mae?: number | null
   rmse?: number | null
   crps?: number | null
-  residual_analysis?: string | null
+  r2?: number | null
   training_date?: Date | string | null
 }
 
 export type ModelsPerformanceUpdateWithoutModelInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   iou?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  accuracy?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  precision?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  recall?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  f1_score?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   mae?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   rmse?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   crps?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
-  residual_analysis?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  r2?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   training_date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 export type ModelsPerformanceUncheckedUpdateWithoutModelInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   iou?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  accuracy?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  precision?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  recall?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  f1_score?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   mae?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   rmse?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   crps?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
-  residual_analysis?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  r2?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   training_date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 export type ModelsPerformanceUncheckedUpdateManyWithoutModelInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   iou?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  accuracy?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  precision?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  recall?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  f1_score?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   mae?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   rmse?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   crps?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
-  residual_analysis?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  r2?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   training_date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
@@ -609,10 +751,14 @@ export type ModelsPerformanceSelect<ExtArgs extends runtime.Types.Extensions.Int
   id?: boolean
   model_id?: boolean
   iou?: boolean
+  accuracy?: boolean
+  precision?: boolean
+  recall?: boolean
+  f1_score?: boolean
   mae?: boolean
   rmse?: boolean
   crps?: boolean
-  residual_analysis?: boolean
+  r2?: boolean
   training_date?: boolean
   model?: boolean | Prisma.ModelsStatusDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["modelsPerformance"]>
@@ -621,10 +767,14 @@ export type ModelsPerformanceSelectCreateManyAndReturn<ExtArgs extends runtime.T
   id?: boolean
   model_id?: boolean
   iou?: boolean
+  accuracy?: boolean
+  precision?: boolean
+  recall?: boolean
+  f1_score?: boolean
   mae?: boolean
   rmse?: boolean
   crps?: boolean
-  residual_analysis?: boolean
+  r2?: boolean
   training_date?: boolean
   model?: boolean | Prisma.ModelsStatusDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["modelsPerformance"]>
@@ -633,10 +783,14 @@ export type ModelsPerformanceSelectUpdateManyAndReturn<ExtArgs extends runtime.T
   id?: boolean
   model_id?: boolean
   iou?: boolean
+  accuracy?: boolean
+  precision?: boolean
+  recall?: boolean
+  f1_score?: boolean
   mae?: boolean
   rmse?: boolean
   crps?: boolean
-  residual_analysis?: boolean
+  r2?: boolean
   training_date?: boolean
   model?: boolean | Prisma.ModelsStatusDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["modelsPerformance"]>
@@ -645,14 +799,18 @@ export type ModelsPerformanceSelectScalar = {
   id?: boolean
   model_id?: boolean
   iou?: boolean
+  accuracy?: boolean
+  precision?: boolean
+  recall?: boolean
+  f1_score?: boolean
   mae?: boolean
   rmse?: boolean
   crps?: boolean
-  residual_analysis?: boolean
+  r2?: boolean
   training_date?: boolean
 }
 
-export type ModelsPerformanceOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "model_id" | "iou" | "mae" | "rmse" | "crps" | "residual_analysis" | "training_date", ExtArgs["result"]["modelsPerformance"]>
+export type ModelsPerformanceOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "model_id" | "iou" | "accuracy" | "precision" | "recall" | "f1_score" | "mae" | "rmse" | "crps" | "r2" | "training_date", ExtArgs["result"]["modelsPerformance"]>
 export type ModelsPerformanceInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   model?: boolean | Prisma.ModelsStatusDefaultArgs<ExtArgs>
 }
@@ -672,10 +830,14 @@ export type $ModelsPerformancePayload<ExtArgs extends runtime.Types.Extensions.I
     id: string
     model_id: string
     iou: number | null
+    accuracy: number | null
+    precision: number | null
+    recall: number | null
+    f1_score: number | null
     mae: number | null
     rmse: number | null
     crps: number | null
-    residual_analysis: string | null
+    r2: number | null
     training_date: Date | null
   }, ExtArgs["result"]["modelsPerformance"]>
   composites: {}
@@ -1104,10 +1266,14 @@ export interface ModelsPerformanceFieldRefs {
   readonly id: Prisma.FieldRef<"ModelsPerformance", 'String'>
   readonly model_id: Prisma.FieldRef<"ModelsPerformance", 'String'>
   readonly iou: Prisma.FieldRef<"ModelsPerformance", 'Float'>
+  readonly accuracy: Prisma.FieldRef<"ModelsPerformance", 'Float'>
+  readonly precision: Prisma.FieldRef<"ModelsPerformance", 'Float'>
+  readonly recall: Prisma.FieldRef<"ModelsPerformance", 'Float'>
+  readonly f1_score: Prisma.FieldRef<"ModelsPerformance", 'Float'>
   readonly mae: Prisma.FieldRef<"ModelsPerformance", 'Float'>
   readonly rmse: Prisma.FieldRef<"ModelsPerformance", 'Float'>
   readonly crps: Prisma.FieldRef<"ModelsPerformance", 'Float'>
-  readonly residual_analysis: Prisma.FieldRef<"ModelsPerformance", 'String'>
+  readonly r2: Prisma.FieldRef<"ModelsPerformance", 'Float'>
   readonly training_date: Prisma.FieldRef<"ModelsPerformance", 'DateTime'>
 }
     
