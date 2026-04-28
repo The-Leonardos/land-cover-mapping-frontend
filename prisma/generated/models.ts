@@ -9,6 +9,8 @@
  * 🟢 You can import this file directly.
  */
 export type * from './models/LandCoverTimeSeries'
-export type * from './models/ModelsStatus'
-export type * from './models/ModelsPerformance'
+export type * from './models/Models'
+export type * from './models/ModelsRun'
+export type * from './models/DeepLabPerformance'
+export type * from './models/DeepVarPerformance'
 export type * from './commonInputTypes'

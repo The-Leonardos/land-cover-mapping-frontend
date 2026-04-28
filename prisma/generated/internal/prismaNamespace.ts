@@ -385,8 +385,10 @@ type FieldRefInputType<Model, FieldType> = Model extends never ? never : FieldRe
 
 export const ModelName = {
   LandCoverTimeSeries: 'LandCoverTimeSeries',
-  ModelsStatus: 'ModelsStatus',
-  ModelsPerformance: 'ModelsPerformance'
+  Models: 'Models',
+  ModelsRun: 'ModelsRun',
+  DeepLabPerformance: 'DeepLabPerformance',
+  DeepVarPerformance: 'DeepVarPerformance'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -402,7 +404,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "landCoverTimeSeries" | "modelsStatus" | "modelsPerformance"
+    modelProps: "landCoverTimeSeries" | "models" | "modelsRun" | "deepLabPerformance" | "deepVarPerformance"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -480,151 +482,299 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
-    ModelsStatus: {
-      payload: Prisma.$ModelsStatusPayload<ExtArgs>
-      fields: Prisma.ModelsStatusFieldRefs
+    Models: {
+      payload: Prisma.$ModelsPayload<ExtArgs>
+      fields: Prisma.ModelsFieldRefs
       operations: {
         findUnique: {
-          args: Prisma.ModelsStatusFindUniqueArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ModelsStatusPayload> | null
+          args: Prisma.ModelsFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ModelsPayload> | null
         }
         findUniqueOrThrow: {
-          args: Prisma.ModelsStatusFindUniqueOrThrowArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ModelsStatusPayload>
+          args: Prisma.ModelsFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ModelsPayload>
         }
         findFirst: {
-          args: Prisma.ModelsStatusFindFirstArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ModelsStatusPayload> | null
+          args: Prisma.ModelsFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ModelsPayload> | null
         }
         findFirstOrThrow: {
-          args: Prisma.ModelsStatusFindFirstOrThrowArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ModelsStatusPayload>
+          args: Prisma.ModelsFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ModelsPayload>
         }
         findMany: {
-          args: Prisma.ModelsStatusFindManyArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ModelsStatusPayload>[]
+          args: Prisma.ModelsFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ModelsPayload>[]
         }
         create: {
-          args: Prisma.ModelsStatusCreateArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ModelsStatusPayload>
+          args: Prisma.ModelsCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ModelsPayload>
         }
         createMany: {
-          args: Prisma.ModelsStatusCreateManyArgs<ExtArgs>
+          args: Prisma.ModelsCreateManyArgs<ExtArgs>
           result: BatchPayload
         }
         createManyAndReturn: {
-          args: Prisma.ModelsStatusCreateManyAndReturnArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ModelsStatusPayload>[]
+          args: Prisma.ModelsCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ModelsPayload>[]
         }
         delete: {
-          args: Prisma.ModelsStatusDeleteArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ModelsStatusPayload>
+          args: Prisma.ModelsDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ModelsPayload>
         }
         update: {
-          args: Prisma.ModelsStatusUpdateArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ModelsStatusPayload>
+          args: Prisma.ModelsUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ModelsPayload>
         }
         deleteMany: {
-          args: Prisma.ModelsStatusDeleteManyArgs<ExtArgs>
+          args: Prisma.ModelsDeleteManyArgs<ExtArgs>
           result: BatchPayload
         }
         updateMany: {
-          args: Prisma.ModelsStatusUpdateManyArgs<ExtArgs>
+          args: Prisma.ModelsUpdateManyArgs<ExtArgs>
           result: BatchPayload
         }
         updateManyAndReturn: {
-          args: Prisma.ModelsStatusUpdateManyAndReturnArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ModelsStatusPayload>[]
+          args: Prisma.ModelsUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ModelsPayload>[]
         }
         upsert: {
-          args: Prisma.ModelsStatusUpsertArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ModelsStatusPayload>
+          args: Prisma.ModelsUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ModelsPayload>
         }
         aggregate: {
-          args: Prisma.ModelsStatusAggregateArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.AggregateModelsStatus>
+          args: Prisma.ModelsAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateModels>
         }
         groupBy: {
-          args: Prisma.ModelsStatusGroupByArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.ModelsStatusGroupByOutputType>[]
+          args: Prisma.ModelsGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ModelsGroupByOutputType>[]
         }
         count: {
-          args: Prisma.ModelsStatusCountArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.ModelsStatusCountAggregateOutputType> | number
+          args: Prisma.ModelsCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ModelsCountAggregateOutputType> | number
         }
       }
     }
-    ModelsPerformance: {
-      payload: Prisma.$ModelsPerformancePayload<ExtArgs>
-      fields: Prisma.ModelsPerformanceFieldRefs
+    ModelsRun: {
+      payload: Prisma.$ModelsRunPayload<ExtArgs>
+      fields: Prisma.ModelsRunFieldRefs
       operations: {
         findUnique: {
-          args: Prisma.ModelsPerformanceFindUniqueArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ModelsPerformancePayload> | null
+          args: Prisma.ModelsRunFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ModelsRunPayload> | null
         }
         findUniqueOrThrow: {
-          args: Prisma.ModelsPerformanceFindUniqueOrThrowArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ModelsPerformancePayload>
+          args: Prisma.ModelsRunFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ModelsRunPayload>
         }
         findFirst: {
-          args: Prisma.ModelsPerformanceFindFirstArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ModelsPerformancePayload> | null
+          args: Prisma.ModelsRunFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ModelsRunPayload> | null
         }
         findFirstOrThrow: {
-          args: Prisma.ModelsPerformanceFindFirstOrThrowArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ModelsPerformancePayload>
+          args: Prisma.ModelsRunFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ModelsRunPayload>
         }
         findMany: {
-          args: Prisma.ModelsPerformanceFindManyArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ModelsPerformancePayload>[]
+          args: Prisma.ModelsRunFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ModelsRunPayload>[]
         }
         create: {
-          args: Prisma.ModelsPerformanceCreateArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ModelsPerformancePayload>
+          args: Prisma.ModelsRunCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ModelsRunPayload>
         }
         createMany: {
-          args: Prisma.ModelsPerformanceCreateManyArgs<ExtArgs>
+          args: Prisma.ModelsRunCreateManyArgs<ExtArgs>
           result: BatchPayload
         }
         createManyAndReturn: {
-          args: Prisma.ModelsPerformanceCreateManyAndReturnArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ModelsPerformancePayload>[]
+          args: Prisma.ModelsRunCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ModelsRunPayload>[]
         }
         delete: {
-          args: Prisma.ModelsPerformanceDeleteArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ModelsPerformancePayload>
+          args: Prisma.ModelsRunDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ModelsRunPayload>
         }
         update: {
-          args: Prisma.ModelsPerformanceUpdateArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ModelsPerformancePayload>
+          args: Prisma.ModelsRunUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ModelsRunPayload>
         }
         deleteMany: {
-          args: Prisma.ModelsPerformanceDeleteManyArgs<ExtArgs>
+          args: Prisma.ModelsRunDeleteManyArgs<ExtArgs>
           result: BatchPayload
         }
         updateMany: {
-          args: Prisma.ModelsPerformanceUpdateManyArgs<ExtArgs>
+          args: Prisma.ModelsRunUpdateManyArgs<ExtArgs>
           result: BatchPayload
         }
         updateManyAndReturn: {
-          args: Prisma.ModelsPerformanceUpdateManyAndReturnArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ModelsPerformancePayload>[]
+          args: Prisma.ModelsRunUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ModelsRunPayload>[]
         }
         upsert: {
-          args: Prisma.ModelsPerformanceUpsertArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ModelsPerformancePayload>
+          args: Prisma.ModelsRunUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ModelsRunPayload>
         }
         aggregate: {
-          args: Prisma.ModelsPerformanceAggregateArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.AggregateModelsPerformance>
+          args: Prisma.ModelsRunAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateModelsRun>
         }
         groupBy: {
-          args: Prisma.ModelsPerformanceGroupByArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.ModelsPerformanceGroupByOutputType>[]
+          args: Prisma.ModelsRunGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ModelsRunGroupByOutputType>[]
         }
         count: {
-          args: Prisma.ModelsPerformanceCountArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.ModelsPerformanceCountAggregateOutputType> | number
+          args: Prisma.ModelsRunCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ModelsRunCountAggregateOutputType> | number
+        }
+      }
+    }
+    DeepLabPerformance: {
+      payload: Prisma.$DeepLabPerformancePayload<ExtArgs>
+      fields: Prisma.DeepLabPerformanceFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.DeepLabPerformanceFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DeepLabPerformancePayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.DeepLabPerformanceFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DeepLabPerformancePayload>
+        }
+        findFirst: {
+          args: Prisma.DeepLabPerformanceFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DeepLabPerformancePayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.DeepLabPerformanceFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DeepLabPerformancePayload>
+        }
+        findMany: {
+          args: Prisma.DeepLabPerformanceFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DeepLabPerformancePayload>[]
+        }
+        create: {
+          args: Prisma.DeepLabPerformanceCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DeepLabPerformancePayload>
+        }
+        createMany: {
+          args: Prisma.DeepLabPerformanceCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.DeepLabPerformanceCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DeepLabPerformancePayload>[]
+        }
+        delete: {
+          args: Prisma.DeepLabPerformanceDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DeepLabPerformancePayload>
+        }
+        update: {
+          args: Prisma.DeepLabPerformanceUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DeepLabPerformancePayload>
+        }
+        deleteMany: {
+          args: Prisma.DeepLabPerformanceDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.DeepLabPerformanceUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.DeepLabPerformanceUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DeepLabPerformancePayload>[]
+        }
+        upsert: {
+          args: Prisma.DeepLabPerformanceUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DeepLabPerformancePayload>
+        }
+        aggregate: {
+          args: Prisma.DeepLabPerformanceAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateDeepLabPerformance>
+        }
+        groupBy: {
+          args: Prisma.DeepLabPerformanceGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.DeepLabPerformanceGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.DeepLabPerformanceCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.DeepLabPerformanceCountAggregateOutputType> | number
+        }
+      }
+    }
+    DeepVarPerformance: {
+      payload: Prisma.$DeepVarPerformancePayload<ExtArgs>
+      fields: Prisma.DeepVarPerformanceFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.DeepVarPerformanceFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DeepVarPerformancePayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.DeepVarPerformanceFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DeepVarPerformancePayload>
+        }
+        findFirst: {
+          args: Prisma.DeepVarPerformanceFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DeepVarPerformancePayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.DeepVarPerformanceFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DeepVarPerformancePayload>
+        }
+        findMany: {
+          args: Prisma.DeepVarPerformanceFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DeepVarPerformancePayload>[]
+        }
+        create: {
+          args: Prisma.DeepVarPerformanceCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DeepVarPerformancePayload>
+        }
+        createMany: {
+          args: Prisma.DeepVarPerformanceCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.DeepVarPerformanceCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DeepVarPerformancePayload>[]
+        }
+        delete: {
+          args: Prisma.DeepVarPerformanceDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DeepVarPerformancePayload>
+        }
+        update: {
+          args: Prisma.DeepVarPerformanceUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DeepVarPerformancePayload>
+        }
+        deleteMany: {
+          args: Prisma.DeepVarPerformanceDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.DeepVarPerformanceUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.DeepVarPerformanceUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DeepVarPerformancePayload>[]
+        }
+        upsert: {
+          args: Prisma.DeepVarPerformanceUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DeepVarPerformancePayload>
+        }
+        aggregate: {
+          args: Prisma.DeepVarPerformanceAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateDeepVarPerformance>
+        }
+        groupBy: {
+          args: Prisma.DeepVarPerformanceGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.DeepVarPerformanceGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.DeepVarPerformanceCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.DeepVarPerformanceCountAggregateOutputType> | number
         }
       }
     }
@@ -684,33 +834,47 @@ export const LandCoverTimeSeriesScalarFieldEnum = {
 export type LandCoverTimeSeriesScalarFieldEnum = (typeof LandCoverTimeSeriesScalarFieldEnum)[keyof typeof LandCoverTimeSeriesScalarFieldEnum]
 
 
-export const ModelsStatusScalarFieldEnum = {
+export const ModelsScalarFieldEnum = {
   model_id: 'model_id',
-  model_name: 'model_name',
-  forecast_year: 'forecast_year',
-  training_status: 'training_status',
-  inference_status: 'inference_status'
+  model_name: 'model_name'
 } as const
 
-export type ModelsStatusScalarFieldEnum = (typeof ModelsStatusScalarFieldEnum)[keyof typeof ModelsStatusScalarFieldEnum]
+export type ModelsScalarFieldEnum = (typeof ModelsScalarFieldEnum)[keyof typeof ModelsScalarFieldEnum]
 
 
-export const ModelsPerformanceScalarFieldEnum = {
+export const ModelsRunScalarFieldEnum = {
   id: 'id',
   model_id: 'model_id',
+  forecast_year: 'forecast_year',
+  training_status: 'training_status',
+  inference_status: 'inference_status',
+  training_date: 'training_date'
+} as const
+
+export type ModelsRunScalarFieldEnum = (typeof ModelsRunScalarFieldEnum)[keyof typeof ModelsRunScalarFieldEnum]
+
+
+export const DeepLabPerformanceScalarFieldEnum = {
+  model_run_id: 'model_run_id',
   iou: 'iou',
   accuracy: 'accuracy',
   precision: 'precision',
   recall: 'recall',
-  f1_score: 'f1_score',
-  mae: 'mae',
-  rmse: 'rmse',
-  crps: 'crps',
-  r2: 'r2',
-  training_date: 'training_date'
+  f1_score: 'f1_score'
 } as const
 
-export type ModelsPerformanceScalarFieldEnum = (typeof ModelsPerformanceScalarFieldEnum)[keyof typeof ModelsPerformanceScalarFieldEnum]
+export type DeepLabPerformanceScalarFieldEnum = (typeof DeepLabPerformanceScalarFieldEnum)[keyof typeof DeepLabPerformanceScalarFieldEnum]
+
+
+export const DeepVarPerformanceScalarFieldEnum = {
+  model_run_id: 'model_run_id',
+  mae: 'mae',
+  rmse: 'rmse',
+  r2: 'r2',
+  crps: 'crps'
+} as const
+
+export type DeepVarPerformanceScalarFieldEnum = (typeof DeepVarPerformanceScalarFieldEnum)[keyof typeof DeepVarPerformanceScalarFieldEnum]
 
 
 export const SortOrder = {
@@ -922,8 +1086,10 @@ export type PrismaClientOptions = ({
 }
 export type GlobalOmitConfig = {
   landCoverTimeSeries?: Prisma.LandCoverTimeSeriesOmit
-  modelsStatus?: Prisma.ModelsStatusOmit
-  modelsPerformance?: Prisma.ModelsPerformanceOmit
+  models?: Prisma.ModelsOmit
+  modelsRun?: Prisma.ModelsRunOmit
+  deepLabPerformance?: Prisma.DeepLabPerformanceOmit
+  deepVarPerformance?: Prisma.DeepVarPerformanceOmit
 }
 
 /* Types for Logging */

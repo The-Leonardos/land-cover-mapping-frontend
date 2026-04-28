@@ -1,18 +1,22 @@
 export type DeepLabMetrics = {
   modelName: string;
-  date: string;
+  trainingDate: string;
   year: string;
+
   iou: string;
-  acc: string;
-  prec: string;
-  rec: string;
+  accuracy: string;
+  precision: string;
+  recall: string;
   f1: string;
 };
 
 export type DeepVarMetrics = {
   modelName: string;
-  date: string;
+  trainingDate: string;
   year: string;
+
   mae: string;
   rmse: string;
+  r2: string;
+  crps: string;
 };

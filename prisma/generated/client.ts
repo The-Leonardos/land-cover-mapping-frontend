@@ -47,12 +47,22 @@ export { Prisma }
  */
 export type LandCoverTimeSeries = Prisma.LandCoverTimeSeriesModel
 /**
- * Model ModelsStatus
+ * Model Models
  * 
  */
-export type ModelsStatus = Prisma.ModelsStatusModel
+export type Models = Prisma.ModelsModel
 /**
- * Model ModelsPerformance
+ * Model ModelsRun
  * 
  */
-export type ModelsPerformance = Prisma.ModelsPerformanceModel
+export type ModelsRun = Prisma.ModelsRunModel
+/**
+ * Model DeepLabPerformance
+ * 
+ */
+export type DeepLabPerformance = Prisma.DeepLabPerformanceModel
+/**
+ * Model DeepVarPerformance
+ * 
+ */
+export type DeepVarPerformance = Prisma.DeepVarPerformanceModel
