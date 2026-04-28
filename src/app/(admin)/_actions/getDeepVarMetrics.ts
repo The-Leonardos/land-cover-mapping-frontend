@@ -3,26 +3,24 @@
 import { prisma } from "@/lib/prisma";
 import { DeepVarMetrics } from "@/lib/types/metrics";
 
-
 export async function getDeepVarMetrics(): Promise<DeepVarMetrics[]> {
-  const runs = await prisma.modelsRun.findMany({
-    where: {
-      deepvarPerformance: { isNot: null },
-    },
+  const rows = await prisma.deepVarPerformance.findMany({
     include: {
       model: true,
-      deepvarPerformance: true,
+      model_run: true,
     },
   });
 
-  return runs.map((run) => ({
-    modelName: run.model.model_name,
-    trainingDate: run.training_date ? run.training_date.toISOString().split("T")[0] : "—",
-    year: String(run.forecast_year),
+  return rows.map((row) => ({
+    modelName:    row.model.model_name,
+    trainingDate: row.model_run.training_date
+      ? row.model_run.training_date.toISOString().split("T")[0]
+      : "—",
+    year: String(row.model_run.forecast_year ?? "—"),
 
-    mae: run.deepvarPerformance?.mae != null ? run.deepvarPerformance.mae.toFixed(4) : "—",
-    rmse: run.deepvarPerformance?.rmse != null ? run.deepvarPerformance.rmse.toFixed(4) : "—",
-    r2: run.deepvarPerformance?.r2 != null ? run.deepvarPerformance.r2.toFixed(4) : "—",
-    crps: run.deepvarPerformance?.crps != null ? run.deepvarPerformance.crps.toFixed(4) : "—",
+    mae:  row.mae  != null ? row.mae.toFixed(6)  : "—",
+    rmse: row.rmse != null ? row.rmse.toFixed(6) : "—",
+    r2:   row.r2   != null ? row.r2.toFixed(4)   : "—",
+    crps: row.crps != null ? row.crps.toFixed(6) : "—",
   }));
 }
