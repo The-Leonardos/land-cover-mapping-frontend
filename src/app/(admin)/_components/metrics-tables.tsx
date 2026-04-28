@@ -34,7 +34,7 @@ export async function MetricsTables() {
               <thead className="bg-zinc-950/50 text-zinc-400 border-b border-zinc-800 uppercase text-xs">
                 <tr>
                   <th className="px-6 py-3 font-medium">Model Name</th>
-                  <th className="px-6 py-3 font-medium">Version/Date</th>
+                  <th className="px-6 py-3 font-medium">Training Date</th>
                   <th className="px-6 py-3 font-medium">Forecast Year</th>
                   <th className="px-6 py-3 font-medium">mIoU</th>
                   <th className="px-6 py-3 font-medium">Accuracy</th>
@@ -47,12 +47,12 @@ export async function MetricsTables() {
                 {deepLabMetrics.map((row, i) => (
                   <tr key={i} className="hover:bg-zinc-800/30 transition-colors">
                     <td className="px-6 py-4 font-medium">{row.modelName}</td>
-                    <td className="px-6 py-4">{row.date}</td>
+                    <td className="px-6 py-4">{row.trainingDate}</td>
                     <td className="px-6 py-4">{row.year}</td>
                     <td className="px-6 py-4">{row.iou}</td>
-                    <td className="px-6 py-4">{row.acc}</td>
-                    <td className="px-6 py-4">{row.prec}</td>
-                    <td className="px-6 py-4">{row.rec}</td>
+                    <td className="px-6 py-4">{row.accuracy}</td>
+                    <td className="px-6 py-4">{row.precision}</td>
+                    <td className="px-6 py-4">{row.recall}</td>
                     <td className="px-6 py-4">{row.f1}</td>
                   </tr>
                 ))}
@@ -74,20 +74,24 @@ export async function MetricsTables() {
               <thead className="bg-zinc-950/50 text-zinc-400 border-b border-zinc-800 uppercase text-xs">
                 <tr>
                   <th className="px-6 py-3 font-medium">Model Name</th>
-                  <th className="px-6 py-3 font-medium">Version/Date</th>
+                  <th className="px-6 py-3 font-medium">Training Date</th>
                   <th className="px-6 py-3 font-medium">Forecast Year</th>
                   <th className="px-6 py-3 font-medium text-right">MAE</th>
                   <th className="px-6 py-3 font-medium text-right">RMSE</th>
+                  <th className="px-6 py-3 font-medium text-right">R²</th>
+                  <th className="px-6 py-3 font-medium text-right">CRPS</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-zinc-800">
                 {deepVarMetrics.map((row, i) => (
                   <tr key={i} className="hover:bg-zinc-800/30 transition-colors">
                     <td className="px-6 py-4 font-medium">{row.modelName}</td>
-                    <td className="px-6 py-4">{row.date}</td>
+                    <td className="px-6 py-4">{row.trainingDate}</td>
                     <td className="px-6 py-4">{row.year}</td>
                     <td className="px-6 py-4 text-right">{row.mae}</td>
                     <td className="px-6 py-4 text-right">{row.rmse}</td>
+                    <td className="px-6 py-4 text-right">{row.r2}</td>
+                    <td className="px-6 py-4 text-right">{row.crps}</td>
                   </tr>
                 ))}
               </tbody>
