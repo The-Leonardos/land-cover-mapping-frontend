@@ -42,6 +42,7 @@ export type DeepVarPerformanceSumAggregateOutputType = {
 
 export type DeepVarPerformanceMinAggregateOutputType = {
   model_run_id: string | null
+  model_id: string | null
   mae: number | null
   rmse: number | null
   r2: number | null
@@ -50,6 +51,7 @@ export type DeepVarPerformanceMinAggregateOutputType = {
 
 export type DeepVarPerformanceMaxAggregateOutputType = {
   model_run_id: string | null
+  model_id: string | null
   mae: number | null
   rmse: number | null
   r2: number | null
@@ -58,6 +60,7 @@ export type DeepVarPerformanceMaxAggregateOutputType = {
 
 export type DeepVarPerformanceCountAggregateOutputType = {
   model_run_id: number
+  model_id: number
   mae: number
   rmse: number
   r2: number
@@ -82,6 +85,7 @@ export type DeepVarPerformanceSumAggregateInputType = {
 
 export type DeepVarPerformanceMinAggregateInputType = {
   model_run_id?: true
+  model_id?: true
   mae?: true
   rmse?: true
   r2?: true
@@ -90,6 +94,7 @@ export type DeepVarPerformanceMinAggregateInputType = {
 
 export type DeepVarPerformanceMaxAggregateInputType = {
   model_run_id?: true
+  model_id?: true
   mae?: true
   rmse?: true
   r2?: true
@@ -98,6 +103,7 @@ export type DeepVarPerformanceMaxAggregateInputType = {
 
 export type DeepVarPerformanceCountAggregateInputType = {
   model_run_id?: true
+  model_id?: true
   mae?: true
   rmse?: true
   r2?: true
@@ -193,6 +199,7 @@ export type DeepVarPerformanceGroupByArgs<ExtArgs extends runtime.Types.Extensio
 
 export type DeepVarPerformanceGroupByOutputType = {
   model_run_id: string
+  model_id: string
   mae: number | null
   rmse: number | null
   r2: number | null
@@ -224,19 +231,23 @@ export type DeepVarPerformanceWhereInput = {
   OR?: Prisma.DeepVarPerformanceWhereInput[]
   NOT?: Prisma.DeepVarPerformanceWhereInput | Prisma.DeepVarPerformanceWhereInput[]
   model_run_id?: Prisma.StringFilter<"DeepVarPerformance"> | string
+  model_id?: Prisma.StringFilter<"DeepVarPerformance"> | string
   mae?: Prisma.FloatNullableFilter<"DeepVarPerformance"> | number | null
   rmse?: Prisma.FloatNullableFilter<"DeepVarPerformance"> | number | null
   r2?: Prisma.FloatNullableFilter<"DeepVarPerformance"> | number | null
   crps?: Prisma.FloatNullableFilter<"DeepVarPerformance"> | number | null
+  model?: Prisma.XOR<Prisma.ModelsScalarRelationFilter, Prisma.ModelsWhereInput>
   model_run?: Prisma.XOR<Prisma.ModelsRunScalarRelationFilter, Prisma.ModelsRunWhereInput>
 }
 
 export type DeepVarPerformanceOrderByWithRelationInput = {
   model_run_id?: Prisma.SortOrder
+  model_id?: Prisma.SortOrder
   mae?: Prisma.SortOrderInput | Prisma.SortOrder
   rmse?: Prisma.SortOrderInput | Prisma.SortOrder
   r2?: Prisma.SortOrderInput | Prisma.SortOrder
   crps?: Prisma.SortOrderInput | Prisma.SortOrder
+  model?: Prisma.ModelsOrderByWithRelationInput
   model_run?: Prisma.ModelsRunOrderByWithRelationInput
 }
 
@@ -245,15 +256,18 @@ export type DeepVarPerformanceWhereUniqueInput = Prisma.AtLeast<{
   AND?: Prisma.DeepVarPerformanceWhereInput | Prisma.DeepVarPerformanceWhereInput[]
   OR?: Prisma.DeepVarPerformanceWhereInput[]
   NOT?: Prisma.DeepVarPerformanceWhereInput | Prisma.DeepVarPerformanceWhereInput[]
+  model_id?: Prisma.StringFilter<"DeepVarPerformance"> | string
   mae?: Prisma.FloatNullableFilter<"DeepVarPerformance"> | number | null
   rmse?: Prisma.FloatNullableFilter<"DeepVarPerformance"> | number | null
   r2?: Prisma.FloatNullableFilter<"DeepVarPerformance"> | number | null
   crps?: Prisma.FloatNullableFilter<"DeepVarPerformance"> | number | null
+  model?: Prisma.XOR<Prisma.ModelsScalarRelationFilter, Prisma.ModelsWhereInput>
   model_run?: Prisma.XOR<Prisma.ModelsRunScalarRelationFilter, Prisma.ModelsRunWhereInput>
 }, "model_run_id">
 
 export type DeepVarPerformanceOrderByWithAggregationInput = {
   model_run_id?: Prisma.SortOrder
+  model_id?: Prisma.SortOrder
   mae?: Prisma.SortOrderInput | Prisma.SortOrder
   rmse?: Prisma.SortOrderInput | Prisma.SortOrder
   r2?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -270,6 +284,7 @@ export type DeepVarPerformanceScalarWhereWithAggregatesInput = {
   OR?: Prisma.DeepVarPerformanceScalarWhereWithAggregatesInput[]
   NOT?: Prisma.DeepVarPerformanceScalarWhereWithAggregatesInput | Prisma.DeepVarPerformanceScalarWhereWithAggregatesInput[]
   model_run_id?: Prisma.StringWithAggregatesFilter<"DeepVarPerformance"> | string
+  model_id?: Prisma.StringWithAggregatesFilter<"DeepVarPerformance"> | string
   mae?: Prisma.FloatNullableWithAggregatesFilter<"DeepVarPerformance"> | number | null
   rmse?: Prisma.FloatNullableWithAggregatesFilter<"DeepVarPerformance"> | number | null
   r2?: Prisma.FloatNullableWithAggregatesFilter<"DeepVarPerformance"> | number | null
@@ -281,11 +296,13 @@ export type DeepVarPerformanceCreateInput = {
   rmse?: number | null
   r2?: number | null
   crps?: number | null
+  model: Prisma.ModelsCreateNestedOneWithoutDeepvarPerformanceInput
   model_run: Prisma.ModelsRunCreateNestedOneWithoutDeepvarPerformanceInput
 }
 
 export type DeepVarPerformanceUncheckedCreateInput = {
   model_run_id: string
+  model_id: string
   mae?: number | null
   rmse?: number | null
   r2?: number | null
@@ -297,11 +314,13 @@ export type DeepVarPerformanceUpdateInput = {
   rmse?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   r2?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   crps?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  model?: Prisma.ModelsUpdateOneRequiredWithoutDeepvarPerformanceNestedInput
   model_run?: Prisma.ModelsRunUpdateOneRequiredWithoutDeepvarPerformanceNestedInput
 }
 
 export type DeepVarPerformanceUncheckedUpdateInput = {
   model_run_id?: Prisma.StringFieldUpdateOperationsInput | string
+  model_id?: Prisma.StringFieldUpdateOperationsInput | string
   mae?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   rmse?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   r2?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
@@ -310,6 +329,7 @@ export type DeepVarPerformanceUncheckedUpdateInput = {
 
 export type DeepVarPerformanceCreateManyInput = {
   model_run_id: string
+  model_id: string
   mae?: number | null
   rmse?: number | null
   r2?: number | null
@@ -325,10 +345,21 @@ export type DeepVarPerformanceUpdateManyMutationInput = {
 
 export type DeepVarPerformanceUncheckedUpdateManyInput = {
   model_run_id?: Prisma.StringFieldUpdateOperationsInput | string
+  model_id?: Prisma.StringFieldUpdateOperationsInput | string
   mae?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   rmse?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   r2?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   crps?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+}
+
+export type DeepVarPerformanceListRelationFilter = {
+  every?: Prisma.DeepVarPerformanceWhereInput
+  some?: Prisma.DeepVarPerformanceWhereInput
+  none?: Prisma.DeepVarPerformanceWhereInput
+}
+
+export type DeepVarPerformanceOrderByRelationAggregateInput = {
+  _count?: Prisma.SortOrder
 }
 
 export type DeepVarPerformanceNullableScalarRelationFilter = {
@@ -338,6 +369,7 @@ export type DeepVarPerformanceNullableScalarRelationFilter = {
 
 export type DeepVarPerformanceCountOrderByAggregateInput = {
   model_run_id?: Prisma.SortOrder
+  model_id?: Prisma.SortOrder
   mae?: Prisma.SortOrder
   rmse?: Prisma.SortOrder
   r2?: Prisma.SortOrder
@@ -353,6 +385,7 @@ export type DeepVarPerformanceAvgOrderByAggregateInput = {
 
 export type DeepVarPerformanceMaxOrderByAggregateInput = {
   model_run_id?: Prisma.SortOrder
+  model_id?: Prisma.SortOrder
   mae?: Prisma.SortOrder
   rmse?: Prisma.SortOrder
   r2?: Prisma.SortOrder
@@ -361,6 +394,7 @@ export type DeepVarPerformanceMaxOrderByAggregateInput = {
 
 export type DeepVarPerformanceMinOrderByAggregateInput = {
   model_run_id?: Prisma.SortOrder
+  model_id?: Prisma.SortOrder
   mae?: Prisma.SortOrder
   rmse?: Prisma.SortOrder
   r2?: Prisma.SortOrder
@@ -372,6 +406,48 @@ export type DeepVarPerformanceSumOrderByAggregateInput = {
   rmse?: Prisma.SortOrder
   r2?: Prisma.SortOrder
   crps?: Prisma.SortOrder
+}
+
+export type DeepVarPerformanceCreateNestedManyWithoutModelInput = {
+  create?: Prisma.XOR<Prisma.DeepVarPerformanceCreateWithoutModelInput, Prisma.DeepVarPerformanceUncheckedCreateWithoutModelInput> | Prisma.DeepVarPerformanceCreateWithoutModelInput[] | Prisma.DeepVarPerformanceUncheckedCreateWithoutModelInput[]
+  connectOrCreate?: Prisma.DeepVarPerformanceCreateOrConnectWithoutModelInput | Prisma.DeepVarPerformanceCreateOrConnectWithoutModelInput[]
+  createMany?: Prisma.DeepVarPerformanceCreateManyModelInputEnvelope
+  connect?: Prisma.DeepVarPerformanceWhereUniqueInput | Prisma.DeepVarPerformanceWhereUniqueInput[]
+}
+
+export type DeepVarPerformanceUncheckedCreateNestedManyWithoutModelInput = {
+  create?: Prisma.XOR<Prisma.DeepVarPerformanceCreateWithoutModelInput, Prisma.DeepVarPerformanceUncheckedCreateWithoutModelInput> | Prisma.DeepVarPerformanceCreateWithoutModelInput[] | Prisma.DeepVarPerformanceUncheckedCreateWithoutModelInput[]
+  connectOrCreate?: Prisma.DeepVarPerformanceCreateOrConnectWithoutModelInput | Prisma.DeepVarPerformanceCreateOrConnectWithoutModelInput[]
+  createMany?: Prisma.DeepVarPerformanceCreateManyModelInputEnvelope
+  connect?: Prisma.DeepVarPerformanceWhereUniqueInput | Prisma.DeepVarPerformanceWhereUniqueInput[]
+}
+
+export type DeepVarPerformanceUpdateManyWithoutModelNestedInput = {
+  create?: Prisma.XOR<Prisma.DeepVarPerformanceCreateWithoutModelInput, Prisma.DeepVarPerformanceUncheckedCreateWithoutModelInput> | Prisma.DeepVarPerformanceCreateWithoutModelInput[] | Prisma.DeepVarPerformanceUncheckedCreateWithoutModelInput[]
+  connectOrCreate?: Prisma.DeepVarPerformanceCreateOrConnectWithoutModelInput | Prisma.DeepVarPerformanceCreateOrConnectWithoutModelInput[]
+  upsert?: Prisma.DeepVarPerformanceUpsertWithWhereUniqueWithoutModelInput | Prisma.DeepVarPerformanceUpsertWithWhereUniqueWithoutModelInput[]
+  createMany?: Prisma.DeepVarPerformanceCreateManyModelInputEnvelope
+  set?: Prisma.DeepVarPerformanceWhereUniqueInput | Prisma.DeepVarPerformanceWhereUniqueInput[]
+  disconnect?: Prisma.DeepVarPerformanceWhereUniqueInput | Prisma.DeepVarPerformanceWhereUniqueInput[]
+  delete?: Prisma.DeepVarPerformanceWhereUniqueInput | Prisma.DeepVarPerformanceWhereUniqueInput[]
+  connect?: Prisma.DeepVarPerformanceWhereUniqueInput | Prisma.DeepVarPerformanceWhereUniqueInput[]
+  update?: Prisma.DeepVarPerformanceUpdateWithWhereUniqueWithoutModelInput | Prisma.DeepVarPerformanceUpdateWithWhereUniqueWithoutModelInput[]
+  updateMany?: Prisma.DeepVarPerformanceUpdateManyWithWhereWithoutModelInput | Prisma.DeepVarPerformanceUpdateManyWithWhereWithoutModelInput[]
+  deleteMany?: Prisma.DeepVarPerformanceScalarWhereInput | Prisma.DeepVarPerformanceScalarWhereInput[]
+}
+
+export type DeepVarPerformanceUncheckedUpdateManyWithoutModelNestedInput = {
+  create?: Prisma.XOR<Prisma.DeepVarPerformanceCreateWithoutModelInput, Prisma.DeepVarPerformanceUncheckedCreateWithoutModelInput> | Prisma.DeepVarPerformanceCreateWithoutModelInput[] | Prisma.DeepVarPerformanceUncheckedCreateWithoutModelInput[]
+  connectOrCreate?: Prisma.DeepVarPerformanceCreateOrConnectWithoutModelInput | Prisma.DeepVarPerformanceCreateOrConnectWithoutModelInput[]
+  upsert?: Prisma.DeepVarPerformanceUpsertWithWhereUniqueWithoutModelInput | Prisma.DeepVarPerformanceUpsertWithWhereUniqueWithoutModelInput[]
+  createMany?: Prisma.DeepVarPerformanceCreateManyModelInputEnvelope
+  set?: Prisma.DeepVarPerformanceWhereUniqueInput | Prisma.DeepVarPerformanceWhereUniqueInput[]
+  disconnect?: Prisma.DeepVarPerformanceWhereUniqueInput | Prisma.DeepVarPerformanceWhereUniqueInput[]
+  delete?: Prisma.DeepVarPerformanceWhereUniqueInput | Prisma.DeepVarPerformanceWhereUniqueInput[]
+  connect?: Prisma.DeepVarPerformanceWhereUniqueInput | Prisma.DeepVarPerformanceWhereUniqueInput[]
+  update?: Prisma.DeepVarPerformanceUpdateWithWhereUniqueWithoutModelInput | Prisma.DeepVarPerformanceUpdateWithWhereUniqueWithoutModelInput[]
+  updateMany?: Prisma.DeepVarPerformanceUpdateManyWithWhereWithoutModelInput | Prisma.DeepVarPerformanceUpdateManyWithWhereWithoutModelInput[]
+  deleteMany?: Prisma.DeepVarPerformanceScalarWhereInput | Prisma.DeepVarPerformanceScalarWhereInput[]
 }
 
 export type DeepVarPerformanceCreateNestedOneWithoutModel_runInput = {
@@ -406,14 +482,70 @@ export type DeepVarPerformanceUncheckedUpdateOneWithoutModel_runNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.DeepVarPerformanceUpdateToOneWithWhereWithoutModel_runInput, Prisma.DeepVarPerformanceUpdateWithoutModel_runInput>, Prisma.DeepVarPerformanceUncheckedUpdateWithoutModel_runInput>
 }
 
-export type DeepVarPerformanceCreateWithoutModel_runInput = {
+export type DeepVarPerformanceCreateWithoutModelInput = {
+  mae?: number | null
+  rmse?: number | null
+  r2?: number | null
+  crps?: number | null
+  model_run: Prisma.ModelsRunCreateNestedOneWithoutDeepvarPerformanceInput
+}
+
+export type DeepVarPerformanceUncheckedCreateWithoutModelInput = {
+  model_run_id: string
   mae?: number | null
   rmse?: number | null
   r2?: number | null
   crps?: number | null
 }
 
+export type DeepVarPerformanceCreateOrConnectWithoutModelInput = {
+  where: Prisma.DeepVarPerformanceWhereUniqueInput
+  create: Prisma.XOR<Prisma.DeepVarPerformanceCreateWithoutModelInput, Prisma.DeepVarPerformanceUncheckedCreateWithoutModelInput>
+}
+
+export type DeepVarPerformanceCreateManyModelInputEnvelope = {
+  data: Prisma.DeepVarPerformanceCreateManyModelInput | Prisma.DeepVarPerformanceCreateManyModelInput[]
+  skipDuplicates?: boolean
+}
+
+export type DeepVarPerformanceUpsertWithWhereUniqueWithoutModelInput = {
+  where: Prisma.DeepVarPerformanceWhereUniqueInput
+  update: Prisma.XOR<Prisma.DeepVarPerformanceUpdateWithoutModelInput, Prisma.DeepVarPerformanceUncheckedUpdateWithoutModelInput>
+  create: Prisma.XOR<Prisma.DeepVarPerformanceCreateWithoutModelInput, Prisma.DeepVarPerformanceUncheckedCreateWithoutModelInput>
+}
+
+export type DeepVarPerformanceUpdateWithWhereUniqueWithoutModelInput = {
+  where: Prisma.DeepVarPerformanceWhereUniqueInput
+  data: Prisma.XOR<Prisma.DeepVarPerformanceUpdateWithoutModelInput, Prisma.DeepVarPerformanceUncheckedUpdateWithoutModelInput>
+}
+
+export type DeepVarPerformanceUpdateManyWithWhereWithoutModelInput = {
+  where: Prisma.DeepVarPerformanceScalarWhereInput
+  data: Prisma.XOR<Prisma.DeepVarPerformanceUpdateManyMutationInput, Prisma.DeepVarPerformanceUncheckedUpdateManyWithoutModelInput>
+}
+
+export type DeepVarPerformanceScalarWhereInput = {
+  AND?: Prisma.DeepVarPerformanceScalarWhereInput | Prisma.DeepVarPerformanceScalarWhereInput[]
+  OR?: Prisma.DeepVarPerformanceScalarWhereInput[]
+  NOT?: Prisma.DeepVarPerformanceScalarWhereInput | Prisma.DeepVarPerformanceScalarWhereInput[]
+  model_run_id?: Prisma.StringFilter<"DeepVarPerformance"> | string
+  model_id?: Prisma.StringFilter<"DeepVarPerformance"> | string
+  mae?: Prisma.FloatNullableFilter<"DeepVarPerformance"> | number | null
+  rmse?: Prisma.FloatNullableFilter<"DeepVarPerformance"> | number | null
+  r2?: Prisma.FloatNullableFilter<"DeepVarPerformance"> | number | null
+  crps?: Prisma.FloatNullableFilter<"DeepVarPerformance"> | number | null
+}
+
+export type DeepVarPerformanceCreateWithoutModel_runInput = {
+  mae?: number | null
+  rmse?: number | null
+  r2?: number | null
+  crps?: number | null
+  model: Prisma.ModelsCreateNestedOneWithoutDeepvarPerformanceInput
+}
+
 export type DeepVarPerformanceUncheckedCreateWithoutModel_runInput = {
+  model_id: string
   mae?: number | null
   rmse?: number | null
   r2?: number | null
@@ -441,9 +573,43 @@ export type DeepVarPerformanceUpdateWithoutModel_runInput = {
   rmse?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   r2?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   crps?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  model?: Prisma.ModelsUpdateOneRequiredWithoutDeepvarPerformanceNestedInput
 }
 
 export type DeepVarPerformanceUncheckedUpdateWithoutModel_runInput = {
+  model_id?: Prisma.StringFieldUpdateOperationsInput | string
+  mae?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  rmse?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  r2?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  crps?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+}
+
+export type DeepVarPerformanceCreateManyModelInput = {
+  model_run_id: string
+  mae?: number | null
+  rmse?: number | null
+  r2?: number | null
+  crps?: number | null
+}
+
+export type DeepVarPerformanceUpdateWithoutModelInput = {
+  mae?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  rmse?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  r2?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  crps?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  model_run?: Prisma.ModelsRunUpdateOneRequiredWithoutDeepvarPerformanceNestedInput
+}
+
+export type DeepVarPerformanceUncheckedUpdateWithoutModelInput = {
+  model_run_id?: Prisma.StringFieldUpdateOperationsInput | string
+  mae?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  rmse?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  r2?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  crps?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+}
+
+export type DeepVarPerformanceUncheckedUpdateManyWithoutModelInput = {
+  model_run_id?: Prisma.StringFieldUpdateOperationsInput | string
   mae?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   rmse?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   r2?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
@@ -454,57 +620,69 @@ export type DeepVarPerformanceUncheckedUpdateWithoutModel_runInput = {
 
 export type DeepVarPerformanceSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   model_run_id?: boolean
+  model_id?: boolean
   mae?: boolean
   rmse?: boolean
   r2?: boolean
   crps?: boolean
+  model?: boolean | Prisma.ModelsDefaultArgs<ExtArgs>
   model_run?: boolean | Prisma.ModelsRunDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["deepVarPerformance"]>
 
 export type DeepVarPerformanceSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   model_run_id?: boolean
+  model_id?: boolean
   mae?: boolean
   rmse?: boolean
   r2?: boolean
   crps?: boolean
+  model?: boolean | Prisma.ModelsDefaultArgs<ExtArgs>
   model_run?: boolean | Prisma.ModelsRunDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["deepVarPerformance"]>
 
 export type DeepVarPerformanceSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   model_run_id?: boolean
+  model_id?: boolean
   mae?: boolean
   rmse?: boolean
   r2?: boolean
   crps?: boolean
+  model?: boolean | Prisma.ModelsDefaultArgs<ExtArgs>
   model_run?: boolean | Prisma.ModelsRunDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["deepVarPerformance"]>
 
 export type DeepVarPerformanceSelectScalar = {
   model_run_id?: boolean
+  model_id?: boolean
   mae?: boolean
   rmse?: boolean
   r2?: boolean
   crps?: boolean
 }
 
-export type DeepVarPerformanceOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"model_run_id" | "mae" | "rmse" | "r2" | "crps", ExtArgs["result"]["deepVarPerformance"]>
+export type DeepVarPerformanceOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"model_run_id" | "model_id" | "mae" | "rmse" | "r2" | "crps", ExtArgs["result"]["deepVarPerformance"]>
 export type DeepVarPerformanceInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  model?: boolean | Prisma.ModelsDefaultArgs<ExtArgs>
   model_run?: boolean | Prisma.ModelsRunDefaultArgs<ExtArgs>
 }
 export type DeepVarPerformanceIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  model?: boolean | Prisma.ModelsDefaultArgs<ExtArgs>
   model_run?: boolean | Prisma.ModelsRunDefaultArgs<ExtArgs>
 }
 export type DeepVarPerformanceIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  model?: boolean | Prisma.ModelsDefaultArgs<ExtArgs>
   model_run?: boolean | Prisma.ModelsRunDefaultArgs<ExtArgs>
 }
 
 export type $DeepVarPerformancePayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "DeepVarPerformance"
   objects: {
+    model: Prisma.$ModelsPayload<ExtArgs>
     model_run: Prisma.$ModelsRunPayload<ExtArgs>
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     model_run_id: string
+    model_id: string
     mae: number | null
     rmse: number | null
     r2: number | null
@@ -903,6 +1081,7 @@ readonly fields: DeepVarPerformanceFieldRefs;
  */
 export interface Prisma__DeepVarPerformanceClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
+  model<T extends Prisma.ModelsDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.ModelsDefaultArgs<ExtArgs>>): Prisma.Prisma__ModelsClient<runtime.Types.Result.GetResult<Prisma.$ModelsPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   model_run<T extends Prisma.ModelsRunDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.ModelsRunDefaultArgs<ExtArgs>>): Prisma.Prisma__ModelsRunClient<runtime.Types.Result.GetResult<Prisma.$ModelsRunPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -934,6 +1113,7 @@ export interface Prisma__DeepVarPerformanceClient<T, Null = never, ExtArgs exten
  */
 export interface DeepVarPerformanceFieldRefs {
   readonly model_run_id: Prisma.FieldRef<"DeepVarPerformance", 'String'>
+  readonly model_id: Prisma.FieldRef<"DeepVarPerformance", 'String'>
   readonly mae: Prisma.FieldRef<"DeepVarPerformance", 'Float'>
   readonly rmse: Prisma.FieldRef<"DeepVarPerformance", 'Float'>
   readonly r2: Prisma.FieldRef<"DeepVarPerformance", 'Float'>

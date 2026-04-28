@@ -36,7 +36,6 @@ export type ModelsRunSumAggregateOutputType = {
 
 export type ModelsRunMinAggregateOutputType = {
   id: string | null
-  model_id: string | null
   forecast_year: number | null
   training_status: $Enums.TrainingStatus | null
   inference_status: $Enums.InferenceStatus | null
@@ -45,7 +44,6 @@ export type ModelsRunMinAggregateOutputType = {
 
 export type ModelsRunMaxAggregateOutputType = {
   id: string | null
-  model_id: string | null
   forecast_year: number | null
   training_status: $Enums.TrainingStatus | null
   inference_status: $Enums.InferenceStatus | null
@@ -54,7 +52,6 @@ export type ModelsRunMaxAggregateOutputType = {
 
 export type ModelsRunCountAggregateOutputType = {
   id: number
-  model_id: number
   forecast_year: number
   training_status: number
   inference_status: number
@@ -73,7 +70,6 @@ export type ModelsRunSumAggregateInputType = {
 
 export type ModelsRunMinAggregateInputType = {
   id?: true
-  model_id?: true
   forecast_year?: true
   training_status?: true
   inference_status?: true
@@ -82,7 +78,6 @@ export type ModelsRunMinAggregateInputType = {
 
 export type ModelsRunMaxAggregateInputType = {
   id?: true
-  model_id?: true
   forecast_year?: true
   training_status?: true
   inference_status?: true
@@ -91,7 +86,6 @@ export type ModelsRunMaxAggregateInputType = {
 
 export type ModelsRunCountAggregateInputType = {
   id?: true
-  model_id?: true
   forecast_year?: true
   training_status?: true
   inference_status?: true
@@ -187,7 +181,6 @@ export type ModelsRunGroupByArgs<ExtArgs extends runtime.Types.Extensions.Intern
 
 export type ModelsRunGroupByOutputType = {
   id: string
-  model_id: string
   forecast_year: number | null
   training_status: $Enums.TrainingStatus
   inference_status: $Enums.InferenceStatus | null
@@ -219,24 +212,20 @@ export type ModelsRunWhereInput = {
   OR?: Prisma.ModelsRunWhereInput[]
   NOT?: Prisma.ModelsRunWhereInput | Prisma.ModelsRunWhereInput[]
   id?: Prisma.StringFilter<"ModelsRun"> | string
-  model_id?: Prisma.StringFilter<"ModelsRun"> | string
   forecast_year?: Prisma.IntNullableFilter<"ModelsRun"> | number | null
   training_status?: Prisma.EnumTrainingStatusFilter<"ModelsRun"> | $Enums.TrainingStatus
   inference_status?: Prisma.EnumInferenceStatusNullableFilter<"ModelsRun"> | $Enums.InferenceStatus | null
   training_date?: Prisma.DateTimeNullableFilter<"ModelsRun"> | Date | string | null
-  model?: Prisma.XOR<Prisma.ModelsScalarRelationFilter, Prisma.ModelsWhereInput>
   deeplabPerformance?: Prisma.XOR<Prisma.DeepLabPerformanceNullableScalarRelationFilter, Prisma.DeepLabPerformanceWhereInput> | null
   deepvarPerformance?: Prisma.XOR<Prisma.DeepVarPerformanceNullableScalarRelationFilter, Prisma.DeepVarPerformanceWhereInput> | null
 }
 
 export type ModelsRunOrderByWithRelationInput = {
   id?: Prisma.SortOrder
-  model_id?: Prisma.SortOrder
   forecast_year?: Prisma.SortOrderInput | Prisma.SortOrder
   training_status?: Prisma.SortOrder
   inference_status?: Prisma.SortOrderInput | Prisma.SortOrder
   training_date?: Prisma.SortOrderInput | Prisma.SortOrder
-  model?: Prisma.ModelsOrderByWithRelationInput
   deeplabPerformance?: Prisma.DeepLabPerformanceOrderByWithRelationInput
   deepvarPerformance?: Prisma.DeepVarPerformanceOrderByWithRelationInput
 }
@@ -246,19 +235,16 @@ export type ModelsRunWhereUniqueInput = Prisma.AtLeast<{
   AND?: Prisma.ModelsRunWhereInput | Prisma.ModelsRunWhereInput[]
   OR?: Prisma.ModelsRunWhereInput[]
   NOT?: Prisma.ModelsRunWhereInput | Prisma.ModelsRunWhereInput[]
-  model_id?: Prisma.StringFilter<"ModelsRun"> | string
   forecast_year?: Prisma.IntNullableFilter<"ModelsRun"> | number | null
   training_status?: Prisma.EnumTrainingStatusFilter<"ModelsRun"> | $Enums.TrainingStatus
   inference_status?: Prisma.EnumInferenceStatusNullableFilter<"ModelsRun"> | $Enums.InferenceStatus | null
   training_date?: Prisma.DateTimeNullableFilter<"ModelsRun"> | Date | string | null
-  model?: Prisma.XOR<Prisma.ModelsScalarRelationFilter, Prisma.ModelsWhereInput>
   deeplabPerformance?: Prisma.XOR<Prisma.DeepLabPerformanceNullableScalarRelationFilter, Prisma.DeepLabPerformanceWhereInput> | null
   deepvarPerformance?: Prisma.XOR<Prisma.DeepVarPerformanceNullableScalarRelationFilter, Prisma.DeepVarPerformanceWhereInput> | null
 }, "id">
 
 export type ModelsRunOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
-  model_id?: Prisma.SortOrder
   forecast_year?: Prisma.SortOrderInput | Prisma.SortOrder
   training_status?: Prisma.SortOrder
   inference_status?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -275,7 +261,6 @@ export type ModelsRunScalarWhereWithAggregatesInput = {
   OR?: Prisma.ModelsRunScalarWhereWithAggregatesInput[]
   NOT?: Prisma.ModelsRunScalarWhereWithAggregatesInput | Prisma.ModelsRunScalarWhereWithAggregatesInput[]
   id?: Prisma.StringWithAggregatesFilter<"ModelsRun"> | string
-  model_id?: Prisma.StringWithAggregatesFilter<"ModelsRun"> | string
   forecast_year?: Prisma.IntNullableWithAggregatesFilter<"ModelsRun"> | number | null
   training_status?: Prisma.EnumTrainingStatusWithAggregatesFilter<"ModelsRun"> | $Enums.TrainingStatus
   inference_status?: Prisma.EnumInferenceStatusNullableWithAggregatesFilter<"ModelsRun"> | $Enums.InferenceStatus | null
@@ -288,14 +273,12 @@ export type ModelsRunCreateInput = {
   training_status?: $Enums.TrainingStatus
   inference_status?: $Enums.InferenceStatus | null
   training_date?: Date | string | null
-  model: Prisma.ModelsCreateNestedOneWithoutModel_runsInput
   deeplabPerformance?: Prisma.DeepLabPerformanceCreateNestedOneWithoutModel_runInput
   deepvarPerformance?: Prisma.DeepVarPerformanceCreateNestedOneWithoutModel_runInput
 }
 
 export type ModelsRunUncheckedCreateInput = {
   id?: string
-  model_id: string
   forecast_year?: number | null
   training_status?: $Enums.TrainingStatus
   inference_status?: $Enums.InferenceStatus | null
@@ -310,14 +293,12 @@ export type ModelsRunUpdateInput = {
   training_status?: Prisma.EnumTrainingStatusFieldUpdateOperationsInput | $Enums.TrainingStatus
   inference_status?: Prisma.NullableEnumInferenceStatusFieldUpdateOperationsInput | $Enums.InferenceStatus | null
   training_date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  model?: Prisma.ModelsUpdateOneRequiredWithoutModel_runsNestedInput
   deeplabPerformance?: Prisma.DeepLabPerformanceUpdateOneWithoutModel_runNestedInput
   deepvarPerformance?: Prisma.DeepVarPerformanceUpdateOneWithoutModel_runNestedInput
 }
 
 export type ModelsRunUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  model_id?: Prisma.StringFieldUpdateOperationsInput | string
   forecast_year?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   training_status?: Prisma.EnumTrainingStatusFieldUpdateOperationsInput | $Enums.TrainingStatus
   inference_status?: Prisma.NullableEnumInferenceStatusFieldUpdateOperationsInput | $Enums.InferenceStatus | null
@@ -328,7 +309,6 @@ export type ModelsRunUncheckedUpdateInput = {
 
 export type ModelsRunCreateManyInput = {
   id?: string
-  model_id: string
   forecast_year?: number | null
   training_status?: $Enums.TrainingStatus
   inference_status?: $Enums.InferenceStatus | null
@@ -345,26 +325,14 @@ export type ModelsRunUpdateManyMutationInput = {
 
 export type ModelsRunUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  model_id?: Prisma.StringFieldUpdateOperationsInput | string
   forecast_year?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   training_status?: Prisma.EnumTrainingStatusFieldUpdateOperationsInput | $Enums.TrainingStatus
   inference_status?: Prisma.NullableEnumInferenceStatusFieldUpdateOperationsInput | $Enums.InferenceStatus | null
   training_date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
-export type ModelsRunListRelationFilter = {
-  every?: Prisma.ModelsRunWhereInput
-  some?: Prisma.ModelsRunWhereInput
-  none?: Prisma.ModelsRunWhereInput
-}
-
-export type ModelsRunOrderByRelationAggregateInput = {
-  _count?: Prisma.SortOrder
-}
-
 export type ModelsRunCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
-  model_id?: Prisma.SortOrder
   forecast_year?: Prisma.SortOrder
   training_status?: Prisma.SortOrder
   inference_status?: Prisma.SortOrder
@@ -377,7 +345,6 @@ export type ModelsRunAvgOrderByAggregateInput = {
 
 export type ModelsRunMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
-  model_id?: Prisma.SortOrder
   forecast_year?: Prisma.SortOrder
   training_status?: Prisma.SortOrder
   inference_status?: Prisma.SortOrder
@@ -386,7 +353,6 @@ export type ModelsRunMaxOrderByAggregateInput = {
 
 export type ModelsRunMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
-  model_id?: Prisma.SortOrder
   forecast_year?: Prisma.SortOrder
   training_status?: Prisma.SortOrder
   inference_status?: Prisma.SortOrder
@@ -400,48 +366,6 @@ export type ModelsRunSumOrderByAggregateInput = {
 export type ModelsRunScalarRelationFilter = {
   is?: Prisma.ModelsRunWhereInput
   isNot?: Prisma.ModelsRunWhereInput
-}
-
-export type ModelsRunCreateNestedManyWithoutModelInput = {
-  create?: Prisma.XOR<Prisma.ModelsRunCreateWithoutModelInput, Prisma.ModelsRunUncheckedCreateWithoutModelInput> | Prisma.ModelsRunCreateWithoutModelInput[] | Prisma.ModelsRunUncheckedCreateWithoutModelInput[]
-  connectOrCreate?: Prisma.ModelsRunCreateOrConnectWithoutModelInput | Prisma.ModelsRunCreateOrConnectWithoutModelInput[]
-  createMany?: Prisma.ModelsRunCreateManyModelInputEnvelope
-  connect?: Prisma.ModelsRunWhereUniqueInput | Prisma.ModelsRunWhereUniqueInput[]
-}
-
-export type ModelsRunUncheckedCreateNestedManyWithoutModelInput = {
-  create?: Prisma.XOR<Prisma.ModelsRunCreateWithoutModelInput, Prisma.ModelsRunUncheckedCreateWithoutModelInput> | Prisma.ModelsRunCreateWithoutModelInput[] | Prisma.ModelsRunUncheckedCreateWithoutModelInput[]
-  connectOrCreate?: Prisma.ModelsRunCreateOrConnectWithoutModelInput | Prisma.ModelsRunCreateOrConnectWithoutModelInput[]
-  createMany?: Prisma.ModelsRunCreateManyModelInputEnvelope
-  connect?: Prisma.ModelsRunWhereUniqueInput | Prisma.ModelsRunWhereUniqueInput[]
-}
-
-export type ModelsRunUpdateManyWithoutModelNestedInput = {
-  create?: Prisma.XOR<Prisma.ModelsRunCreateWithoutModelInput, Prisma.ModelsRunUncheckedCreateWithoutModelInput> | Prisma.ModelsRunCreateWithoutModelInput[] | Prisma.ModelsRunUncheckedCreateWithoutModelInput[]
-  connectOrCreate?: Prisma.ModelsRunCreateOrConnectWithoutModelInput | Prisma.ModelsRunCreateOrConnectWithoutModelInput[]
-  upsert?: Prisma.ModelsRunUpsertWithWhereUniqueWithoutModelInput | Prisma.ModelsRunUpsertWithWhereUniqueWithoutModelInput[]
-  createMany?: Prisma.ModelsRunCreateManyModelInputEnvelope
-  set?: Prisma.ModelsRunWhereUniqueInput | Prisma.ModelsRunWhereUniqueInput[]
-  disconnect?: Prisma.ModelsRunWhereUniqueInput | Prisma.ModelsRunWhereUniqueInput[]
-  delete?: Prisma.ModelsRunWhereUniqueInput | Prisma.ModelsRunWhereUniqueInput[]
-  connect?: Prisma.ModelsRunWhereUniqueInput | Prisma.ModelsRunWhereUniqueInput[]
-  update?: Prisma.ModelsRunUpdateWithWhereUniqueWithoutModelInput | Prisma.ModelsRunUpdateWithWhereUniqueWithoutModelInput[]
-  updateMany?: Prisma.ModelsRunUpdateManyWithWhereWithoutModelInput | Prisma.ModelsRunUpdateManyWithWhereWithoutModelInput[]
-  deleteMany?: Prisma.ModelsRunScalarWhereInput | Prisma.ModelsRunScalarWhereInput[]
-}
-
-export type ModelsRunUncheckedUpdateManyWithoutModelNestedInput = {
-  create?: Prisma.XOR<Prisma.ModelsRunCreateWithoutModelInput, Prisma.ModelsRunUncheckedCreateWithoutModelInput> | Prisma.ModelsRunCreateWithoutModelInput[] | Prisma.ModelsRunUncheckedCreateWithoutModelInput[]
-  connectOrCreate?: Prisma.ModelsRunCreateOrConnectWithoutModelInput | Prisma.ModelsRunCreateOrConnectWithoutModelInput[]
-  upsert?: Prisma.ModelsRunUpsertWithWhereUniqueWithoutModelInput | Prisma.ModelsRunUpsertWithWhereUniqueWithoutModelInput[]
-  createMany?: Prisma.ModelsRunCreateManyModelInputEnvelope
-  set?: Prisma.ModelsRunWhereUniqueInput | Prisma.ModelsRunWhereUniqueInput[]
-  disconnect?: Prisma.ModelsRunWhereUniqueInput | Prisma.ModelsRunWhereUniqueInput[]
-  delete?: Prisma.ModelsRunWhereUniqueInput | Prisma.ModelsRunWhereUniqueInput[]
-  connect?: Prisma.ModelsRunWhereUniqueInput | Prisma.ModelsRunWhereUniqueInput[]
-  update?: Prisma.ModelsRunUpdateWithWhereUniqueWithoutModelInput | Prisma.ModelsRunUpdateWithWhereUniqueWithoutModelInput[]
-  updateMany?: Prisma.ModelsRunUpdateManyWithWhereWithoutModelInput | Prisma.ModelsRunUpdateManyWithWhereWithoutModelInput[]
-  deleteMany?: Prisma.ModelsRunScalarWhereInput | Prisma.ModelsRunScalarWhereInput[]
 }
 
 export type NullableIntFieldUpdateOperationsInput = {
@@ -492,77 +416,17 @@ export type ModelsRunUpdateOneRequiredWithoutDeepvarPerformanceNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.ModelsRunUpdateToOneWithWhereWithoutDeepvarPerformanceInput, Prisma.ModelsRunUpdateWithoutDeepvarPerformanceInput>, Prisma.ModelsRunUncheckedUpdateWithoutDeepvarPerformanceInput>
 }
 
-export type ModelsRunCreateWithoutModelInput = {
-  id?: string
-  forecast_year?: number | null
-  training_status?: $Enums.TrainingStatus
-  inference_status?: $Enums.InferenceStatus | null
-  training_date?: Date | string | null
-  deeplabPerformance?: Prisma.DeepLabPerformanceCreateNestedOneWithoutModel_runInput
-  deepvarPerformance?: Prisma.DeepVarPerformanceCreateNestedOneWithoutModel_runInput
-}
-
-export type ModelsRunUncheckedCreateWithoutModelInput = {
-  id?: string
-  forecast_year?: number | null
-  training_status?: $Enums.TrainingStatus
-  inference_status?: $Enums.InferenceStatus | null
-  training_date?: Date | string | null
-  deeplabPerformance?: Prisma.DeepLabPerformanceUncheckedCreateNestedOneWithoutModel_runInput
-  deepvarPerformance?: Prisma.DeepVarPerformanceUncheckedCreateNestedOneWithoutModel_runInput
-}
-
-export type ModelsRunCreateOrConnectWithoutModelInput = {
-  where: Prisma.ModelsRunWhereUniqueInput
-  create: Prisma.XOR<Prisma.ModelsRunCreateWithoutModelInput, Prisma.ModelsRunUncheckedCreateWithoutModelInput>
-}
-
-export type ModelsRunCreateManyModelInputEnvelope = {
-  data: Prisma.ModelsRunCreateManyModelInput | Prisma.ModelsRunCreateManyModelInput[]
-  skipDuplicates?: boolean
-}
-
-export type ModelsRunUpsertWithWhereUniqueWithoutModelInput = {
-  where: Prisma.ModelsRunWhereUniqueInput
-  update: Prisma.XOR<Prisma.ModelsRunUpdateWithoutModelInput, Prisma.ModelsRunUncheckedUpdateWithoutModelInput>
-  create: Prisma.XOR<Prisma.ModelsRunCreateWithoutModelInput, Prisma.ModelsRunUncheckedCreateWithoutModelInput>
-}
-
-export type ModelsRunUpdateWithWhereUniqueWithoutModelInput = {
-  where: Prisma.ModelsRunWhereUniqueInput
-  data: Prisma.XOR<Prisma.ModelsRunUpdateWithoutModelInput, Prisma.ModelsRunUncheckedUpdateWithoutModelInput>
-}
-
-export type ModelsRunUpdateManyWithWhereWithoutModelInput = {
-  where: Prisma.ModelsRunScalarWhereInput
-  data: Prisma.XOR<Prisma.ModelsRunUpdateManyMutationInput, Prisma.ModelsRunUncheckedUpdateManyWithoutModelInput>
-}
-
-export type ModelsRunScalarWhereInput = {
-  AND?: Prisma.ModelsRunScalarWhereInput | Prisma.ModelsRunScalarWhereInput[]
-  OR?: Prisma.ModelsRunScalarWhereInput[]
-  NOT?: Prisma.ModelsRunScalarWhereInput | Prisma.ModelsRunScalarWhereInput[]
-  id?: Prisma.StringFilter<"ModelsRun"> | string
-  model_id?: Prisma.StringFilter<"ModelsRun"> | string
-  forecast_year?: Prisma.IntNullableFilter<"ModelsRun"> | number | null
-  training_status?: Prisma.EnumTrainingStatusFilter<"ModelsRun"> | $Enums.TrainingStatus
-  inference_status?: Prisma.EnumInferenceStatusNullableFilter<"ModelsRun"> | $Enums.InferenceStatus | null
-  training_date?: Prisma.DateTimeNullableFilter<"ModelsRun"> | Date | string | null
-}
-
 export type ModelsRunCreateWithoutDeeplabPerformanceInput = {
   id?: string
   forecast_year?: number | null
   training_status?: $Enums.TrainingStatus
   inference_status?: $Enums.InferenceStatus | null
   training_date?: Date | string | null
-  model: Prisma.ModelsCreateNestedOneWithoutModel_runsInput
   deepvarPerformance?: Prisma.DeepVarPerformanceCreateNestedOneWithoutModel_runInput
 }
 
 export type ModelsRunUncheckedCreateWithoutDeeplabPerformanceInput = {
   id?: string
-  model_id: string
   forecast_year?: number | null
   training_status?: $Enums.TrainingStatus
   inference_status?: $Enums.InferenceStatus | null
@@ -592,13 +456,11 @@ export type ModelsRunUpdateWithoutDeeplabPerformanceInput = {
   training_status?: Prisma.EnumTrainingStatusFieldUpdateOperationsInput | $Enums.TrainingStatus
   inference_status?: Prisma.NullableEnumInferenceStatusFieldUpdateOperationsInput | $Enums.InferenceStatus | null
   training_date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  model?: Prisma.ModelsUpdateOneRequiredWithoutModel_runsNestedInput
   deepvarPerformance?: Prisma.DeepVarPerformanceUpdateOneWithoutModel_runNestedInput
 }
 
 export type ModelsRunUncheckedUpdateWithoutDeeplabPerformanceInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  model_id?: Prisma.StringFieldUpdateOperationsInput | string
   forecast_year?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   training_status?: Prisma.EnumTrainingStatusFieldUpdateOperationsInput | $Enums.TrainingStatus
   inference_status?: Prisma.NullableEnumInferenceStatusFieldUpdateOperationsInput | $Enums.InferenceStatus | null
@@ -612,13 +474,11 @@ export type ModelsRunCreateWithoutDeepvarPerformanceInput = {
   training_status?: $Enums.TrainingStatus
   inference_status?: $Enums.InferenceStatus | null
   training_date?: Date | string | null
-  model: Prisma.ModelsCreateNestedOneWithoutModel_runsInput
   deeplabPerformance?: Prisma.DeepLabPerformanceCreateNestedOneWithoutModel_runInput
 }
 
 export type ModelsRunUncheckedCreateWithoutDeepvarPerformanceInput = {
   id?: string
-  model_id: string
   forecast_year?: number | null
   training_status?: $Enums.TrainingStatus
   inference_status?: $Enums.InferenceStatus | null
@@ -648,122 +508,70 @@ export type ModelsRunUpdateWithoutDeepvarPerformanceInput = {
   training_status?: Prisma.EnumTrainingStatusFieldUpdateOperationsInput | $Enums.TrainingStatus
   inference_status?: Prisma.NullableEnumInferenceStatusFieldUpdateOperationsInput | $Enums.InferenceStatus | null
   training_date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  model?: Prisma.ModelsUpdateOneRequiredWithoutModel_runsNestedInput
   deeplabPerformance?: Prisma.DeepLabPerformanceUpdateOneWithoutModel_runNestedInput
 }
 
 export type ModelsRunUncheckedUpdateWithoutDeepvarPerformanceInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  model_id?: Prisma.StringFieldUpdateOperationsInput | string
   forecast_year?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   training_status?: Prisma.EnumTrainingStatusFieldUpdateOperationsInput | $Enums.TrainingStatus
   inference_status?: Prisma.NullableEnumInferenceStatusFieldUpdateOperationsInput | $Enums.InferenceStatus | null
   training_date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deeplabPerformance?: Prisma.DeepLabPerformanceUncheckedUpdateOneWithoutModel_runNestedInput
-}
-
-export type ModelsRunCreateManyModelInput = {
-  id?: string
-  forecast_year?: number | null
-  training_status?: $Enums.TrainingStatus
-  inference_status?: $Enums.InferenceStatus | null
-  training_date?: Date | string | null
-}
-
-export type ModelsRunUpdateWithoutModelInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  forecast_year?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  training_status?: Prisma.EnumTrainingStatusFieldUpdateOperationsInput | $Enums.TrainingStatus
-  inference_status?: Prisma.NullableEnumInferenceStatusFieldUpdateOperationsInput | $Enums.InferenceStatus | null
-  training_date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  deeplabPerformance?: Prisma.DeepLabPerformanceUpdateOneWithoutModel_runNestedInput
-  deepvarPerformance?: Prisma.DeepVarPerformanceUpdateOneWithoutModel_runNestedInput
-}
-
-export type ModelsRunUncheckedUpdateWithoutModelInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  forecast_year?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  training_status?: Prisma.EnumTrainingStatusFieldUpdateOperationsInput | $Enums.TrainingStatus
-  inference_status?: Prisma.NullableEnumInferenceStatusFieldUpdateOperationsInput | $Enums.InferenceStatus | null
-  training_date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  deeplabPerformance?: Prisma.DeepLabPerformanceUncheckedUpdateOneWithoutModel_runNestedInput
-  deepvarPerformance?: Prisma.DeepVarPerformanceUncheckedUpdateOneWithoutModel_runNestedInput
-}
-
-export type ModelsRunUncheckedUpdateManyWithoutModelInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  forecast_year?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  training_status?: Prisma.EnumTrainingStatusFieldUpdateOperationsInput | $Enums.TrainingStatus
-  inference_status?: Prisma.NullableEnumInferenceStatusFieldUpdateOperationsInput | $Enums.InferenceStatus | null
-  training_date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 
 
 export type ModelsRunSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
-  model_id?: boolean
   forecast_year?: boolean
   training_status?: boolean
   inference_status?: boolean
   training_date?: boolean
-  model?: boolean | Prisma.ModelsDefaultArgs<ExtArgs>
   deeplabPerformance?: boolean | Prisma.ModelsRun$deeplabPerformanceArgs<ExtArgs>
   deepvarPerformance?: boolean | Prisma.ModelsRun$deepvarPerformanceArgs<ExtArgs>
 }, ExtArgs["result"]["modelsRun"]>
 
 export type ModelsRunSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
-  model_id?: boolean
   forecast_year?: boolean
   training_status?: boolean
   inference_status?: boolean
   training_date?: boolean
-  model?: boolean | Prisma.ModelsDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["modelsRun"]>
 
 export type ModelsRunSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
-  model_id?: boolean
   forecast_year?: boolean
   training_status?: boolean
   inference_status?: boolean
   training_date?: boolean
-  model?: boolean | Prisma.ModelsDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["modelsRun"]>
 
 export type ModelsRunSelectScalar = {
   id?: boolean
-  model_id?: boolean
   forecast_year?: boolean
   training_status?: boolean
   inference_status?: boolean
   training_date?: boolean
 }
 
-export type ModelsRunOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "model_id" | "forecast_year" | "training_status" | "inference_status" | "training_date", ExtArgs["result"]["modelsRun"]>
+export type ModelsRunOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "forecast_year" | "training_status" | "inference_status" | "training_date", ExtArgs["result"]["modelsRun"]>
 export type ModelsRunInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  model?: boolean | Prisma.ModelsDefaultArgs<ExtArgs>
   deeplabPerformance?: boolean | Prisma.ModelsRun$deeplabPerformanceArgs<ExtArgs>
   deepvarPerformance?: boolean | Prisma.ModelsRun$deepvarPerformanceArgs<ExtArgs>
 }
-export type ModelsRunIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  model?: boolean | Prisma.ModelsDefaultArgs<ExtArgs>
-}
-export type ModelsRunIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  model?: boolean | Prisma.ModelsDefaultArgs<ExtArgs>
-}
+export type ModelsRunIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
+export type ModelsRunIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
 
 export type $ModelsRunPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "ModelsRun"
   objects: {
-    model: Prisma.$ModelsPayload<ExtArgs>
     deeplabPerformance: Prisma.$DeepLabPerformancePayload<ExtArgs> | null
     deepvarPerformance: Prisma.$DeepVarPerformancePayload<ExtArgs> | null
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
-    model_id: string
     forecast_year: number | null
     training_status: $Enums.TrainingStatus
     inference_status: $Enums.InferenceStatus | null
@@ -1162,7 +970,6 @@ readonly fields: ModelsRunFieldRefs;
  */
 export interface Prisma__ModelsRunClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
-  model<T extends Prisma.ModelsDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.ModelsDefaultArgs<ExtArgs>>): Prisma.Prisma__ModelsClient<runtime.Types.Result.GetResult<Prisma.$ModelsPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   deeplabPerformance<T extends Prisma.ModelsRun$deeplabPerformanceArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.ModelsRun$deeplabPerformanceArgs<ExtArgs>>): Prisma.Prisma__DeepLabPerformanceClient<runtime.Types.Result.GetResult<Prisma.$DeepLabPerformancePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   deepvarPerformance<T extends Prisma.ModelsRun$deepvarPerformanceArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.ModelsRun$deepvarPerformanceArgs<ExtArgs>>): Prisma.Prisma__DeepVarPerformanceClient<runtime.Types.Result.GetResult<Prisma.$DeepVarPerformancePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   /**
@@ -1195,7 +1002,6 @@ export interface Prisma__ModelsRunClient<T, Null = never, ExtArgs extends runtim
  */
 export interface ModelsRunFieldRefs {
   readonly id: Prisma.FieldRef<"ModelsRun", 'String'>
-  readonly model_id: Prisma.FieldRef<"ModelsRun", 'String'>
   readonly forecast_year: Prisma.FieldRef<"ModelsRun", 'Int'>
   readonly training_status: Prisma.FieldRef<"ModelsRun", 'TrainingStatus'>
   readonly inference_status: Prisma.FieldRef<"ModelsRun", 'InferenceStatus'>
@@ -1423,7 +1229,7 @@ export type ModelsRunCreateArgs<ExtArgs extends runtime.Types.Extensions.Interna
   /**
    * The data needed to create a ModelsRun.
    */
-  data: Prisma.XOR<Prisma.ModelsRunCreateInput, Prisma.ModelsRunUncheckedCreateInput>
+  data?: Prisma.XOR<Prisma.ModelsRunCreateInput, Prisma.ModelsRunUncheckedCreateInput>
 }
 
 /**
@@ -1454,10 +1260,6 @@ export type ModelsRunCreateManyAndReturnArgs<ExtArgs extends runtime.Types.Exten
    */
   data: Prisma.ModelsRunCreateManyInput | Prisma.ModelsRunCreateManyInput[]
   skipDuplicates?: boolean
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.ModelsRunIncludeCreateManyAndReturn<ExtArgs> | null
 }
 
 /**
@@ -1528,10 +1330,6 @@ export type ModelsRunUpdateManyAndReturnArgs<ExtArgs extends runtime.Types.Exten
    * Limit how many ModelsRuns to update.
    */
   limit?: number
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.ModelsRunIncludeUpdateManyAndReturn<ExtArgs> | null
 }
 
 /**

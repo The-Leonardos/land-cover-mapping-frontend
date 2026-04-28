@@ -47,12 +47,12 @@ model Models {
   model_id    String      @id @default(uuid())
   model_name  String
 
-  model_runs  ModelsRun[]
+  deepLabPerformance DeepLabPerformance[]
+  deepvarPerformance DeepVarPerformance[]
 }
 
 model ModelsRun {
   id                 String             @id @default(uuid())
-  model_id           String
 
   forecast_year      Int?
   training_status    TrainingStatus     @default(not_started)
@@ -60,14 +60,13 @@ model ModelsRun {
 
   training_date      DateTime?
 
-  model              Models @relation(fields: [model_id], references: [model_id])
-
   deeplabPerformance DeepLabPerformance?
   deepvarPerformance DeepVarPerformance?
 }
 
 model DeepLabPerformance {
   model_run_id   String   @id
+  model_id       String
 
   iou            Float?
   accuracy       Float?
@@ -75,16 +74,19 @@ model DeepLabPerformance {
   recall         Float?
   f1_score       Float?
 
+  model          Models @relation(fields: [model_id], references: [model_id])
   model_run      ModelsRun @relation(fields: [model_run_id], references: [id])
 }
 
 model DeepVarPerformance {
   model_run_id   String   @id
+  model_id       String
 
   mae            Float?
   rmse           Float?
   r2             Float?
   crps           Float?
 
+  model          Models @relation(fields: [model_id], references: [model_id])
   model_run      ModelsRun @relation(fields: [model_run_id], references: [id])
 }
