@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 
 const protectedRoutes = ["/admin"];
-const publicRoutes = ["/login", "/map", "/forecast"];
+const publicRoutes = ["/login", "/map", "/forecast", "/compare"];
 
 export function proxy(request: NextRequest) {
   const adminToken = request.cookies.get("admin_token")?.value;
