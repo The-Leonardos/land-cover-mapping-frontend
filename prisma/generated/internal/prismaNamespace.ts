@@ -385,6 +385,7 @@ type FieldRefInputType<Model, FieldType> = Model extends never ? never : FieldRe
 
 export const ModelName = {
   LandCoverTimeSeries: 'LandCoverTimeSeries',
+  Years: 'Years',
   Models: 'Models',
   ModelsRun: 'ModelsRun',
   DeepLabPerformance: 'DeepLabPerformance',
@@ -404,7 +405,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "landCoverTimeSeries" | "models" | "modelsRun" | "deepLabPerformance" | "deepVarPerformance"
+    modelProps: "landCoverTimeSeries" | "years" | "models" | "modelsRun" | "deepLabPerformance" | "deepVarPerformance"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -479,6 +480,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         count: {
           args: Prisma.LandCoverTimeSeriesCountArgs<ExtArgs>
           result: runtime.Types.Utils.Optional<Prisma.LandCoverTimeSeriesCountAggregateOutputType> | number
+        }
+      }
+    }
+    Years: {
+      payload: Prisma.$YearsPayload<ExtArgs>
+      fields: Prisma.YearsFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.YearsFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$YearsPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.YearsFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$YearsPayload>
+        }
+        findFirst: {
+          args: Prisma.YearsFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$YearsPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.YearsFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$YearsPayload>
+        }
+        findMany: {
+          args: Prisma.YearsFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$YearsPayload>[]
+        }
+        create: {
+          args: Prisma.YearsCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$YearsPayload>
+        }
+        createMany: {
+          args: Prisma.YearsCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.YearsCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$YearsPayload>[]
+        }
+        delete: {
+          args: Prisma.YearsDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$YearsPayload>
+        }
+        update: {
+          args: Prisma.YearsUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$YearsPayload>
+        }
+        deleteMany: {
+          args: Prisma.YearsDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.YearsUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.YearsUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$YearsPayload>[]
+        }
+        upsert: {
+          args: Prisma.YearsUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$YearsPayload>
+        }
+        aggregate: {
+          args: Prisma.YearsAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateYears>
+        }
+        groupBy: {
+          args: Prisma.YearsGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.YearsGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.YearsCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.YearsCountAggregateOutputType> | number
         }
       }
     }
@@ -834,6 +909,13 @@ export const LandCoverTimeSeriesScalarFieldEnum = {
 export type LandCoverTimeSeriesScalarFieldEnum = (typeof LandCoverTimeSeriesScalarFieldEnum)[keyof typeof LandCoverTimeSeriesScalarFieldEnum]
 
 
+export const YearsScalarFieldEnum = {
+  year: 'year'
+} as const
+
+export type YearsScalarFieldEnum = (typeof YearsScalarFieldEnum)[keyof typeof YearsScalarFieldEnum]
+
+
 export const ModelsScalarFieldEnum = {
   model_id: 'model_id',
   model_name: 'model_name'
@@ -1086,6 +1168,7 @@ export type PrismaClientOptions = ({
 }
 export type GlobalOmitConfig = {
   landCoverTimeSeries?: Prisma.LandCoverTimeSeriesOmit
+  years?: Prisma.YearsOmit
   models?: Prisma.ModelsOmit
   modelsRun?: Prisma.ModelsRunOmit
   deepLabPerformance?: Prisma.DeepLabPerformanceOmit

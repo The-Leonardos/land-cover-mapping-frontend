@@ -52,6 +52,7 @@ export const AnyNull = runtime.AnyNull
 
 export const ModelName = {
   LandCoverTimeSeries: 'LandCoverTimeSeries',
+  Years: 'Years',
   Models: 'Models',
   ModelsRun: 'ModelsRun',
   DeepLabPerformance: 'DeepLabPerformance',
@@ -89,6 +90,13 @@ export const LandCoverTimeSeriesScalarFieldEnum = {
 } as const
 
 export type LandCoverTimeSeriesScalarFieldEnum = (typeof LandCoverTimeSeriesScalarFieldEnum)[keyof typeof LandCoverTimeSeriesScalarFieldEnum]
+
+
+export const YearsScalarFieldEnum = {
+  year: 'year'
+} as const
+
+export type YearsScalarFieldEnum = (typeof YearsScalarFieldEnum)[keyof typeof YearsScalarFieldEnum]
 
 
 export const ModelsScalarFieldEnum = {

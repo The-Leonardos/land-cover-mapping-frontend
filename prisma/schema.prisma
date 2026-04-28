@@ -39,6 +39,10 @@ model LandCoverTimeSeries {
   @@id([barangay_id, year, quarter])
 }
 
+model Years {
+  year   Int     @id
+}
+
 model Models {
   model_id    String      @id @default(uuid())
   model_name  String
