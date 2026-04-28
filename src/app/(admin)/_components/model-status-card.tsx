@@ -1,7 +1,8 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { ModelStatus } from "../_actions/getPipelineStatus";
+import { getPipelineStatus, ModelStatus } from "../_actions/getPipelineStatus";
+import { useBarangayStore } from "@/app/(main)/map/_stores/barangayStore";
 
 const REFRESH_INTERVAL = 10000; // 10 seconds
 
@@ -11,12 +12,17 @@ const REFRESH_INTERVAL = 10000; // 10 seconds
  */
 export function ModelStatusCard() {
   const [status, setStatus] = useState<ModelStatus>("not_started");
+  const latestYear = useBarangayStore((state) => state.YEARS[state.YEARS.length - 1]);
   
   // Real polling would go here
   useEffect(() => {
-    const interval = setInterval(() => {
-      // Fetch from API...
-    }, 10000);
+    const updatePipelinStatus = async () => {
+      const pipelineStatus = await getPipelineStatus(latestYear);
+      setStatus(pipelineStatus.modelStatus);
+    }
+    updatePipelinStatus();
+    const interval = setInterval(updatePipelinStatus, REFRESH_INTERVAL);
+
     return () => clearInterval(interval);
   }, []);
 
