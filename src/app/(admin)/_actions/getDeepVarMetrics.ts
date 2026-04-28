@@ -18,9 +18,9 @@ export async function getDeepVarMetrics(): Promise<DeepVarMetrics[]> {
       : "—",
     year: String(row.model_run.forecast_year ?? "—"),
 
-    mae:  row.mae  != null ? row.mae.toFixed(6)  : "—",
-    rmse: row.rmse != null ? row.rmse.toFixed(6) : "—",
+    mae:  row.mae  != null ? row.mae.toFixed(4)  : "—",
+    rmse: row.rmse != null ? row.rmse.toFixed(4) : "—",
     r2:   row.r2   != null ? row.r2.toFixed(4)   : "—",
-    crps: row.crps != null ? row.crps.toFixed(6) : "—",
+    crps: row.crps != null ? row.crps.toFixed(4) : "—",
   }));
 }

@@ -18,10 +18,10 @@ export async function getDeepLabMetrics(): Promise<DeepLabMetrics[]> {
       : "—",
     year: String(row.model_run.forecast_year ?? "—"),
 
-    iou:       row.iou       != null ? row.iou.toFixed(4)       : "—",
-    accuracy:  row.accuracy  != null ? row.accuracy.toFixed(4)  : "—",
-    precision: row.precision != null ? row.precision.toFixed(4) : "—",
-    recall:    row.recall    != null ? row.recall.toFixed(4)    : "—",
-    f1:        row.f1_score  != null ? row.f1_score.toFixed(4)  : "—",
+    iou:       row.iou       != null ? row.iou.toFixed(2)       : "—",
+    accuracy:  row.accuracy  != null ? row.accuracy.toFixed(2)  : "—",
+    precision: row.precision != null ? row.precision.toFixed(2) : "—",
+    recall:    row.recall    != null ? row.recall.toFixed(2)    : "—",
+    f1:        row.f1_score  != null ? row.f1_score.toFixed(2)  : "—",
   }));
 }

@@ -36,7 +36,7 @@ export async function MetricsTables() {
                   <th className="px-6 py-3 font-medium">Model Name</th>
                   <th className="px-6 py-3 font-medium">Training Date</th>
                   <th className="px-6 py-3 font-medium">Forecast Year</th>
-                  <th className="px-6 py-3 font-medium">mIoU</th>
+                  <th className="px-6 py-3 font-medium">IoU</th>
                   <th className="px-6 py-3 font-medium">Accuracy</th>
                   <th className="px-6 py-3 font-medium">Precision</th>
                   <th className="px-6 py-3 font-medium">Recall</th>
@@ -49,11 +49,11 @@ export async function MetricsTables() {
                     <td className="px-6 py-4 font-medium">{row.modelName}</td>
                     <td className="px-6 py-4">{row.trainingDate}</td>
                     <td className="px-6 py-4">{row.year}</td>
-                    <td className="px-6 py-4">{row.iou}</td>
-                    <td className="px-6 py-4">{row.accuracy}</td>
-                    <td className="px-6 py-4">{row.precision}</td>
-                    <td className="px-6 py-4">{row.recall}</td>
-                    <td className="px-6 py-4">{row.f1}</td>
+                    <td className="px-6 py-4">{row.iou} %</td>
+                    <td className="px-6 py-4">{row.accuracy} %</td>
+                    <td className="px-6 py-4">{row.precision} %</td>
+                    <td className="px-6 py-4">{row.recall} %</td>
+                    <td className="px-6 py-4">{row.f1} %</td>
                   </tr>
                 ))}
               </tbody>
