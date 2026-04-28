@@ -1,7 +1,9 @@
 "use server";
 
-export type ModelStatus = "not_started" | "training" | "trained"; // both models, time series and image prediction
-export type InferenceStatus = "not_started" | "completed"; // this is only for image prediction
+import {prisma} from "@/lib/prisma";
+
+export type ModelStatus = "not_started" | "training" | "trained";
+export type InferenceStatus = "not_started" | "completed";
 
 export interface PipelineStatus {
   modelStatus: ModelStatus;
@@ -10,13 +12,24 @@ export interface PipelineStatus {
 
 /**
  * Fetches the current pipeline status for a given year.
+ * Returns the most recently created ModelsRun for that forecast_year.
+ * If no run exists, defaults to not_started / not_started.
  */
-export async function getPipelineStatus(year: number): Promise<PipelineStatus> {
-  // Mock delay
-  await new Promise((resolve) => setTimeout(resolve, 500));
+export async function getPipelineStatus(currentYear: number): Promise<PipelineStatus> {
+  const run = await prisma.modelsRun.findFirst({
+    where: { forecast_year: currentYear },
+    orderBy: { training_date: "desc" },
+  });
+
+  if (!run) {
+    return {
+      modelStatus: "not_started",
+      inferenceStatus: "not_started",
+    };
+  }
 
   return {
-    modelStatus: "trained",
-    inferenceStatus: "not_started",
+    modelStatus: run.training_status as ModelStatus,
+    inferenceStatus: (run.inference_status ?? "not_started") as InferenceStatus,
   };
 }
