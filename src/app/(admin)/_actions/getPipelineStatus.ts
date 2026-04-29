@@ -16,9 +16,8 @@ export interface PipelineStatus {
  * If no run exists, defaults to not_started / not_started.
  */
 export async function getPipelineStatus(currentYear: number): Promise<PipelineStatus> {
-  const run = await prisma.modelsRun.findFirst({
+  const run = await prisma.modelsRun.findUnique({
     where: { forecast_year: currentYear },
-    orderBy: { training_date: "desc" },
   });
 
   if (!run) {
