@@ -71,11 +71,11 @@ export async function MetricsTables() {
                     <td className="px-6 py-4 font-medium">{row.modelName}</td>
                     <td className="px-6 py-4">{row.trainingDate}</td>
                     <td className="px-6 py-4">{row.year}</td>
-                    <td className="px-6 py-4">{row.iou} %</td>
-                    <td className="px-6 py-4">{row.accuracy} %</td>
-                    <td className="px-6 py-4">{row.precision} %</td>
-                    <td className="px-6 py-4">{row.recall} %</td>
-                    <td className="px-6 py-4">{row.f1} %</td>
+                    <td className="px-6 py-4">{row.iou} {row.iou === '—' ? '' : "%"}</td>
+                    <td className="px-6 py-4">{row.accuracy} {row.accuracy === '—' ? '' : "%"}</td>
+                    <td className="px-6 py-4">{row.precision} {row.precision === '—' ? '' : "%"}</td>
+                    <td className="px-6 py-4">{row.recall} {row.recall === '—' ? '' : "%"}</td>
+                    <td className="px-6 py-4">{row.f1} {row.f1 === '—' ? '' : "%"}</td>
                   </tr>
                 ))}
               </tbody>
