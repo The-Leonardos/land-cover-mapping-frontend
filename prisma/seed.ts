@@ -2,8 +2,8 @@ import fs from 'fs';
 import path from 'path';
 import { prisma } from '../src/lib/prisma';
 
-async function main() {
-  console.log('Cleaning up existing data...');
+async function  clearAllData() {
+  console.log('Clearing all data...');
 
   // Delete in dependency order (children first)
   await prisma.deepLabPerformance.deleteMany({});
@@ -12,6 +12,15 @@ async function main() {
   await prisma.models.deleteMany({});
   await prisma.years.deleteMany({});
   await prisma.landCoverTimeSeries.deleteMany({});
+}
+
+/**
+ * 2016-2025 actual land cover time series data
+ * 2026 is the forecast year
+ * metrics data are present
+ */
+async function seedActualData() {
+  console.log('Seeding actual data...');
 
   // ── Seed LandCoverTimeSeries from CSV ──────────────────────────────────────
   const csvPath = path.resolve(process.cwd(), 'public/data/deepvar/time-series-data.csv');
@@ -45,8 +54,134 @@ async function main() {
     const values = line.split(',');
     const year = parseInt(values[idxYear]);
 
-    // Only include years 2016–2026
-    if (year < 2016 || year > 2026) continue;
+    timeSeriesData.push({
+      barangay_id:   String(values[idxBarangayId]),
+      barangay_name: String(values[idxBrgyName]),
+      year,
+      quarter:       parseInt(values[idxQuarter]),
+      bare_ground:   parseFloat(values[idxBareGround]),
+      built_up_area: parseFloat(values[idxBuiltArea]),
+      crops:         parseFloat(values[idxCrops]),
+      grass:         parseFloat(values[idxGrass]),
+      shrub_and_scrub: parseFloat(values[idxShrubScrub]),
+      trees:         parseFloat(values[idxTrees]),
+      water:         parseFloat(values[idxWater]),
+    });
+  }
+
+  console.log(`Seeding ${timeSeriesData.length} records from 2016-2025 into LandCoverTimeSeries table...`);
+
+  await prisma.landCoverTimeSeries.createMany({
+    data: timeSeriesData,
+    skipDuplicates: true,
+  });
+
+  // ── Seed Years ─────────────────────────────────────────────────────────────
+  console.log('Seeding Years table from 2016-2026 where 2026 is the forecast year...');
+
+  // length 11 - 2016-2026
+  await prisma.years.createMany({
+    data: Array.from({ length: 11 }, (_, i) => ({ year: 2016 + i })),
+    skipDuplicates: true,
+  });
+  
+  // ── Seed Models ────────────────────────────────────────────────────────────
+  console.log('Seeding Models...');
+
+  const deeplab = await prisma.models.create({
+    data: { model_name: 'DeepLabV3+' },
+  });
+
+  const deepvar = await prisma.models.create({
+    data: { model_name: 'DeepVAR' },
+  });
+
+  // ── Seed ModelsRun ─────────────────────────────────────────────────────────
+  console.log('Seeding ModelsRun...');
+
+  const bothModelsRun = await prisma.modelsRun.create({
+    data: {
+      forecast_year:    2026,
+      training_status:  'trained',
+      inference_status: 'completed',
+      training_date:    new Date('2026-01-01'),
+    },
+  });
+
+  // ── Seed DeepLabPerformance ────────────────────────────────────────────────
+  console.log('Seeding DeepLabPerformance...');
+
+  await prisma.deepLabPerformance.create({
+    data: {
+      model_run_id: bothModelsRun.id,
+      model_id:     deeplab.model_id,
+      iou:          67.095,
+      accuracy:     93.57,
+      precision:    73,
+      recall:       70.74,
+      f1_score:     71.39,
+    },
+  });
+
+  // ── Seed DeepVarPerformance ────────────────────────────────────────────────
+  console.log('Seeding DeepVarPerformance...');
+
+  await prisma.deepVarPerformance.create({
+    data: {
+      model_run_id: bothModelsRun.id,
+      model_id:     deepvar.model_id,
+      mae:  0.039391,
+      rmse: 0.071678,
+      r2:   0.9504,
+      crps: -0.030484,
+    },
+  });
+
+  console.log('Seeding completed successfully.');
+}
+
+/**
+ * 2016-2024 actual land cover time series data
+ * 2025 forecast land cover data
+ * No performance metrics data
+ */
+async function seedDynamicModelDemo() {
+  console.log('Seeding dynamic model demo...');
+
+  // ── Seed LandCoverTimeSeries from CSV ──────────────────────────────────────
+  const csvPath = path.resolve(process.cwd(), 'public/data/deepvar/time-series-data.csv');
+  const csvContent = fs.readFileSync(csvPath, 'utf-8');
+
+  const lines = csvContent.trim().split('\n');
+  const headers = lines[0].trim().split(',');
+
+  const timeSeriesData = [];
+
+  // Columns in CSV: BRGY_NAME, bare_ground, built_area, crops, flooded_vegetation, grass,
+  // quarter, shrub_and_scrub, snow_and_ice, trees, water, year, baranggay_id
+  const getIndex = (name: string) => headers.indexOf(name);
+
+  const idxBrgyName    = getIndex('BRGY_NAME');
+  const idxBareGround  = getIndex('bare_ground');
+  const idxBuiltArea   = getIndex('built_area');
+  const idxCrops       = getIndex('crops');
+  const idxGrass       = getIndex('grass');
+  const idxQuarter     = getIndex('quarter');
+  const idxShrubScrub  = getIndex('shrub_and_scrub');
+  const idxTrees       = getIndex('trees');
+  const idxWater       = getIndex('water');
+  const idxYear        = getIndex('year');
+  const idxBarangayId  = getIndex('baranggay_id');
+
+  for (let i = 1; i < lines.length; i++) {
+    const line = lines[i].trim();
+    if (!line) continue;
+
+    const values = line.split(',');
+    const year = parseInt(values[idxYear]);
+
+    // only seed up to 2024 because 2025 is the forecast year
+    if(year > 2024) continue;
 
     timeSeriesData.push({
       barangay_id:   String(values[idxBarangayId]),
@@ -63,7 +198,7 @@ async function main() {
     });
   }
 
-  console.log(`Seeding ${timeSeriesData.length} records into LandCoverTimeSeries (2016–2026)...`);
+  console.log(`Seeding ${timeSeriesData.length} records from 2016-2024 into LandCoverTimeSeries table...`);
 
   await prisma.landCoverTimeSeries.createMany({
     data: timeSeriesData,
@@ -71,13 +206,14 @@ async function main() {
   });
 
   // ── Seed Years ─────────────────────────────────────────────────────────────
-  console.log('Seeding Years (2016–2026)...');
+  console.log('Seeding Years table from 2016-2025 where 2025 is the forecast year...');
 
+  // length 10 - 2016-2025
   await prisma.years.createMany({
-    data: Array.from({ length: 11 }, (_, i) => ({ year: 2016 + i })),
+    data: Array.from({ length: 10 }, (_, i) => ({ year: 2016 + i })),
     skipDuplicates: true,
   });
-
+  
   // ── Seed Models ────────────────────────────────────────────────────────────
   console.log('Seeding Models...');
 
@@ -92,21 +228,12 @@ async function main() {
   // ── Seed ModelsRun ─────────────────────────────────────────────────────────
   console.log('Seeding ModelsRun...');
 
-  const deeplabRun = await prisma.modelsRun.create({
+  const bothModelsRun = await prisma.modelsRun.create({
     data: {
-      forecast_year:    2026,
-      training_status:  'trained',
-      inference_status: 'completed',
-      training_date:    new Date('2026-01-01'),
-    },
-  });
-
-  const deepvarRun = await prisma.modelsRun.create({
-    data: {
-      forecast_year:    2026,
-      training_status:  'trained',
-      inference_status: 'completed',
-      training_date:    new Date('2026-01-01'),
+      forecast_year:    2025,
+      training_status:  'not_started',
+      inference_status: 'not_started',
+      training_date:    null,
     },
   });
 
@@ -115,13 +242,13 @@ async function main() {
 
   await prisma.deepLabPerformance.create({
     data: {
-      model_run_id: deeplabRun.id,
+      model_run_id: bothModelsRun.id,
       model_id:     deeplab.model_id,
-      iou:          67.095,
-      accuracy:     93.57,
-      precision:    73,
-      recall:       70.74,
-      f1_score:     71.39,
+      iou:          0,
+      accuracy:     0,
+      precision:    0,
+      recall:       0,
+      f1_score:     0,
     },
   });
 
@@ -130,19 +257,32 @@ async function main() {
 
   await prisma.deepVarPerformance.create({
     data: {
-      model_run_id: deepvarRun.id,
+      model_run_id: bothModelsRun.id,
       model_id:     deepvar.model_id,
-      mae:  0.039391,
-      rmse: 0.071678,
-      r2:   0.9504,
-      crps: -0.030484,
+      mae:  0,
+      rmse: 0,
+      r2:   0,
+      crps: 0,
     },
   });
 
   console.log('Seeding completed successfully.');
 }
 
-main()
+async function main(args: string[]) {
+  // check whether args[0] is actual_data or dynamic_model_demo
+  if(args[0] === 'complete_data') {
+    await clearAllData();
+    await seedActualData();
+  } else if(args[0] === 'dynamic_model_demo') {
+    await clearAllData();
+    await seedDynamicModelDemo();
+  } else {
+    throw new Error('Invalid argument. Please provide an argument either "complete_data" or "dynamic_model_demo".');
+  }
+}
+
+main(process.argv.slice(2))
   .catch((e) => {
     console.error(e);
     process.exit(1);

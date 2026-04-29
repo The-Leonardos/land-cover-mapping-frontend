@@ -81,6 +81,7 @@ export async function getBarangayAllYearsTimeSeries(
     }))
 
     // Append mock forecast data for every barangay, based on its last historical point
+    //todo: to be removed
     const lastHistorical = data[data.length - 1]
     if (lastHistorical) {
       data.push(...getMockForecastData(lastHistorical))
