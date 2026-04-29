@@ -113,7 +113,7 @@ async function seedActualData() {
 
   await prisma.deepLabPerformance.create({
     data: {
-      model_run_id: bothModelsRun.id,
+      forecast_year: bothModelsRun.forecast_year,
       model_id:     deeplab.model_id,
       iou:          67.095,
       accuracy:     93.57,
@@ -128,7 +128,7 @@ async function seedActualData() {
 
   await prisma.deepVarPerformance.create({
     data: {
-      model_run_id: bothModelsRun.id,
+      forecast_year: bothModelsRun.forecast_year,
       model_id:     deepvar.model_id,
       mae:  0.039391,
       rmse: 0.071678,
@@ -240,7 +240,7 @@ async function seedDynamicModelDemo() {
 
   await prisma.deepLabPerformance.create({
     data: {
-      model_run_id: modelsRun2025.id,
+      forecast_year: modelsRun2025.forecast_year,
       model_id:     deeplab.model_id,
       iou:          67.095,
       accuracy:     93.57,
@@ -255,7 +255,7 @@ async function seedDynamicModelDemo() {
 
   await prisma.deepVarPerformance.create({
     data: {
-      model_run_id: modelsRun2025.id,
+      forecast_year: modelsRun2025.forecast_year,
       model_id:     deepvar.model_id,
       mae:          0.039391,
       rmse:         0.071678,
@@ -282,7 +282,7 @@ async function seedDynamicModelDemo() {
 
   await prisma.deepLabPerformance.create({
     data: {
-      model_run_id: modelsRun2026.id,
+      forecast_year: modelsRun2026.forecast_year,
       model_id:     deeplab.model_id,
       iou:          null,
       accuracy:     null,
@@ -297,7 +297,7 @@ async function seedDynamicModelDemo() {
 
   await prisma.deepVarPerformance.create({
     data: {
-      model_run_id: modelsRun2026.id,
+      forecast_year: modelsRun2026.forecast_year,
       model_id:     deepvar.model_id,
       mae:          null,
       rmse:         null,
