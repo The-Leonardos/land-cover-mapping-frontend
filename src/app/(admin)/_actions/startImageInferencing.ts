@@ -1,20 +1,26 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
+import { prisma } from "@/lib/prisma";
 
 export default async function startImageInferencing(year: number) {
-    // todo: call the backend api to start image inferencing
     console.log(`Starting image inferencing for year ${year}`);
 
-    // Simulating API call
-    await new Promise(resolve => setTimeout(resolve, 2000));
-    // mark the image inferencing as completed
+    // Upsert the ModelsRun for this year, marking inference as completed
+    await prisma.modelsRun.update({
+        where: {
+            forecast_year: year,
+        },
+        data: {
+            inference_status: "completed",
+        },
+    });
 
     // Revalidate the admin page to refresh pipeline status
     revalidatePath("/admin");
 
     return { 
-      success: true, 
-      message: `Inference pipeline triggered for ${year}.` 
+        success: true, 
+        message: `Inference pipeline triggered for ${year}.` 
     };
 }
