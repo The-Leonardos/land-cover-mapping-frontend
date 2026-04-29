@@ -19,9 +19,13 @@ export const DynamicWorldImageRenderer: React.FC<DynamicWorldImageRendererProps>
         const tiff = await fromUrl(url);
         const image = await tiff.getImage();
 
+        console.log('URL: ', url);
+        console.log('image: ', image);
+
+
         const width = image.getWidth();
         const height = image.getHeight();
-        // console.log("Image dimensions:", width, "x", height);
+        console.log("Image dimensions:", width, "x", height);
 
         // Dynamic world images might use different bands, but we will preserve 
         // the RGB rendering logic from the original tiff renderer.
@@ -31,10 +35,12 @@ export const DynamicWorldImageRenderer: React.FC<DynamicWorldImageRendererProps>
           interleave: false,
         });
 
+        console.log('rasters: ', rasters);
+
         if (isCancelled) return;
 
         const [redBand, greenBand, blueBand] = rasters as any;
-        // console.log("First pixel (R,G,B):", redBand[0], greenBand[0], blueBand[0]);
+        console.log("First pixel (R,G,B):", redBand[0], greenBand[0], blueBand[0]);
 
         const canvas = canvasRef.current;
         if (!canvas) return;
@@ -51,6 +57,8 @@ export const DynamicWorldImageRenderer: React.FC<DynamicWorldImageRendererProps>
         // Dynamic world raw RGB images might need different gain settings
         // Assuming 255-based colors if they are byte or similar reflectance scaling
         const isByte = redBand instanceof Uint8Array || redBand instanceof Uint8ClampedArray;
+        console.log("isByte: ", isByte);
+
         // Adjust saturated points dynamically based on type
         const gain = isByte ? 1 : (255 / 0.3);
 
@@ -66,7 +74,7 @@ export const DynamicWorldImageRenderer: React.FC<DynamicWorldImageRendererProps>
         }
 
         ctx.putImageData(imageData, 0, 0);
-        // console.log("Render complete");
+        console.log("Render complete");
       } catch (err) {
         console.error("Error rendering TIFF:", err);
       }
