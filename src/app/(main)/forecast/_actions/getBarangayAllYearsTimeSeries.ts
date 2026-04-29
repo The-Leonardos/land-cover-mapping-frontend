@@ -15,21 +15,21 @@ export interface TimeSeriesDataPoint {
 }
 
 /**
- * Generates deterministic mock forecast data for CAMP 7 only.
- * Simulates 10-year lookahead (2026–2035) with realistic urban growth trends.
+ * Generates deterministic mock forecast data for any barangay.
+ * Derives base values from the last historical data point so trends feel
+ * continuous, then simulates a 10-year lookahead (2026–2035).
  */
-function getCamp7MockForecastData(): TimeSeriesDataPoint[] {
+function getMockForecastData(lastHistorical: TimeSeriesDataPoint): TimeSeriesDataPoint[] {
   const mockData: TimeSeriesDataPoint[] = []
 
-  // Base values approximating CAMP 7's last historical year
   const base = {
-    water: 0.3,
-    trees: 30,
-    grass: 5,
-    crops: 2,
-    shrub_and_scrub: 3,
-    built_up_area: 55,
-    bare_ground: 1.5,
+    water: lastHistorical.water,
+    trees: lastHistorical.trees,
+    grass: lastHistorical.grass,
+    crops: lastHistorical.crops,
+    shrub_and_scrub: lastHistorical.shrub_and_scrub,
+    built_up_area: lastHistorical.built_up_area,
+    bare_ground: lastHistorical.bare_ground,
   }
 
   for (let year = 2026; year <= 2035; year++) {
@@ -57,7 +57,7 @@ function getCamp7MockForecastData(): TimeSeriesDataPoint[] {
 
 /**
  * Fetches all time series data for a barangay across every year from the database.
- * For CAMP 7 only, appends 10 years of mock forecast data (2026–2035).
+ * Appends 10 years of mock forecast data (2026–2035) for every barangay.
  */
 export async function getBarangayAllYearsTimeSeries(
   barangayName: string
@@ -80,9 +80,10 @@ export async function getBarangayAllYearsTimeSeries(
       bare_ground: d.bare_ground,
     }))
 
-    // Add mock forecast data for CAMP 7 only
-    if (barangayName.toUpperCase() === "CAMP 7") {
-      data.push(...getCamp7MockForecastData())
+    // Append mock forecast data for every barangay, based on its last historical point
+    const lastHistorical = data[data.length - 1]
+    if (lastHistorical) {
+      data.push(...getMockForecastData(lastHistorical))
     }
 
     return data

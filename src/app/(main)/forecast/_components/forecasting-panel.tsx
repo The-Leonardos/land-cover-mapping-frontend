@@ -70,12 +70,6 @@ export function ForecastingPanel({ selectedBarangay }: ForecastingPanelProps) {
     [rawData, startYear, endYear, currentYear, timeStep]
   )
 
-  // Check if the full dataset (not just the filtered view) has forecast data
-  const hasForecastData = useMemo(
-    () => rawData.some((d) => d.year >= currentYear),
-    [rawData, currentYear]
-  )
-
   const yearRange: [number, number] | null =
     availableYears.length > 0
       ? [availableYears[0], availableYears[availableYears.length - 1]]
@@ -114,7 +108,6 @@ export function ForecastingPanel({ selectedBarangay }: ForecastingPanelProps) {
       {/* Header */}
       <ForecastHeader
         selectedBarangay={selectedBarangay}
-        hasForecastData={hasForecastData}
         yearRange={yearRange}
       />
 
@@ -147,7 +140,6 @@ export function ForecastingPanel({ selectedBarangay }: ForecastingPanelProps) {
         <ForecastChart
           chartData={chartData}
           selectedClasses={selectedClasses}
-          currentYear={currentYear}
           selectedBarangay={selectedBarangay!}
         />
       </div>
