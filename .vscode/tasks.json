@@ -36,6 +36,15 @@
 				"reveal": "always",
 				"panel": "new"
 			}
+		},
+		{
+			"label": "✅ Mark Models as Trained for 2026",
+			"type": "shell",
+			"command": "npx tsx prisma/magic.ts 2026",
+			"presentation": {
+				"reveal": "always",
+				"panel": "new"
+			}
 		}
 	]
 }
