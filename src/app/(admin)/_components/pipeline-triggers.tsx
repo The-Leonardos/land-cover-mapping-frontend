@@ -1,11 +1,17 @@
 import { getPipelineStatus } from "../_actions/getPipelineStatus";
 import { TriggerButtons } from "./trigger-buttons";
 import InfoDialog from "./info-dialog";
+import { getYears } from "@/actions/getYears";
 
 export async function PipelineTriggers() {
-  // Use UTC time for system-wide consistency
-  const now = new Date();
-  const currentYear = now.getUTCFullYear();
+  const currentYear = (await getYears()).at(-1);
+
+  if(!currentYear) return null
+
+  // Simulate "now" relative to the latest DB year so the pipeline logic works
+  // even when the real calendar year is ahead of the data (e.g. mocking 2023 in 2026).
+  const _today = new Date();
+  const now = new Date(Date.UTC(currentYear, _today.getUTCMonth(), _today.getUTCDate()));
 
   // 1. Fetch current status from the database/API
   const { modelStatus, inferenceStatus } = await getPipelineStatus(currentYear);
