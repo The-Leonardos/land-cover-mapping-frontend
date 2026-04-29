@@ -180,9 +180,6 @@ async function seedDynamicModelDemo() {
     const values = line.split(',');
     const year = parseInt(values[idxYear]);
 
-    // only seed up to 2024 because 2025 is the forecast year
-    if(year > 2024) continue;
-
     timeSeriesData.push({
       barangay_id:   String(values[idxBarangayId]),
       barangay_name: String(values[idxBrgyName]),
@@ -198,7 +195,7 @@ async function seedDynamicModelDemo() {
     });
   }
 
-  console.log(`Seeding ${timeSeriesData.length} records from 2016-2024 into LandCoverTimeSeries table...`);
+  console.log(`Seeding ${timeSeriesData.length} records from 2016-2025 into LandCoverTimeSeries table...`);
 
   await prisma.landCoverTimeSeries.createMany({
     data: timeSeriesData,
@@ -206,11 +203,11 @@ async function seedDynamicModelDemo() {
   });
 
   // ── Seed Years ─────────────────────────────────────────────────────────────
-  console.log('Seeding Years table from 2016-2025 where 2025 is the forecast year...');
+  console.log('Seeding Years table from 2016-2026 where 2026 is the forecast year...');
 
-  // length 10 - 2016-2025
+  // length 11 - 2016-2026
   await prisma.years.createMany({
-    data: Array.from({ length: 10 }, (_, i) => ({ year: 2016 + i })),
+    data: Array.from({ length: 11 }, (_, i) => ({ year: 2016 + i })),
     skipDuplicates: true,
   });
   
@@ -226,11 +223,54 @@ async function seedDynamicModelDemo() {
   });
 
   // ── Seed ModelsRun ─────────────────────────────────────────────────────────
-  console.log('Seeding ModelsRun...');
+  console.log('Seeding ModelsRun where 2025 is the previous year and has metrics...');
 
-  const bothModelsRun = await prisma.modelsRun.create({
+  
+  const modelsRun2025 = await prisma.modelsRun.create({
     data: {
       forecast_year:    2025,
+      training_status:  'trained',
+      inference_status: 'completed',
+      training_date:    new Date('2025-01-01'),
+    },
+  });
+
+  // ── Seed DeepLabPerformance ────────────────────────────────────────────────
+  console.log('Seeding DeepLabPerformance for 2025...');
+
+  await prisma.deepLabPerformance.create({
+    data: {
+      model_run_id: modelsRun2025.id,
+      model_id:     deeplab.model_id,
+      iou:          67.095,
+      accuracy:     93.57,
+      precision:    73,
+      recall:       70.74,
+      f1_score:     71.39,
+    },
+  });
+
+  // ── Seed DeepVarPerformance ────────────────────────────────────────────────
+  console.log('Seeding DeepVarPerformance for 2025...');
+
+  await prisma.deepVarPerformance.create({
+    data: {
+      model_run_id: modelsRun2025.id,
+      model_id:     deepvar.model_id,
+      mae:          0.039391,
+      rmse:         0.071678,
+      r2:           0.9504,
+      crps:         -0.030484,
+    },
+  });
+
+  // ── Seed ModelsRun (Dynamic Modelling) ────────────────────────────────────
+  console.log('Seeding ModelsRun for 2026 where it does not have metrics yet');
+
+  
+  const modelsRun2026 = await prisma.modelsRun.create({
+    data: {
+      forecast_year:    2026,
       training_status:  'not_started',
       inference_status: 'not_started',
       training_date:    null,
@@ -238,31 +278,31 @@ async function seedDynamicModelDemo() {
   });
 
   // ── Seed DeepLabPerformance ────────────────────────────────────────────────
-  console.log('Seeding DeepLabPerformance...');
+  console.log('Seeding DeepLabPerformance for 2026...');
 
   await prisma.deepLabPerformance.create({
     data: {
-      model_run_id: bothModelsRun.id,
+      model_run_id: modelsRun2026.id,
       model_id:     deeplab.model_id,
-      iou:          0,
-      accuracy:     0,
-      precision:    0,
-      recall:       0,
-      f1_score:     0,
+      iou:          null,
+      accuracy:     null,
+      precision:    null,
+      recall:       null,
+      f1_score:     null,
     },
   });
 
   // ── Seed DeepVarPerformance ────────────────────────────────────────────────
-  console.log('Seeding DeepVarPerformance...');
+  console.log('Seeding DeepVarPerformance for 2026...');
 
   await prisma.deepVarPerformance.create({
     data: {
-      model_run_id: bothModelsRun.id,
+      model_run_id: modelsRun2026.id,
       model_id:     deepvar.model_id,
-      mae:  0,
-      rmse: 0,
-      r2:   0,
-      crps: 0,
+      mae:          null,
+      rmse:         null,
+      r2:           null,
+      crps:         null,
     },
   });
 
