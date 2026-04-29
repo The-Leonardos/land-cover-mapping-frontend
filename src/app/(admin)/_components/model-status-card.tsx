@@ -4,8 +4,9 @@ import { useEffect, useState } from "react";
 import { getPipelineStatus, ModelStatus } from "../_actions/getPipelineStatus";
 import { useBarangayStore } from "@/app/(main)/map/_stores/barangayStore";
 import { ModelStatusCardSkeleton } from "../_skeletons/model-status-card-skeleton";
+import { usePipelineStore } from "../_stores/pipelineStore";
 
-  const statusStyles = {
+const statusStyles = {
     not_started: {
       color: "text-zinc-400",
       bg: "bg-zinc-500/10",
@@ -26,36 +27,37 @@ import { ModelStatusCardSkeleton } from "../_skeletons/model-status-card-skeleto
     },
   };
 
-const REFRESH_INTERVAL = 5000; // 10 seconds
+const REFRESH_INTERVAL = 5000;
 
 /**
- * Fetches the current status of the model training pipeline every 10 seconds.
- * @returns ModelStatusCard component
+ * Polls the pipeline status every 5 seconds and broadcasts it to the
+ * shared pipelineStore so TriggerButtons and MetricsTables stay in sync.
  */
 export function ModelStatusCard() {
   const [status, setStatus] = useState<ModelStatus | null>(null);
   const latestYear = useBarangayStore((state) => state.YEARS).at(-1);
   const fetchYears = useBarangayStore((state) => state.fetchYears);
-  
+  const setPipelineStatus = usePipelineStore((state) => state.setPipelineStatus);
+
   // fetch years on mount 
   useEffect(() => {
     fetchYears();
   }, [fetchYears]);
 
-  
-  // Polling pipeline status every 10 seconds
+  // Polling pipeline status every 5 seconds and syncing to shared store
   useEffect(() => {
     if (!latestYear) return;
     
     const updatePipelineStatus = async () => {
       const pipelineStatus = await getPipelineStatus(latestYear);
       setStatus(pipelineStatus.modelStatus);
-    }
+      setPipelineStatus(pipelineStatus.modelStatus, pipelineStatus.inferenceStatus);
+    };
     updatePipelineStatus();
     const interval = setInterval(updatePipelineStatus, REFRESH_INTERVAL);
     
     return () => clearInterval(interval);
-  }, [latestYear]);
+  }, [latestYear, setPipelineStatus]);
   
   // Show skeleton while the first status fetch is in flight
   if (status === null) return <ModelStatusCardSkeleton />;

@@ -1,7 +1,13 @@
+"use client";
+
+import { useEffect, useState } from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { getDeepLabMetrics } from "../_actions/getDeepLabMetrics";
 import { getDeepVarMetrics } from "../_actions/getDeepVarMetrics";
 import MetricsInfoDialog from "./metrics-info-dialog";
+import { MetricsTablesSkeleton } from "../_skeletons/metrics-tables-skeleton";
+import { usePipelineStore } from "../_stores/pipelineStore";
+import type { DeepLabMetrics, DeepVarMetrics } from "@/lib/types/metrics";
 
 const InfoIcon = () => (
   <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -11,9 +17,27 @@ const InfoIcon = () => (
   </svg>
 );
 
-export async function MetricsTables() {
-  const deepLabMetrics = await getDeepLabMetrics();
-  const deepVarMetrics = await getDeepVarMetrics();
+export function MetricsTables() {
+  const [deepLabMetrics, setDeepLabMetrics] = useState<DeepLabMetrics[] | null>(null);
+  const [deepVarMetrics, setDeepVarMetrics] = useState<DeepVarMetrics[] | null>(null);
+
+  const modelStatus = usePipelineStore((state) => state.modelStatus);
+
+  // Fetch metrics on mount and whenever modelStatus transitions to "trained"
+  useEffect(() => {
+    async function fetchMetrics() {
+      const [deepLab, deepVar] = await Promise.all([
+        getDeepLabMetrics(),
+        getDeepVarMetrics(),
+      ]);
+      setDeepLabMetrics(deepLab);
+      setDeepVarMetrics(deepVar);
+    }
+
+    fetchMetrics();
+  }, [modelStatus]); // re-fetches on every status change (not_started → training → trained)
+
+  if (!deepLabMetrics || !deepVarMetrics) return <MetricsTablesSkeleton />;
 
   return (
     <Tabs defaultValue="image-prediction" className="w-full text-zinc-100 flex flex-col">

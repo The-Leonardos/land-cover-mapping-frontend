@@ -6,7 +6,8 @@ import { prisma } from "@/lib/prisma";
 export default async function startImageInferencing(year: number) {
     console.log(`Starting image inferencing for year ${year}`);
 
-    // Upsert the ModelsRun for this year, marking inference as completed
+    await new Promise((resolve) => setTimeout(resolve, 10000));
+
     await prisma.modelsRun.update({
         where: {
             forecast_year: year,
