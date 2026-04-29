@@ -13,7 +13,16 @@
 		{
 			"label": "🌱 Seed Data (Complete Data)",
 			"type": "shell",
-			"command": "npx prisma db seed",
+			"command": "npx prisma db seed complete_data",
+			"presentation": {
+				"reveal": "always",
+				"panel": "new"
+			}
+		},
+		{
+			"label": "🌿 Seed Data (Dynamic Model Demo)",
+			"type": "shell",
+			"command": "npx prisma db seed dynamic_model_demo",
 			"presentation": {
 				"reveal": "always",
 				"panel": "new"
