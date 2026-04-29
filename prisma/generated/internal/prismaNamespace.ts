@@ -386,7 +386,6 @@ type FieldRefInputType<Model, FieldType> = Model extends never ? never : FieldRe
 export const ModelName = {
   LandCoverTimeSeries: 'LandCoverTimeSeries',
   Years: 'Years',
-  Models: 'Models',
   ModelsRun: 'ModelsRun',
   DeepLabPerformance: 'DeepLabPerformance',
   DeepVarPerformance: 'DeepVarPerformance'
@@ -405,7 +404,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "landCoverTimeSeries" | "years" | "models" | "modelsRun" | "deepLabPerformance" | "deepVarPerformance"
+    modelProps: "landCoverTimeSeries" | "years" | "modelsRun" | "deepLabPerformance" | "deepVarPerformance"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -554,80 +553,6 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         count: {
           args: Prisma.YearsCountArgs<ExtArgs>
           result: runtime.Types.Utils.Optional<Prisma.YearsCountAggregateOutputType> | number
-        }
-      }
-    }
-    Models: {
-      payload: Prisma.$ModelsPayload<ExtArgs>
-      fields: Prisma.ModelsFieldRefs
-      operations: {
-        findUnique: {
-          args: Prisma.ModelsFindUniqueArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ModelsPayload> | null
-        }
-        findUniqueOrThrow: {
-          args: Prisma.ModelsFindUniqueOrThrowArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ModelsPayload>
-        }
-        findFirst: {
-          args: Prisma.ModelsFindFirstArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ModelsPayload> | null
-        }
-        findFirstOrThrow: {
-          args: Prisma.ModelsFindFirstOrThrowArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ModelsPayload>
-        }
-        findMany: {
-          args: Prisma.ModelsFindManyArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ModelsPayload>[]
-        }
-        create: {
-          args: Prisma.ModelsCreateArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ModelsPayload>
-        }
-        createMany: {
-          args: Prisma.ModelsCreateManyArgs<ExtArgs>
-          result: BatchPayload
-        }
-        createManyAndReturn: {
-          args: Prisma.ModelsCreateManyAndReturnArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ModelsPayload>[]
-        }
-        delete: {
-          args: Prisma.ModelsDeleteArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ModelsPayload>
-        }
-        update: {
-          args: Prisma.ModelsUpdateArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ModelsPayload>
-        }
-        deleteMany: {
-          args: Prisma.ModelsDeleteManyArgs<ExtArgs>
-          result: BatchPayload
-        }
-        updateMany: {
-          args: Prisma.ModelsUpdateManyArgs<ExtArgs>
-          result: BatchPayload
-        }
-        updateManyAndReturn: {
-          args: Prisma.ModelsUpdateManyAndReturnArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ModelsPayload>[]
-        }
-        upsert: {
-          args: Prisma.ModelsUpsertArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ModelsPayload>
-        }
-        aggregate: {
-          args: Prisma.ModelsAggregateArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.AggregateModels>
-        }
-        groupBy: {
-          args: Prisma.ModelsGroupByArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.ModelsGroupByOutputType>[]
-        }
-        count: {
-          args: Prisma.ModelsCountArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.ModelsCountAggregateOutputType> | number
         }
       }
     }
@@ -916,14 +841,6 @@ export const YearsScalarFieldEnum = {
 export type YearsScalarFieldEnum = (typeof YearsScalarFieldEnum)[keyof typeof YearsScalarFieldEnum]
 
 
-export const ModelsScalarFieldEnum = {
-  model_id: 'model_id',
-  model_name: 'model_name'
-} as const
-
-export type ModelsScalarFieldEnum = (typeof ModelsScalarFieldEnum)[keyof typeof ModelsScalarFieldEnum]
-
-
 export const ModelsRunScalarFieldEnum = {
   forecast_year: 'forecast_year',
   training_status: 'training_status',
@@ -936,7 +853,7 @@ export type ModelsRunScalarFieldEnum = (typeof ModelsRunScalarFieldEnum)[keyof t
 
 export const DeepLabPerformanceScalarFieldEnum = {
   forecast_year: 'forecast_year',
-  model_id: 'model_id',
+  model_name: 'model_name',
   iou: 'iou',
   accuracy: 'accuracy',
   precision: 'precision',
@@ -949,7 +866,7 @@ export type DeepLabPerformanceScalarFieldEnum = (typeof DeepLabPerformanceScalar
 
 export const DeepVarPerformanceScalarFieldEnum = {
   forecast_year: 'forecast_year',
-  model_id: 'model_id',
+  model_name: 'model_name',
   mae: 'mae',
   rmse: 'rmse',
   r2: 'r2',
@@ -1169,7 +1086,6 @@ export type PrismaClientOptions = ({
 export type GlobalOmitConfig = {
   landCoverTimeSeries?: Prisma.LandCoverTimeSeriesOmit
   years?: Prisma.YearsOmit
-  models?: Prisma.ModelsOmit
   modelsRun?: Prisma.ModelsRunOmit
   deepLabPerformance?: Prisma.DeepLabPerformanceOmit
   deepVarPerformance?: Prisma.DeepVarPerformanceOmit

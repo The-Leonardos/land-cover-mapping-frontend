@@ -46,7 +46,7 @@ export type DeepLabPerformanceSumAggregateOutputType = {
 
 export type DeepLabPerformanceMinAggregateOutputType = {
   forecast_year: number | null
-  model_id: string | null
+  model_name: string | null
   iou: number | null
   accuracy: number | null
   precision: number | null
@@ -56,7 +56,7 @@ export type DeepLabPerformanceMinAggregateOutputType = {
 
 export type DeepLabPerformanceMaxAggregateOutputType = {
   forecast_year: number | null
-  model_id: string | null
+  model_name: string | null
   iou: number | null
   accuracy: number | null
   precision: number | null
@@ -66,7 +66,7 @@ export type DeepLabPerformanceMaxAggregateOutputType = {
 
 export type DeepLabPerformanceCountAggregateOutputType = {
   forecast_year: number
-  model_id: number
+  model_name: number
   iou: number
   accuracy: number
   precision: number
@@ -96,7 +96,7 @@ export type DeepLabPerformanceSumAggregateInputType = {
 
 export type DeepLabPerformanceMinAggregateInputType = {
   forecast_year?: true
-  model_id?: true
+  model_name?: true
   iou?: true
   accuracy?: true
   precision?: true
@@ -106,7 +106,7 @@ export type DeepLabPerformanceMinAggregateInputType = {
 
 export type DeepLabPerformanceMaxAggregateInputType = {
   forecast_year?: true
-  model_id?: true
+  model_name?: true
   iou?: true
   accuracy?: true
   precision?: true
@@ -116,7 +116,7 @@ export type DeepLabPerformanceMaxAggregateInputType = {
 
 export type DeepLabPerformanceCountAggregateInputType = {
   forecast_year?: true
-  model_id?: true
+  model_name?: true
   iou?: true
   accuracy?: true
   precision?: true
@@ -213,7 +213,7 @@ export type DeepLabPerformanceGroupByArgs<ExtArgs extends runtime.Types.Extensio
 
 export type DeepLabPerformanceGroupByOutputType = {
   forecast_year: number
-  model_id: string
+  model_name: string
   iou: number | null
   accuracy: number | null
   precision: number | null
@@ -246,47 +246,44 @@ export type DeepLabPerformanceWhereInput = {
   OR?: Prisma.DeepLabPerformanceWhereInput[]
   NOT?: Prisma.DeepLabPerformanceWhereInput | Prisma.DeepLabPerformanceWhereInput[]
   forecast_year?: Prisma.IntFilter<"DeepLabPerformance"> | number
-  model_id?: Prisma.StringFilter<"DeepLabPerformance"> | string
+  model_name?: Prisma.StringFilter<"DeepLabPerformance"> | string
   iou?: Prisma.FloatNullableFilter<"DeepLabPerformance"> | number | null
   accuracy?: Prisma.FloatNullableFilter<"DeepLabPerformance"> | number | null
   precision?: Prisma.FloatNullableFilter<"DeepLabPerformance"> | number | null
   recall?: Prisma.FloatNullableFilter<"DeepLabPerformance"> | number | null
   f1_score?: Prisma.FloatNullableFilter<"DeepLabPerformance"> | number | null
-  model?: Prisma.XOR<Prisma.ModelsScalarRelationFilter, Prisma.ModelsWhereInput>
   model_run?: Prisma.XOR<Prisma.ModelsRunScalarRelationFilter, Prisma.ModelsRunWhereInput>
 }
 
 export type DeepLabPerformanceOrderByWithRelationInput = {
   forecast_year?: Prisma.SortOrder
-  model_id?: Prisma.SortOrder
+  model_name?: Prisma.SortOrder
   iou?: Prisma.SortOrderInput | Prisma.SortOrder
   accuracy?: Prisma.SortOrderInput | Prisma.SortOrder
   precision?: Prisma.SortOrderInput | Prisma.SortOrder
   recall?: Prisma.SortOrderInput | Prisma.SortOrder
   f1_score?: Prisma.SortOrderInput | Prisma.SortOrder
-  model?: Prisma.ModelsOrderByWithRelationInput
   model_run?: Prisma.ModelsRunOrderByWithRelationInput
 }
 
 export type DeepLabPerformanceWhereUniqueInput = Prisma.AtLeast<{
   forecast_year?: number
-  forecast_year_model_id?: Prisma.DeepLabPerformanceForecast_yearModel_idCompoundUniqueInput
+  forecast_year_model_name?: Prisma.DeepLabPerformanceForecast_yearModel_nameCompoundUniqueInput
   AND?: Prisma.DeepLabPerformanceWhereInput | Prisma.DeepLabPerformanceWhereInput[]
   OR?: Prisma.DeepLabPerformanceWhereInput[]
   NOT?: Prisma.DeepLabPerformanceWhereInput | Prisma.DeepLabPerformanceWhereInput[]
-  model_id?: Prisma.StringFilter<"DeepLabPerformance"> | string
+  model_name?: Prisma.StringFilter<"DeepLabPerformance"> | string
   iou?: Prisma.FloatNullableFilter<"DeepLabPerformance"> | number | null
   accuracy?: Prisma.FloatNullableFilter<"DeepLabPerformance"> | number | null
   precision?: Prisma.FloatNullableFilter<"DeepLabPerformance"> | number | null
   recall?: Prisma.FloatNullableFilter<"DeepLabPerformance"> | number | null
   f1_score?: Prisma.FloatNullableFilter<"DeepLabPerformance"> | number | null
-  model?: Prisma.XOR<Prisma.ModelsScalarRelationFilter, Prisma.ModelsWhereInput>
   model_run?: Prisma.XOR<Prisma.ModelsRunScalarRelationFilter, Prisma.ModelsRunWhereInput>
-}, "forecast_year_model_id" | "forecast_year">
+}, "forecast_year_model_name" | "forecast_year">
 
 export type DeepLabPerformanceOrderByWithAggregationInput = {
   forecast_year?: Prisma.SortOrder
-  model_id?: Prisma.SortOrder
+  model_name?: Prisma.SortOrder
   iou?: Prisma.SortOrderInput | Prisma.SortOrder
   accuracy?: Prisma.SortOrderInput | Prisma.SortOrder
   precision?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -304,7 +301,7 @@ export type DeepLabPerformanceScalarWhereWithAggregatesInput = {
   OR?: Prisma.DeepLabPerformanceScalarWhereWithAggregatesInput[]
   NOT?: Prisma.DeepLabPerformanceScalarWhereWithAggregatesInput | Prisma.DeepLabPerformanceScalarWhereWithAggregatesInput[]
   forecast_year?: Prisma.IntWithAggregatesFilter<"DeepLabPerformance"> | number
-  model_id?: Prisma.StringWithAggregatesFilter<"DeepLabPerformance"> | string
+  model_name?: Prisma.StringWithAggregatesFilter<"DeepLabPerformance"> | string
   iou?: Prisma.FloatNullableWithAggregatesFilter<"DeepLabPerformance"> | number | null
   accuracy?: Prisma.FloatNullableWithAggregatesFilter<"DeepLabPerformance"> | number | null
   precision?: Prisma.FloatNullableWithAggregatesFilter<"DeepLabPerformance"> | number | null
@@ -313,18 +310,18 @@ export type DeepLabPerformanceScalarWhereWithAggregatesInput = {
 }
 
 export type DeepLabPerformanceCreateInput = {
+  model_name: string
   iou?: number | null
   accuracy?: number | null
   precision?: number | null
   recall?: number | null
   f1_score?: number | null
-  model: Prisma.ModelsCreateNestedOneWithoutDeepLabPerformanceInput
   model_run: Prisma.ModelsRunCreateNestedOneWithoutDeeplabPerformanceInput
 }
 
 export type DeepLabPerformanceUncheckedCreateInput = {
   forecast_year: number
-  model_id: string
+  model_name: string
   iou?: number | null
   accuracy?: number | null
   precision?: number | null
@@ -333,18 +330,18 @@ export type DeepLabPerformanceUncheckedCreateInput = {
 }
 
 export type DeepLabPerformanceUpdateInput = {
+  model_name?: Prisma.StringFieldUpdateOperationsInput | string
   iou?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   accuracy?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   precision?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   recall?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   f1_score?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
-  model?: Prisma.ModelsUpdateOneRequiredWithoutDeepLabPerformanceNestedInput
   model_run?: Prisma.ModelsRunUpdateOneRequiredWithoutDeeplabPerformanceNestedInput
 }
 
 export type DeepLabPerformanceUncheckedUpdateInput = {
   forecast_year?: Prisma.IntFieldUpdateOperationsInput | number
-  model_id?: Prisma.StringFieldUpdateOperationsInput | string
+  model_name?: Prisma.StringFieldUpdateOperationsInput | string
   iou?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   accuracy?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   precision?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
@@ -354,7 +351,7 @@ export type DeepLabPerformanceUncheckedUpdateInput = {
 
 export type DeepLabPerformanceCreateManyInput = {
   forecast_year: number
-  model_id: string
+  model_name: string
   iou?: number | null
   accuracy?: number | null
   precision?: number | null
@@ -363,6 +360,7 @@ export type DeepLabPerformanceCreateManyInput = {
 }
 
 export type DeepLabPerformanceUpdateManyMutationInput = {
+  model_name?: Prisma.StringFieldUpdateOperationsInput | string
   iou?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   accuracy?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   precision?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
@@ -372,7 +370,7 @@ export type DeepLabPerformanceUpdateManyMutationInput = {
 
 export type DeepLabPerformanceUncheckedUpdateManyInput = {
   forecast_year?: Prisma.IntFieldUpdateOperationsInput | number
-  model_id?: Prisma.StringFieldUpdateOperationsInput | string
+  model_name?: Prisma.StringFieldUpdateOperationsInput | string
   iou?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   accuracy?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   precision?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
@@ -380,29 +378,19 @@ export type DeepLabPerformanceUncheckedUpdateManyInput = {
   f1_score?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
 }
 
-export type DeepLabPerformanceListRelationFilter = {
-  every?: Prisma.DeepLabPerformanceWhereInput
-  some?: Prisma.DeepLabPerformanceWhereInput
-  none?: Prisma.DeepLabPerformanceWhereInput
-}
-
-export type DeepLabPerformanceOrderByRelationAggregateInput = {
-  _count?: Prisma.SortOrder
-}
-
 export type DeepLabPerformanceNullableScalarRelationFilter = {
   is?: Prisma.DeepLabPerformanceWhereInput | null
   isNot?: Prisma.DeepLabPerformanceWhereInput | null
 }
 
-export type DeepLabPerformanceForecast_yearModel_idCompoundUniqueInput = {
+export type DeepLabPerformanceForecast_yearModel_nameCompoundUniqueInput = {
   forecast_year: number
-  model_id: string
+  model_name: string
 }
 
 export type DeepLabPerformanceCountOrderByAggregateInput = {
   forecast_year?: Prisma.SortOrder
-  model_id?: Prisma.SortOrder
+  model_name?: Prisma.SortOrder
   iou?: Prisma.SortOrder
   accuracy?: Prisma.SortOrder
   precision?: Prisma.SortOrder
@@ -421,7 +409,7 @@ export type DeepLabPerformanceAvgOrderByAggregateInput = {
 
 export type DeepLabPerformanceMaxOrderByAggregateInput = {
   forecast_year?: Prisma.SortOrder
-  model_id?: Prisma.SortOrder
+  model_name?: Prisma.SortOrder
   iou?: Prisma.SortOrder
   accuracy?: Prisma.SortOrder
   precision?: Prisma.SortOrder
@@ -431,7 +419,7 @@ export type DeepLabPerformanceMaxOrderByAggregateInput = {
 
 export type DeepLabPerformanceMinOrderByAggregateInput = {
   forecast_year?: Prisma.SortOrder
-  model_id?: Prisma.SortOrder
+  model_name?: Prisma.SortOrder
   iou?: Prisma.SortOrder
   accuracy?: Prisma.SortOrder
   precision?: Prisma.SortOrder
@@ -446,48 +434,6 @@ export type DeepLabPerformanceSumOrderByAggregateInput = {
   precision?: Prisma.SortOrder
   recall?: Prisma.SortOrder
   f1_score?: Prisma.SortOrder
-}
-
-export type DeepLabPerformanceCreateNestedManyWithoutModelInput = {
-  create?: Prisma.XOR<Prisma.DeepLabPerformanceCreateWithoutModelInput, Prisma.DeepLabPerformanceUncheckedCreateWithoutModelInput> | Prisma.DeepLabPerformanceCreateWithoutModelInput[] | Prisma.DeepLabPerformanceUncheckedCreateWithoutModelInput[]
-  connectOrCreate?: Prisma.DeepLabPerformanceCreateOrConnectWithoutModelInput | Prisma.DeepLabPerformanceCreateOrConnectWithoutModelInput[]
-  createMany?: Prisma.DeepLabPerformanceCreateManyModelInputEnvelope
-  connect?: Prisma.DeepLabPerformanceWhereUniqueInput | Prisma.DeepLabPerformanceWhereUniqueInput[]
-}
-
-export type DeepLabPerformanceUncheckedCreateNestedManyWithoutModelInput = {
-  create?: Prisma.XOR<Prisma.DeepLabPerformanceCreateWithoutModelInput, Prisma.DeepLabPerformanceUncheckedCreateWithoutModelInput> | Prisma.DeepLabPerformanceCreateWithoutModelInput[] | Prisma.DeepLabPerformanceUncheckedCreateWithoutModelInput[]
-  connectOrCreate?: Prisma.DeepLabPerformanceCreateOrConnectWithoutModelInput | Prisma.DeepLabPerformanceCreateOrConnectWithoutModelInput[]
-  createMany?: Prisma.DeepLabPerformanceCreateManyModelInputEnvelope
-  connect?: Prisma.DeepLabPerformanceWhereUniqueInput | Prisma.DeepLabPerformanceWhereUniqueInput[]
-}
-
-export type DeepLabPerformanceUpdateManyWithoutModelNestedInput = {
-  create?: Prisma.XOR<Prisma.DeepLabPerformanceCreateWithoutModelInput, Prisma.DeepLabPerformanceUncheckedCreateWithoutModelInput> | Prisma.DeepLabPerformanceCreateWithoutModelInput[] | Prisma.DeepLabPerformanceUncheckedCreateWithoutModelInput[]
-  connectOrCreate?: Prisma.DeepLabPerformanceCreateOrConnectWithoutModelInput | Prisma.DeepLabPerformanceCreateOrConnectWithoutModelInput[]
-  upsert?: Prisma.DeepLabPerformanceUpsertWithWhereUniqueWithoutModelInput | Prisma.DeepLabPerformanceUpsertWithWhereUniqueWithoutModelInput[]
-  createMany?: Prisma.DeepLabPerformanceCreateManyModelInputEnvelope
-  set?: Prisma.DeepLabPerformanceWhereUniqueInput | Prisma.DeepLabPerformanceWhereUniqueInput[]
-  disconnect?: Prisma.DeepLabPerformanceWhereUniqueInput | Prisma.DeepLabPerformanceWhereUniqueInput[]
-  delete?: Prisma.DeepLabPerformanceWhereUniqueInput | Prisma.DeepLabPerformanceWhereUniqueInput[]
-  connect?: Prisma.DeepLabPerformanceWhereUniqueInput | Prisma.DeepLabPerformanceWhereUniqueInput[]
-  update?: Prisma.DeepLabPerformanceUpdateWithWhereUniqueWithoutModelInput | Prisma.DeepLabPerformanceUpdateWithWhereUniqueWithoutModelInput[]
-  updateMany?: Prisma.DeepLabPerformanceUpdateManyWithWhereWithoutModelInput | Prisma.DeepLabPerformanceUpdateManyWithWhereWithoutModelInput[]
-  deleteMany?: Prisma.DeepLabPerformanceScalarWhereInput | Prisma.DeepLabPerformanceScalarWhereInput[]
-}
-
-export type DeepLabPerformanceUncheckedUpdateManyWithoutModelNestedInput = {
-  create?: Prisma.XOR<Prisma.DeepLabPerformanceCreateWithoutModelInput, Prisma.DeepLabPerformanceUncheckedCreateWithoutModelInput> | Prisma.DeepLabPerformanceCreateWithoutModelInput[] | Prisma.DeepLabPerformanceUncheckedCreateWithoutModelInput[]
-  connectOrCreate?: Prisma.DeepLabPerformanceCreateOrConnectWithoutModelInput | Prisma.DeepLabPerformanceCreateOrConnectWithoutModelInput[]
-  upsert?: Prisma.DeepLabPerformanceUpsertWithWhereUniqueWithoutModelInput | Prisma.DeepLabPerformanceUpsertWithWhereUniqueWithoutModelInput[]
-  createMany?: Prisma.DeepLabPerformanceCreateManyModelInputEnvelope
-  set?: Prisma.DeepLabPerformanceWhereUniqueInput | Prisma.DeepLabPerformanceWhereUniqueInput[]
-  disconnect?: Prisma.DeepLabPerformanceWhereUniqueInput | Prisma.DeepLabPerformanceWhereUniqueInput[]
-  delete?: Prisma.DeepLabPerformanceWhereUniqueInput | Prisma.DeepLabPerformanceWhereUniqueInput[]
-  connect?: Prisma.DeepLabPerformanceWhereUniqueInput | Prisma.DeepLabPerformanceWhereUniqueInput[]
-  update?: Prisma.DeepLabPerformanceUpdateWithWhereUniqueWithoutModelInput | Prisma.DeepLabPerformanceUpdateWithWhereUniqueWithoutModelInput[]
-  updateMany?: Prisma.DeepLabPerformanceUpdateManyWithWhereWithoutModelInput | Prisma.DeepLabPerformanceUpdateManyWithWhereWithoutModelInput[]
-  deleteMany?: Prisma.DeepLabPerformanceScalarWhereInput | Prisma.DeepLabPerformanceScalarWhereInput[]
 }
 
 export type DeepLabPerformanceCreateNestedOneWithoutModel_runInput = {
@@ -530,74 +476,17 @@ export type NullableFloatFieldUpdateOperationsInput = {
   divide?: number
 }
 
-export type DeepLabPerformanceCreateWithoutModelInput = {
-  iou?: number | null
-  accuracy?: number | null
-  precision?: number | null
-  recall?: number | null
-  f1_score?: number | null
-  model_run: Prisma.ModelsRunCreateNestedOneWithoutDeeplabPerformanceInput
-}
-
-export type DeepLabPerformanceUncheckedCreateWithoutModelInput = {
-  forecast_year: number
-  iou?: number | null
-  accuracy?: number | null
-  precision?: number | null
-  recall?: number | null
-  f1_score?: number | null
-}
-
-export type DeepLabPerformanceCreateOrConnectWithoutModelInput = {
-  where: Prisma.DeepLabPerformanceWhereUniqueInput
-  create: Prisma.XOR<Prisma.DeepLabPerformanceCreateWithoutModelInput, Prisma.DeepLabPerformanceUncheckedCreateWithoutModelInput>
-}
-
-export type DeepLabPerformanceCreateManyModelInputEnvelope = {
-  data: Prisma.DeepLabPerformanceCreateManyModelInput | Prisma.DeepLabPerformanceCreateManyModelInput[]
-  skipDuplicates?: boolean
-}
-
-export type DeepLabPerformanceUpsertWithWhereUniqueWithoutModelInput = {
-  where: Prisma.DeepLabPerformanceWhereUniqueInput
-  update: Prisma.XOR<Prisma.DeepLabPerformanceUpdateWithoutModelInput, Prisma.DeepLabPerformanceUncheckedUpdateWithoutModelInput>
-  create: Prisma.XOR<Prisma.DeepLabPerformanceCreateWithoutModelInput, Prisma.DeepLabPerformanceUncheckedCreateWithoutModelInput>
-}
-
-export type DeepLabPerformanceUpdateWithWhereUniqueWithoutModelInput = {
-  where: Prisma.DeepLabPerformanceWhereUniqueInput
-  data: Prisma.XOR<Prisma.DeepLabPerformanceUpdateWithoutModelInput, Prisma.DeepLabPerformanceUncheckedUpdateWithoutModelInput>
-}
-
-export type DeepLabPerformanceUpdateManyWithWhereWithoutModelInput = {
-  where: Prisma.DeepLabPerformanceScalarWhereInput
-  data: Prisma.XOR<Prisma.DeepLabPerformanceUpdateManyMutationInput, Prisma.DeepLabPerformanceUncheckedUpdateManyWithoutModelInput>
-}
-
-export type DeepLabPerformanceScalarWhereInput = {
-  AND?: Prisma.DeepLabPerformanceScalarWhereInput | Prisma.DeepLabPerformanceScalarWhereInput[]
-  OR?: Prisma.DeepLabPerformanceScalarWhereInput[]
-  NOT?: Prisma.DeepLabPerformanceScalarWhereInput | Prisma.DeepLabPerformanceScalarWhereInput[]
-  forecast_year?: Prisma.IntFilter<"DeepLabPerformance"> | number
-  model_id?: Prisma.StringFilter<"DeepLabPerformance"> | string
-  iou?: Prisma.FloatNullableFilter<"DeepLabPerformance"> | number | null
-  accuracy?: Prisma.FloatNullableFilter<"DeepLabPerformance"> | number | null
-  precision?: Prisma.FloatNullableFilter<"DeepLabPerformance"> | number | null
-  recall?: Prisma.FloatNullableFilter<"DeepLabPerformance"> | number | null
-  f1_score?: Prisma.FloatNullableFilter<"DeepLabPerformance"> | number | null
-}
-
 export type DeepLabPerformanceCreateWithoutModel_runInput = {
+  model_name: string
   iou?: number | null
   accuracy?: number | null
   precision?: number | null
   recall?: number | null
   f1_score?: number | null
-  model: Prisma.ModelsCreateNestedOneWithoutDeepLabPerformanceInput
 }
 
 export type DeepLabPerformanceUncheckedCreateWithoutModel_runInput = {
-  model_id: string
+  model_name: string
   iou?: number | null
   accuracy?: number | null
   precision?: number | null
@@ -622,52 +511,16 @@ export type DeepLabPerformanceUpdateToOneWithWhereWithoutModel_runInput = {
 }
 
 export type DeepLabPerformanceUpdateWithoutModel_runInput = {
+  model_name?: Prisma.StringFieldUpdateOperationsInput | string
   iou?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   accuracy?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   precision?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   recall?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   f1_score?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
-  model?: Prisma.ModelsUpdateOneRequiredWithoutDeepLabPerformanceNestedInput
 }
 
 export type DeepLabPerformanceUncheckedUpdateWithoutModel_runInput = {
-  model_id?: Prisma.StringFieldUpdateOperationsInput | string
-  iou?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
-  accuracy?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
-  precision?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
-  recall?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
-  f1_score?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
-}
-
-export type DeepLabPerformanceCreateManyModelInput = {
-  forecast_year: number
-  iou?: number | null
-  accuracy?: number | null
-  precision?: number | null
-  recall?: number | null
-  f1_score?: number | null
-}
-
-export type DeepLabPerformanceUpdateWithoutModelInput = {
-  iou?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
-  accuracy?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
-  precision?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
-  recall?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
-  f1_score?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
-  model_run?: Prisma.ModelsRunUpdateOneRequiredWithoutDeeplabPerformanceNestedInput
-}
-
-export type DeepLabPerformanceUncheckedUpdateWithoutModelInput = {
-  forecast_year?: Prisma.IntFieldUpdateOperationsInput | number
-  iou?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
-  accuracy?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
-  precision?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
-  recall?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
-  f1_score?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
-}
-
-export type DeepLabPerformanceUncheckedUpdateManyWithoutModelInput = {
-  forecast_year?: Prisma.IntFieldUpdateOperationsInput | number
+  model_name?: Prisma.StringFieldUpdateOperationsInput | string
   iou?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   accuracy?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   precision?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
@@ -679,43 +532,40 @@ export type DeepLabPerformanceUncheckedUpdateManyWithoutModelInput = {
 
 export type DeepLabPerformanceSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   forecast_year?: boolean
-  model_id?: boolean
+  model_name?: boolean
   iou?: boolean
   accuracy?: boolean
   precision?: boolean
   recall?: boolean
   f1_score?: boolean
-  model?: boolean | Prisma.ModelsDefaultArgs<ExtArgs>
   model_run?: boolean | Prisma.ModelsRunDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["deepLabPerformance"]>
 
 export type DeepLabPerformanceSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   forecast_year?: boolean
-  model_id?: boolean
+  model_name?: boolean
   iou?: boolean
   accuracy?: boolean
   precision?: boolean
   recall?: boolean
   f1_score?: boolean
-  model?: boolean | Prisma.ModelsDefaultArgs<ExtArgs>
   model_run?: boolean | Prisma.ModelsRunDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["deepLabPerformance"]>
 
 export type DeepLabPerformanceSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   forecast_year?: boolean
-  model_id?: boolean
+  model_name?: boolean
   iou?: boolean
   accuracy?: boolean
   precision?: boolean
   recall?: boolean
   f1_score?: boolean
-  model?: boolean | Prisma.ModelsDefaultArgs<ExtArgs>
   model_run?: boolean | Prisma.ModelsRunDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["deepLabPerformance"]>
 
 export type DeepLabPerformanceSelectScalar = {
   forecast_year?: boolean
-  model_id?: boolean
+  model_name?: boolean
   iou?: boolean
   accuracy?: boolean
   precision?: boolean
@@ -723,29 +573,25 @@ export type DeepLabPerformanceSelectScalar = {
   f1_score?: boolean
 }
 
-export type DeepLabPerformanceOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"forecast_year" | "model_id" | "iou" | "accuracy" | "precision" | "recall" | "f1_score", ExtArgs["result"]["deepLabPerformance"]>
+export type DeepLabPerformanceOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"forecast_year" | "model_name" | "iou" | "accuracy" | "precision" | "recall" | "f1_score", ExtArgs["result"]["deepLabPerformance"]>
 export type DeepLabPerformanceInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  model?: boolean | Prisma.ModelsDefaultArgs<ExtArgs>
   model_run?: boolean | Prisma.ModelsRunDefaultArgs<ExtArgs>
 }
 export type DeepLabPerformanceIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  model?: boolean | Prisma.ModelsDefaultArgs<ExtArgs>
   model_run?: boolean | Prisma.ModelsRunDefaultArgs<ExtArgs>
 }
 export type DeepLabPerformanceIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  model?: boolean | Prisma.ModelsDefaultArgs<ExtArgs>
   model_run?: boolean | Prisma.ModelsRunDefaultArgs<ExtArgs>
 }
 
 export type $DeepLabPerformancePayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "DeepLabPerformance"
   objects: {
-    model: Prisma.$ModelsPayload<ExtArgs>
     model_run: Prisma.$ModelsRunPayload<ExtArgs>
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     forecast_year: number
-    model_id: string
+    model_name: string
     iou: number | null
     accuracy: number | null
     precision: number | null
@@ -1145,7 +991,6 @@ readonly fields: DeepLabPerformanceFieldRefs;
  */
 export interface Prisma__DeepLabPerformanceClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
-  model<T extends Prisma.ModelsDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.ModelsDefaultArgs<ExtArgs>>): Prisma.Prisma__ModelsClient<runtime.Types.Result.GetResult<Prisma.$ModelsPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   model_run<T extends Prisma.ModelsRunDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.ModelsRunDefaultArgs<ExtArgs>>): Prisma.Prisma__ModelsRunClient<runtime.Types.Result.GetResult<Prisma.$ModelsRunPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -1177,7 +1022,7 @@ export interface Prisma__DeepLabPerformanceClient<T, Null = never, ExtArgs exten
  */
 export interface DeepLabPerformanceFieldRefs {
   readonly forecast_year: Prisma.FieldRef<"DeepLabPerformance", 'Int'>
-  readonly model_id: Prisma.FieldRef<"DeepLabPerformance", 'String'>
+  readonly model_name: Prisma.FieldRef<"DeepLabPerformance", 'String'>
   readonly iou: Prisma.FieldRef<"DeepLabPerformance", 'Float'>
   readonly accuracy: Prisma.FieldRef<"DeepLabPerformance", 'Float'>
   readonly precision: Prisma.FieldRef<"DeepLabPerformance", 'Float'>

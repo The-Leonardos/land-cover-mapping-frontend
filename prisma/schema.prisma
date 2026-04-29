@@ -43,14 +43,6 @@ model Years {
   year   Int     @id
 }
 
-model Models {
-  model_id    String      @id @default(uuid())
-  model_name  String
-
-  deepLabPerformance DeepLabPerformance[]
-  deepvarPerformance DeepVarPerformance[]
-}
-
 model ModelsRun {
   forecast_year      Int                @id
   training_status    TrainingStatus     @default(not_started)
@@ -64,7 +56,7 @@ model ModelsRun {
 
 model DeepLabPerformance {
   forecast_year  Int @unique
-  model_id       String
+  model_name       String
 
   iou            Float?
   accuracy       Float?
@@ -72,23 +64,21 @@ model DeepLabPerformance {
   recall         Float?
   f1_score       Float?
 
-  model          Models    @relation(fields: [model_id], references: [model_id])
   model_run      ModelsRun @relation(fields: [forecast_year], references: [forecast_year])
 
-  @@id([forecast_year, model_id])
+  @@id([forecast_year, model_name])
 }
 
 model DeepVarPerformance {
   forecast_year  Int @unique
-  model_id       String
+  model_name       String
 
   mae            Float?
   rmse           Float?
   r2             Float?
   crps           Float?
 
-  model          Models    @relation(fields: [model_id], references: [model_id])
   model_run      ModelsRun @relation(fields: [forecast_year], references: [forecast_year])
 
-  @@id([forecast_year, model_id])
+  @@id([forecast_year, model_name])
 }

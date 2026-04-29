@@ -52,11 +52,6 @@ export type LandCoverTimeSeries = Prisma.LandCoverTimeSeriesModel
  */
 export type Years = Prisma.YearsModel
 /**
- * Model Models
- * 
- */
-export type Models = Prisma.ModelsModel
-/**
  * Model ModelsRun
  * 
  */

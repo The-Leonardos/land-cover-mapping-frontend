@@ -53,7 +53,6 @@ export const AnyNull = runtime.AnyNull
 export const ModelName = {
   LandCoverTimeSeries: 'LandCoverTimeSeries',
   Years: 'Years',
-  Models: 'Models',
   ModelsRun: 'ModelsRun',
   DeepLabPerformance: 'DeepLabPerformance',
   DeepVarPerformance: 'DeepVarPerformance'
@@ -99,14 +98,6 @@ export const YearsScalarFieldEnum = {
 export type YearsScalarFieldEnum = (typeof YearsScalarFieldEnum)[keyof typeof YearsScalarFieldEnum]
 
 
-export const ModelsScalarFieldEnum = {
-  model_id: 'model_id',
-  model_name: 'model_name'
-} as const
-
-export type ModelsScalarFieldEnum = (typeof ModelsScalarFieldEnum)[keyof typeof ModelsScalarFieldEnum]
-
-
 export const ModelsRunScalarFieldEnum = {
   forecast_year: 'forecast_year',
   training_status: 'training_status',
@@ -119,7 +110,7 @@ export type ModelsRunScalarFieldEnum = (typeof ModelsRunScalarFieldEnum)[keyof t
 
 export const DeepLabPerformanceScalarFieldEnum = {
   forecast_year: 'forecast_year',
-  model_id: 'model_id',
+  model_name: 'model_name',
   iou: 'iou',
   accuracy: 'accuracy',
   precision: 'precision',
@@ -132,7 +123,7 @@ export type DeepLabPerformanceScalarFieldEnum = (typeof DeepLabPerformanceScalar
 
 export const DeepVarPerformanceScalarFieldEnum = {
   forecast_year: 'forecast_year',
-  model_id: 'model_id',
+  model_name: 'model_name',
   mae: 'mae',
   rmse: 'rmse',
   r2: 'r2',
