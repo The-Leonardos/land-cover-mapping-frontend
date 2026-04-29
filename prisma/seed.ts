@@ -9,7 +9,6 @@ async function  clearAllData() {
   await prisma.deepLabPerformance.deleteMany({});
   await prisma.deepVarPerformance.deleteMany({});
   await prisma.modelsRun.deleteMany({});
-  await prisma.models.deleteMany({});
   await prisma.years.deleteMany({});
   await prisma.landCoverTimeSeries.deleteMany({});
 }
@@ -84,17 +83,6 @@ async function seedActualData() {
     data: Array.from({ length: 11 }, (_, i) => ({ year: 2016 + i })),
     skipDuplicates: true,
   });
-  
-  // ── Seed Models ────────────────────────────────────────────────────────────
-  console.log('Seeding Models...');
-
-  const deeplab = await prisma.models.create({
-    data: { model_name: 'DeepLabV3+' },
-  });
-
-  const deepvar = await prisma.models.create({
-    data: { model_name: 'DeepVAR' },
-  });
 
   // ── Seed ModelsRun ─────────────────────────────────────────────────────────
   console.log('Seeding ModelsRun...');
@@ -114,7 +102,7 @@ async function seedActualData() {
   await prisma.deepLabPerformance.create({
     data: {
       forecast_year: bothModelsRun.forecast_year,
-      model_id:     deeplab.model_id,
+      model_name: "DeepLabV3+",
       iou:          67.095,
       accuracy:     93.57,
       precision:    73,
@@ -129,7 +117,7 @@ async function seedActualData() {
   await prisma.deepVarPerformance.create({
     data: {
       forecast_year: bothModelsRun.forecast_year,
-      model_id:     deepvar.model_id,
+      model_name: "DeepVAR",
       mae:  0.039391,
       rmse: 0.071678,
       r2:   0.9504,
@@ -210,17 +198,6 @@ async function seedDynamicModelDemo() {
     data: Array.from({ length: 11 }, (_, i) => ({ year: 2016 + i })),
     skipDuplicates: true,
   });
-  
-  // ── Seed Models ────────────────────────────────────────────────────────────
-  console.log('Seeding Models...');
-
-  const deeplab = await prisma.models.create({
-    data: { model_name: 'DeepLabV3+' },
-  });
-
-  const deepvar = await prisma.models.create({
-    data: { model_name: 'DeepVAR' },
-  });
 
   // ── Seed ModelsRun ─────────────────────────────────────────────────────────
   console.log('Seeding ModelsRun where 2025 is the previous year and has metrics...');
@@ -241,7 +218,7 @@ async function seedDynamicModelDemo() {
   await prisma.deepLabPerformance.create({
     data: {
       forecast_year: modelsRun2025.forecast_year,
-      model_id:     deeplab.model_id,
+      model_name: "DeepLabV3+",
       iou:          67.095,
       accuracy:     93.57,
       precision:    73,
@@ -256,7 +233,7 @@ async function seedDynamicModelDemo() {
   await prisma.deepVarPerformance.create({
     data: {
       forecast_year: modelsRun2025.forecast_year,
-      model_id:     deepvar.model_id,
+      model_name: "DeepVAR",
       mae:          0.039391,
       rmse:         0.071678,
       r2:           0.9504,
@@ -283,7 +260,7 @@ async function seedDynamicModelDemo() {
   await prisma.deepLabPerformance.create({
     data: {
       forecast_year: modelsRun2026.forecast_year,
-      model_id:     deeplab.model_id,
+      model_name: "DeepLabV3+",
       iou:          null,
       accuracy:     null,
       precision:    null,
@@ -298,7 +275,7 @@ async function seedDynamicModelDemo() {
   await prisma.deepVarPerformance.create({
     data: {
       forecast_year: modelsRun2026.forecast_year,
-      model_id:     deepvar.model_id,
+      model_name: "DeepVAR",
       mae:          null,
       rmse:         null,
       r2:           null,

@@ -6,13 +6,12 @@ import { DeepVarMetrics } from "@/lib/types/metrics";
 export async function getDeepVarMetrics(): Promise<DeepVarMetrics[]> {
   const rows = await prisma.deepVarPerformance.findMany({
     include: {
-      model: true,
       model_run: true,
     },
   });
 
   return rows.map((row) => ({
-    modelName:    row.model.model_name,
+    modelName:    row.model_name,
     trainingDate: row.model_run.training_date
       ? row.model_run.training_date.toISOString().split("T")[0]
       : "—",
