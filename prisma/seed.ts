@@ -317,6 +317,8 @@ async function main(args: string[]) {
   } else if(args[0] === 'dynamic_model_demo') {
     await clearAllData();
     await seedDynamicModelDemo();
+  } else if(args[0] === 'clear_all_data') {
+    await clearAllData();
   } else {
     throw new Error('Invalid argument. Please provide an argument either "complete_data" or "dynamic_model_demo".');
   }

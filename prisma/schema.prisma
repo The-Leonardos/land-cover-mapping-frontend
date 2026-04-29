@@ -52,9 +52,7 @@ model Models {
 }
 
 model ModelsRun {
-  id                 String             @id @default(uuid())
-
-  forecast_year      Int?
+  forecast_year      Int                @id
   training_status    TrainingStatus     @default(not_started)
   inference_status   InferenceStatus?
 
@@ -65,7 +63,7 @@ model ModelsRun {
 }
 
 model DeepLabPerformance {
-  model_run_id   String   @id
+  forecast_year   String   @id
   model_id       String
 
   iou            Float?
@@ -75,11 +73,11 @@ model DeepLabPerformance {
   f1_score       Float?
 
   model          Models @relation(fields: [model_id], references: [model_id])
-  model_run      ModelsRun @relation(fields: [model_run_id], references: [id])
+  model_run      ModelsRun @relation(fields: [forecast_year], references: [forecast_year])
 }
 
 model DeepVarPerformance {
-  model_run_id   String   @id
+  forecast_year   String   @id
   model_id       String
 
   mae            Float?

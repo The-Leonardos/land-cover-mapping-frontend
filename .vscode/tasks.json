@@ -27,6 +27,15 @@
 				"reveal": "always",
 				"panel": "new"
 			}
+		},
+		{
+			"label": "🗑️ Clear All Data",
+			"type": "shell",
+			"command": "npx prisma db seed clear_all_data",
+			"presentation": {
+				"reveal": "always",
+				"panel": "new"
+			}
 		}
 	]
 }
