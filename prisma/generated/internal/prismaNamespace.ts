@@ -925,7 +925,6 @@ export type ModelsScalarFieldEnum = (typeof ModelsScalarFieldEnum)[keyof typeof 
 
 
 export const ModelsRunScalarFieldEnum = {
-  id: 'id',
   forecast_year: 'forecast_year',
   training_status: 'training_status',
   inference_status: 'inference_status',
@@ -936,7 +935,7 @@ export type ModelsRunScalarFieldEnum = (typeof ModelsRunScalarFieldEnum)[keyof t
 
 
 export const DeepLabPerformanceScalarFieldEnum = {
-  model_run_id: 'model_run_id',
+  forecast_year: 'forecast_year',
   model_id: 'model_id',
   iou: 'iou',
   accuracy: 'accuracy',
@@ -949,7 +948,7 @@ export type DeepLabPerformanceScalarFieldEnum = (typeof DeepLabPerformanceScalar
 
 
 export const DeepVarPerformanceScalarFieldEnum = {
-  model_run_id: 'model_run_id',
+  forecast_year: 'forecast_year',
   model_id: 'model_id',
   mae: 'mae',
   rmse: 'rmse',

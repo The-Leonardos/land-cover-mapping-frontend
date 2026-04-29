@@ -63,7 +63,7 @@ model ModelsRun {
 }
 
 model DeepLabPerformance {
-  forecast_year   String   @id
+  forecast_year  Int @unique
   model_id       String
 
   iou            Float?
@@ -72,12 +72,14 @@ model DeepLabPerformance {
   recall         Float?
   f1_score       Float?
 
-  model          Models @relation(fields: [model_id], references: [model_id])
+  model          Models    @relation(fields: [model_id], references: [model_id])
   model_run      ModelsRun @relation(fields: [forecast_year], references: [forecast_year])
+
+  @@id([forecast_year, model_id])
 }
 
 model DeepVarPerformance {
-  forecast_year   String   @id
+  forecast_year  Int @unique
   model_id       String
 
   mae            Float?
@@ -85,6 +87,8 @@ model DeepVarPerformance {
   r2             Float?
   crps           Float?
 
-  model          Models @relation(fields: [model_id], references: [model_id])
-  model_run      ModelsRun @relation(fields: [model_run_id], references: [id])
+  model          Models    @relation(fields: [model_id], references: [model_id])
+  model_run      ModelsRun @relation(fields: [forecast_year], references: [forecast_year])
+
+  @@id([forecast_year, model_id])
 }
