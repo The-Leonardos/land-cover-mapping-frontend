@@ -1,6 +1,15 @@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { getDeepLabMetrics } from "../_actions/getDeepLabMetrics";
 import { getDeepVarMetrics } from "../_actions/getDeepVarMetrics";
+import MetricsInfoDialog from "./metrics-info-dialog";
+
+const InfoIcon = () => (
+  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <circle cx="12" cy="12" r="10"/>
+    <path d="M12 16v-4"/>
+    <path d="M12 8h.01"/>
+  </svg>
+);
 
 export async function MetricsTables() {
   const deepLabMetrics = await getDeepLabMetrics();
@@ -25,9 +34,22 @@ export async function MetricsTables() {
       {/* DeepLab V3+ Table */}
       <TabsContent value="image-prediction" className="mt-0 outline-none">
         <div className="rounded-xl border border-zinc-800 bg-zinc-900 shadow overflow-hidden">
-          <div className="p-6 border-b border-zinc-800">
-            <h3 className="font-semibold leading-none mb-1">Image Prediction Metrics (DeepLab V3+)</h3>
-            <p className="text-sm text-zinc-400">Historical performance metrics for the Image Segmentation model.</p>
+          <div className="p-6 border-b border-zinc-800 flex items-start justify-between gap-4">
+            <div>
+              <h3 className="font-semibold leading-none mb-1">Image Prediction Metrics (DeepLab V3+)</h3>
+              <p className="text-sm text-zinc-400">Historical performance metrics for the Image Segmentation model.</p>
+            </div>
+            <MetricsInfoDialog
+              defaultTab="image-prediction"
+              trigger={
+                <button
+                  className="p-1.5 -mr-1.5 -mt-1.5 text-zinc-400 hover:text-zinc-100 hover:bg-zinc-800 rounded-full transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-zinc-700 shrink-0"
+                  aria-label="DeepLab V3+ Metrics Information"
+                >
+                  <InfoIcon />
+                </button>
+              }
+            />
           </div>
           <div className="overflow-x-auto text-sm">
             <table className="w-full text-left whitespace-nowrap">
@@ -65,9 +87,22 @@ export async function MetricsTables() {
       {/* DeepVar Table */}
       <TabsContent value="time-series" className="mt-0 outline-none">
         <div className="rounded-xl border border-zinc-800 bg-zinc-900 shadow overflow-hidden">
-          <div className="p-6 border-b border-zinc-800">
-            <h3 className="font-semibold leading-none mb-1">Time Series Metrics (DeepVar)</h3>
-            <p className="text-sm text-zinc-400">Historical performance metrics for the Time Series Forecasting model.</p>
+          <div className="p-6 border-b border-zinc-800 flex items-start justify-between gap-4">
+            <div>
+              <h3 className="font-semibold leading-none mb-1">Time Series Metrics (DeepVar)</h3>
+              <p className="text-sm text-zinc-400">Historical performance metrics for the Time Series Forecasting model.</p>
+            </div>
+            <MetricsInfoDialog
+              defaultTab="time-series"
+              trigger={
+                <button
+                  className="p-1.5 -mr-1.5 -mt-1.5 text-zinc-400 hover:text-zinc-100 hover:bg-zinc-800 rounded-full transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-zinc-700 shrink-0"
+                  aria-label="DeepVar Metrics Information"
+                >
+                  <InfoIcon />
+                </button>
+              }
+            />
           </div>
           <div className="overflow-x-auto text-sm">
             <table className="w-full text-left whitespace-nowrap">
