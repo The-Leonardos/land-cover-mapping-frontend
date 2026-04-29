@@ -125,6 +125,6 @@ function getInferenceLockState(isTimeUnlocked: boolean, modelStatus: ModelStatus
   if (isPending) return { text: "Starting...", disabled: true };
   if (status === "completed") return { text: "Inference Completed", disabled: true };
   if (!isTimeUnlocked) return { text: "Locked (Until April 1)", disabled: true };
-  if (modelStatus !== "trained") return { text: "Locked (Requires Model)", disabled: true };
+  if (modelStatus !== "trained") return { text: "Locked (Requires Trained Model)", disabled: true };
   return { text: "Run Image Inference", disabled: false };
 }
