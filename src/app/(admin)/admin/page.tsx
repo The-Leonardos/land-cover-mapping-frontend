@@ -17,7 +17,7 @@ export default function AdminPage() {
           <form action={logoutAction}>
             <button 
               type="submit" 
-              className="px-4 py-2 bg-zinc-900 hover:bg-zinc-800 border border-zinc-800 rounded-md text-sm transition-colors text-zinc-300 w-full md:w-auto font-medium"
+              className="px-4 py-2 bg-destructive/80 text-destructive-foreground hover:bg-destructive/60 border border-destructive rounded-md text-sm transition-colors text-zinc-300 w-full md:w-auto font-medium"
             >
               Sign Out
             </button>
@@ -38,4 +38,4 @@ export default function AdminPage() {
       </div>
     </div>
   );
-}
+}
