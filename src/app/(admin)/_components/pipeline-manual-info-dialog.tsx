@@ -1,7 +1,7 @@
 import { Dialog, DialogTrigger, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
-export default function InfoDialog({ trigger }: { trigger: React.ReactNode }) {
+export default function PipelineManualInfoDialog({ trigger }: { trigger: React.ReactNode }) {
   return (
     <Dialog>
       <DialogTrigger asChild>{trigger}</DialogTrigger>

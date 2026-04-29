@@ -1,6 +1,6 @@
 import { getPipelineStatus } from "../_actions/getPipelineStatus";
 import { TriggerButtons } from "./trigger-buttons";
-import InfoDialog from "./info-dialog";
+import PipelineManualInfoDialog from "./pipeline-manual-info-dialog";
 import { getYears } from "@/actions/getYears";
 
 export async function PipelineTriggers() {
@@ -31,7 +31,7 @@ export async function PipelineTriggers() {
             <h3 className="font-semibold leading-none tracking-tight">Manual Pipeline Triggers</h3>
             <p className="text-sm text-zinc-400">Manage model training and map generation workflows.</p>
           </div>
-          <InfoDialog 
+          <PipelineManualInfoDialog 
             trigger={
               <button 
                 className="p-1.5 -mr-1.5 -mt-1.5 text-zinc-400 hover:text-zinc-100 hover:bg-zinc-800 rounded-full transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-zinc-700 shrink-0" 
