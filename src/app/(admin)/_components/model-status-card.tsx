@@ -40,7 +40,7 @@ const STATUS_CONFIG: Record<ModelStatus, { label: string; icon: React.ReactNode 
   },
 };
 
-const REFRESH_INTERVAL = 5000;
+const REFRESH_INTERVAL = 2000;
 
 /**
  * Polls the pipeline status every 5 seconds and broadcasts it to the
@@ -96,7 +96,7 @@ export function ModelStatusCard() {
       
       <div className="mt-4 flex items-center gap-2">
         <div className="w-2 h-2 rounded-full bg-primary animate-pulse" />
-        <p className="text-sm text-muted-foreground/60 font-medium">Auto-refresh: {REFRESH_INTERVAL / 1000}s</p>
+        <p className="text-sm text-muted-foreground/60 font-medium">Auto-refresh: 1min</p>
       </div>
     </div>
   );

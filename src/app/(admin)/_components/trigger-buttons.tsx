@@ -60,7 +60,7 @@ export function TriggerButtons({
       : "Status: Inference Completed";
 
   return (
-    <div className="flex flex-col gap-6">
+    <div className="flex flex-col gap-4">
       <ControlButton
         title="Retrain Models"
         description={modelDescription}
@@ -69,7 +69,7 @@ export function TriggerButtons({
         onClick={() => handleAction(retrainModels, startRetrainTransition, "Failed to start retraining.")}
       />
 
-      <div className="pt-4 border-t border-zinc-800" />
+      <div className="border-t border-zinc-800" />
 
       <ControlButton
         title="Run Inference Map"
@@ -122,7 +122,7 @@ function getModelLockState(isTimeUnlocked: boolean, status: ModelStatus, isPendi
 }
 
 function getInferenceLockState(isTimeUnlocked: boolean, modelStatus: ModelStatus, status: InferenceStatus, isPending: boolean) {
-  if (isPending) return { text: "Inferencing", disabled: true };
+  if (isPending) return { text: "Inferencing...", disabled: true };
   if (status === "completed") return { text: "Inference Completed", disabled: true };
   if (!isTimeUnlocked) return { text: "Locked (Until April 1)", disabled: true };
   if (modelStatus !== "trained") return { text: "Locked (Requires Trained Model)", disabled: true };

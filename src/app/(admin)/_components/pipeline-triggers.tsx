@@ -39,17 +39,16 @@ export function PipelineTriggers() {
   if (!timeInfo || modelStatus === null || inferenceStatus === null) return <PipelineTriggersSkeleton />;
 
   return (
-    <div className="md:col-span-2 rounded-xl border border-border bg-card shadow-xl shadow-black/20 text-foreground p-6 flex flex-col justify-between transition-all duration-300">
+    <div className="md:col-span-2 rounded-xl border border-zinc-800 bg-zinc-900 shadow text-zinc-100 p-6 flex flex-col justify-between">
       <div>
         <div className="flex items-start justify-between mb-6 gap-4">
           <div className="flex flex-col space-y-1.5">
-            <h3 className="font-semibold leading-none tracking-tight">Manual Pipeline Triggers</h3>
-            <p className="text-sm text-muted-foreground">Manage model training and map generation workflows.</p>
+            <h3 className="font-semibold text-base text-zinc-400 leading-none tracking-tight">Manage model training and map generation workflows.</h3>
           </div>
           <PipelineManualInfoDialog 
             trigger={
               <button 
-                className="p-1.5 -mr-1.5 -mt-1.5 text-muted-foreground hover:text-foreground hover:bg-muted rounded-full transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-primary/50 shrink-0" 
+                className="p-1.5 -mr-1.5 -mt-1.5 text-zinc-400 hover:text-zinc-100 hover:bg-zinc-800 rounded-full transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-zinc-700 shrink-0" 
                 aria-label="Pipeline Information"
               >
                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
