@@ -3,13 +3,11 @@ import { MapPin } from "lucide-react"
 
 interface ForecastHeaderProps {
   selectedBarangay: string | null
-  hasForecastData: boolean
   yearRange: [number, number] | null
 }
 
 export function ForecastHeader({
   selectedBarangay,
-  hasForecastData,
   yearRange,
 }: ForecastHeaderProps) {
   return (
@@ -22,8 +20,7 @@ export function ForecastHeader({
           </h2>
         </div>
         <p className="text-xs md:text-sm text-muted-foreground">
-          Land Cover Time Series
-          {hasForecastData ? " & Forecast" : " Analysis"}
+          Land Cover Time Series &amp; Forecast
         </p>
       </div>
 

@@ -52,8 +52,10 @@ export const AnyNull = runtime.AnyNull
 
 export const ModelName = {
   LandCoverTimeSeries: 'LandCoverTimeSeries',
-  ModelsStatus: 'ModelsStatus',
-  ModelsPerformance: 'ModelsPerformance'
+  Years: 'Years',
+  ModelsRun: 'ModelsRun',
+  DeepLabPerformance: 'DeepLabPerformance',
+  DeepVarPerformance: 'DeepVarPerformance'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -89,29 +91,47 @@ export const LandCoverTimeSeriesScalarFieldEnum = {
 export type LandCoverTimeSeriesScalarFieldEnum = (typeof LandCoverTimeSeriesScalarFieldEnum)[keyof typeof LandCoverTimeSeriesScalarFieldEnum]
 
 
-export const ModelsStatusScalarFieldEnum = {
-  model_id: 'model_id',
-  model_name: 'model_name',
+export const YearsScalarFieldEnum = {
+  year: 'year'
+} as const
+
+export type YearsScalarFieldEnum = (typeof YearsScalarFieldEnum)[keyof typeof YearsScalarFieldEnum]
+
+
+export const ModelsRunScalarFieldEnum = {
   forecast_year: 'forecast_year',
   training_status: 'training_status',
-  inference_status: 'inference_status'
+  inference_status: 'inference_status',
+  training_date: 'training_date',
+  training_data: 'training_data'
 } as const
 
-export type ModelsStatusScalarFieldEnum = (typeof ModelsStatusScalarFieldEnum)[keyof typeof ModelsStatusScalarFieldEnum]
+export type ModelsRunScalarFieldEnum = (typeof ModelsRunScalarFieldEnum)[keyof typeof ModelsRunScalarFieldEnum]
 
 
-export const ModelsPerformanceScalarFieldEnum = {
-  id: 'id',
-  model_id: 'model_id',
+export const DeepLabPerformanceScalarFieldEnum = {
+  forecast_year: 'forecast_year',
+  model_name: 'model_name',
   iou: 'iou',
+  accuracy: 'accuracy',
+  precision: 'precision',
+  recall: 'recall',
+  f1_score: 'f1_score'
+} as const
+
+export type DeepLabPerformanceScalarFieldEnum = (typeof DeepLabPerformanceScalarFieldEnum)[keyof typeof DeepLabPerformanceScalarFieldEnum]
+
+
+export const DeepVarPerformanceScalarFieldEnum = {
+  forecast_year: 'forecast_year',
+  model_name: 'model_name',
   mae: 'mae',
   rmse: 'rmse',
-  crps: 'crps',
-  residual_analysis: 'residual_analysis',
-  training_date: 'training_date'
+  r2: 'r2',
+  crps: 'crps'
 } as const
 
-export type ModelsPerformanceScalarFieldEnum = (typeof ModelsPerformanceScalarFieldEnum)[keyof typeof ModelsPerformanceScalarFieldEnum]
+export type DeepVarPerformanceScalarFieldEnum = (typeof DeepVarPerformanceScalarFieldEnum)[keyof typeof DeepVarPerformanceScalarFieldEnum]
 
 
 export const SortOrder = {

@@ -18,6 +18,7 @@ import { ForecastChart } from "./forecast-chart"
 import { ForecastTimeStepToggle } from "./forecast-timestep-toggle"
 import { ForecastSkeleton } from "../_skeletons/forecast-skeleton"
 import { Separator } from "@/components/ui/separator"
+import { useBarangayStore } from "../../map/_stores/barangayStore"
 
 interface ForecastingPanelProps {
   selectedBarangay: string | null
@@ -30,7 +31,8 @@ export function ForecastingPanel({ selectedBarangay }: ForecastingPanelProps) {
     new Set(["trees", "built_up_area", "grass", "water"])
   )
 
-  const currentYear = new Date().getFullYear()
+  // use the latest year stored in database
+  const currentYear = useBarangayStore((state) => state.YEARS).at(-1) || new Date().getFullYear()
 
   // Derived values
   const availableYears = useMemo(() => getAvailableYears(rawData), [rawData])
@@ -68,12 +70,6 @@ export function ForecastingPanel({ selectedBarangay }: ForecastingPanelProps) {
   const chartData = useMemo(
     () => generateChartData(rawData, startYear, endYear, currentYear, timeStep),
     [rawData, startYear, endYear, currentYear, timeStep]
-  )
-
-  // Check if the full dataset (not just the filtered view) has forecast data
-  const hasForecastData = useMemo(
-    () => rawData.some((d) => d.year >= currentYear),
-    [rawData, currentYear]
   )
 
   const yearRange: [number, number] | null =
@@ -114,7 +110,6 @@ export function ForecastingPanel({ selectedBarangay }: ForecastingPanelProps) {
       {/* Header */}
       <ForecastHeader
         selectedBarangay={selectedBarangay}
-        hasForecastData={hasForecastData}
         yearRange={yearRange}
       />
 
@@ -147,7 +142,6 @@ export function ForecastingPanel({ selectedBarangay }: ForecastingPanelProps) {
         <ForecastChart
           chartData={chartData}
           selectedClasses={selectedClasses}
-          currentYear={currentYear}
           selectedBarangay={selectedBarangay!}
         />
       </div>

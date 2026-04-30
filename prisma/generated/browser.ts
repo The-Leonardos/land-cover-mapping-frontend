@@ -23,12 +23,22 @@ export * from './enums';
  */
 export type LandCoverTimeSeries = Prisma.LandCoverTimeSeriesModel
 /**
- * Model ModelsStatus
+ * Model Years
  * 
  */
-export type ModelsStatus = Prisma.ModelsStatusModel
+export type Years = Prisma.YearsModel
 /**
- * Model ModelsPerformance
+ * Model ModelsRun
  * 
  */
-export type ModelsPerformance = Prisma.ModelsPerformanceModel
+export type ModelsRun = Prisma.ModelsRunModel
+/**
+ * Model DeepLabPerformance
+ * 
+ */
+export type DeepLabPerformance = Prisma.DeepLabPerformanceModel
+/**
+ * Model DeepVarPerformance
+ * 
+ */
+export type DeepVarPerformance = Prisma.DeepVarPerformanceModel

@@ -2,9 +2,6 @@ import { logoutAction } from "../_actions/logout";
 import { ModelStatusCard } from "../_components/model-status-card";
 import { PipelineTriggers } from "../_components/pipeline-triggers";
 import { MetricsTables } from "../_components/metrics-tables";
-import { Suspense } from "react";
-import { MetricsTablesSkeleton } from "../_skeletons/metrics-tables-skeleton";
-import { PipelineTriggersSkeleton } from "../_skeletons/pipeline-triggers-skeleton";
 
 export default function AdminPage() {
   return (
@@ -20,7 +17,7 @@ export default function AdminPage() {
           <form action={logoutAction}>
             <button 
               type="submit" 
-              className="px-4 py-2 bg-zinc-900 hover:bg-zinc-800 border border-zinc-800 rounded-md text-sm transition-colors text-zinc-300 w-full md:w-auto font-medium"
+              className="px-4 py-2 bg-destructive/80 text-destructive-foreground hover:bg-destructive/60 border border-destructive rounded-md text-sm transition-colors text-zinc-300 w-full md:w-auto font-medium"
             >
               Sign Out
             </button>
@@ -30,17 +27,12 @@ export default function AdminPage() {
         {/* Top Widgets Grid */}
         <div className="grid md:grid-cols-3 gap-6 w-full items-stretch">
           <ModelStatusCard />
- 
-          <Suspense fallback={<PipelineTriggersSkeleton />}>
-            <PipelineTriggers />
-          </Suspense>
+          <PipelineTriggers />
         </div>
 
         {/* Models Data Tables */}
         <div className="w-full">
-          <Suspense fallback={<MetricsTablesSkeleton />}>
-            <MetricsTables />
-          </Suspense>
+          <MetricsTables />
         </div>
 
       </div>

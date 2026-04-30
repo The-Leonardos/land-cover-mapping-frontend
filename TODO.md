@@ -1,5 +1,3 @@
-fix: remove camp 7 10 year look ahead data
+fix: remove forecast append in the data at line 87 of getBarangayAllYearsTimeSeries.ts
 
-feat: formulate the mock presentation of dynamic modeling. use mock data, add auto seeder file and seed the database with mocks
-
-feat: implement the model performance metrics UI part based on the dtabaset content
+fix: add a route in login route that routes the user to main page (i.e. map)

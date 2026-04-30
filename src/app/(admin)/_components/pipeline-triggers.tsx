@@ -1,21 +1,42 @@
-import { getPipelineStatus } from "../_actions/getPipelineStatus";
+"use client";
+
+import { useEffect, useState } from "react";
 import { TriggerButtons } from "./trigger-buttons";
-import InfoDialog from "./info-dialog";
+import PipelineManualInfoDialog from "./pipeline-manual-info-dialog";
+import { usePipelineStore } from "../_stores/pipelineStore";
+import { useBarangayStore } from "@/app/(main)/map/_stores/barangayStore";
+import { PipelineTriggersSkeleton } from "../_skeletons/pipeline-triggers-skeleton";
 
-export async function PipelineTriggers() {
-  // Use UTC time for system-wide consistency
-  const now = new Date();
-  const currentYear = now.getUTCFullYear();
+export function PipelineTriggers() {
+  const [timeInfo, setTimeInfo] = useState<{
+    currentYear: number;
+    isModelUnlockedByTime: boolean;
+    isInferenceUnlockedByTime: boolean;
+  } | null>(null);
 
-  // 1. Fetch current status from the database/API
-  const { modelStatus, inferenceStatus } = await getPipelineStatus(currentYear);
+  const modelStatus = usePipelineStore((state) => state.modelStatus);
+  const inferenceStatus = usePipelineStore((state) => state.inferenceStatus);
+  const latestYear = useBarangayStore((state) => state.YEARS).at(-1);
 
-  // 2. Calculate Time-based Locks (strictly UTC 12:00 AM)
-  const retrainUnlockTime = new Date(Date.UTC(currentYear, 0, 1, 0, 0, 0)); // Jan 1, 00:00 UTC
-  const inferenceUnlockTime = new Date(Date.UTC(currentYear, 3, 1, 0, 0, 0)); // April 1, 00:00 UTC
+  // Compute time-based locks once we know the current year
+  useEffect(() => {
+    if (!latestYear) return;
 
-  const isModelUnlockedByTime = now >= retrainUnlockTime;
-  const isInferenceUnlockedByTime = now >= inferenceUnlockTime;
+    const _today = new Date();
+    const now = new Date(Date.UTC(latestYear, _today.getUTCMonth(), _today.getUTCDate()));
+
+    const retrainUnlockTime  = new Date(Date.UTC(latestYear, 0, 1, 0, 0, 0)); // Jan 1
+    const inferenceUnlockTime = new Date(Date.UTC(latestYear, 3, 1, 0, 0, 0)); // Apr 1
+
+    setTimeInfo({
+      currentYear: latestYear,
+      isModelUnlockedByTime:     now >= retrainUnlockTime,
+      isInferenceUnlockedByTime: now >= inferenceUnlockTime,
+    });
+  }, [latestYear]);
+
+  // Don't render until time info and at least a status are known
+  if (!timeInfo || modelStatus === null || inferenceStatus === null) return <PipelineTriggersSkeleton />;
 
   return (
     <div className="md:col-span-2 rounded-xl border border-zinc-800 bg-zinc-900 shadow text-zinc-100 p-6 flex flex-col justify-between">
@@ -25,7 +46,7 @@ export async function PipelineTriggers() {
             <h3 className="font-semibold leading-none tracking-tight">Manual Pipeline Triggers</h3>
             <p className="text-sm text-zinc-400">Manage model training and map generation workflows.</p>
           </div>
-          <InfoDialog 
+          <PipelineManualInfoDialog 
             trigger={
               <button 
                 className="p-1.5 -mr-1.5 -mt-1.5 text-zinc-400 hover:text-zinc-100 hover:bg-zinc-800 rounded-full transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-zinc-700 shrink-0" 
@@ -42,9 +63,9 @@ export async function PipelineTriggers() {
         </div>
         
         <TriggerButtons 
-          currentYear={currentYear}
-          isModelUnlockedByTime={isModelUnlockedByTime}
-          isInferenceUnlockedByTime={isInferenceUnlockedByTime}
+          currentYear={timeInfo.currentYear}
+          isModelUnlockedByTime={timeInfo.isModelUnlockedByTime}
+          isInferenceUnlockedByTime={timeInfo.isInferenceUnlockedByTime}
           modelStatus={modelStatus}
           inferenceStatus={inferenceStatus}
         />

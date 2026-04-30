@@ -1,10 +1,43 @@
+"use client";
+
+import { useEffect, useState } from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { getDeepLabMetrics } from "../_actions/getDeepLabMetrics";
 import { getDeepVarMetrics } from "../_actions/getDeepVarMetrics";
+import MetricsInfoDialog from "./metrics-info-dialog";
+import { MetricsTablesSkeleton } from "../_skeletons/metrics-tables-skeleton";
+import { usePipelineStore } from "../_stores/pipelineStore";
+import type { DeepLabMetrics, DeepVarMetrics } from "@/lib/types/metrics";
 
-export async function MetricsTables() {
-  const deepLabMetrics = await getDeepLabMetrics();
-  const deepVarMetrics = await getDeepVarMetrics();
+const InfoIcon = () => (
+  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <circle cx="12" cy="12" r="10"/>
+    <path d="M12 16v-4"/>
+    <path d="M12 8h.01"/>
+  </svg>
+);
+
+export function MetricsTables() {
+  const [deepLabMetrics, setDeepLabMetrics] = useState<DeepLabMetrics[] | null>(null);
+  const [deepVarMetrics, setDeepVarMetrics] = useState<DeepVarMetrics[] | null>(null);
+
+  const modelStatus = usePipelineStore((state) => state.modelStatus);
+
+  // Fetch metrics on mount and whenever modelStatus transitions to "trained"
+  useEffect(() => {
+    async function fetchMetrics() {
+      const [deepLab, deepVar] = await Promise.all([
+        getDeepLabMetrics(),
+        getDeepVarMetrics(),
+      ]);
+      setDeepLabMetrics(deepLab);
+      setDeepVarMetrics(deepVar);
+    }
+
+    fetchMetrics();
+  }, [modelStatus]); // re-fetches on every status change (not_started → training → trained)
+
+  if (!deepLabMetrics || !deepVarMetrics) return <MetricsTablesSkeleton />;
 
   return (
     <Tabs defaultValue="image-prediction" className="w-full text-zinc-100 flex flex-col">
@@ -25,35 +58,50 @@ export async function MetricsTables() {
       {/* DeepLab V3+ Table */}
       <TabsContent value="image-prediction" className="mt-0 outline-none">
         <div className="rounded-xl border border-zinc-800 bg-zinc-900 shadow overflow-hidden">
-          <div className="p-6 border-b border-zinc-800">
-            <h3 className="font-semibold leading-none mb-1">Image Prediction Metrics (DeepLab V3+)</h3>
-            <p className="text-sm text-zinc-400">Historical performance metrics for the Image Segmentation model.</p>
+          <div className="p-6 border-b border-zinc-800 flex items-start justify-between gap-4">
+            <div>
+              <h3 className="font-semibold leading-none mb-1">Image Prediction Metrics (DeepLab V3+)</h3>
+              <p className="text-sm text-zinc-400">Historical performance metrics for the Image Segmentation model.</p>
+            </div>
+            <MetricsInfoDialog
+              defaultTab="image-prediction"
+              trigger={
+                <button
+                  className="p-1.5 -mr-1.5 -mt-1.5 text-zinc-400 hover:text-zinc-100 hover:bg-zinc-800 rounded-full transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-zinc-700 shrink-0"
+                  aria-label="DeepLab V3+ Metrics Information"
+                >
+                  <InfoIcon />
+                </button>
+              }
+            />
           </div>
           <div className="overflow-x-auto text-sm">
             <table className="w-full text-left whitespace-nowrap">
               <thead className="bg-zinc-950/50 text-zinc-400 border-b border-zinc-800 uppercase text-xs">
                 <tr>
-                  <th className="px-6 py-3 font-medium">Model Name</th>
-                  <th className="px-6 py-3 font-medium">Version/Date</th>
-                  <th className="px-6 py-3 font-medium">Forecast Year</th>
-                  <th className="px-6 py-3 font-medium">mIoU</th>
-                  <th className="px-6 py-3 font-medium">Accuracy</th>
-                  <th className="px-6 py-3 font-medium">Precision</th>
-                  <th className="px-6 py-3 font-medium">Recall</th>
-                  <th className="px-6 py-3 font-medium">F1-Score</th>
+                  <th className="px-6 py-3 font-medium text-center">Model Name</th>
+                  <th className="px-6 py-3 font-medium text-center">Training Data</th>
+                  <th className="px-6 py-3 font-medium text-center">Training Date</th>
+                  <th className="px-6 py-3 font-medium text-center">Forecast Year</th>
+                  <th className="px-6 py-3 font-medium text-center">IoU</th>
+                  <th className="px-6 py-3 font-medium text-center">Accuracy</th>
+                  <th className="px-6 py-3 font-medium text-center">Precision</th>
+                  <th className="px-6 py-3 font-medium text-center">Recall</th>
+                  <th className="px-6 py-3 font-medium text-center">F1-Score</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-zinc-800">
                 {deepLabMetrics.map((row, i) => (
                   <tr key={i} className="hover:bg-zinc-800/30 transition-colors">
-                    <td className="px-6 py-4 font-medium">{row.modelName}</td>
-                    <td className="px-6 py-4">{row.date}</td>
-                    <td className="px-6 py-4">{row.year}</td>
-                    <td className="px-6 py-4">{row.iou}</td>
-                    <td className="px-6 py-4">{row.acc}</td>
-                    <td className="px-6 py-4">{row.prec}</td>
-                    <td className="px-6 py-4">{row.rec}</td>
-                    <td className="px-6 py-4">{row.f1}</td>
+                    <td className="px-6 py-4 font-medium text-center">{row.modelName}</td>
+                    <td className="px-6 py-4 text-center">{row.trainingData}</td>
+                    <td className="px-6 py-4 text-center">{row.trainingDate}</td>
+                    <td className="px-6 py-4 text-center">{row.year}</td>
+                    <td className="px-6 py-4 text-center">{row.iou} {row.iou === '—' ? '' : "%"}</td>
+                    <td className="px-6 py-4 text-center">{row.accuracy} {row.accuracy === '—' ? '' : "%"}</td>
+                    <td className="px-6 py-4 text-center">{row.precision} {row.precision === '—' ? '' : "%"}</td>
+                    <td className="px-6 py-4 text-center">{row.recall} {row.recall === '—' ? '' : "%"}</td>
+                    <td className="px-6 py-4 text-center">{row.f1} {row.f1 === '—' ? '' : "%"}</td>
                   </tr>
                 ))}
               </tbody>
@@ -65,29 +113,48 @@ export async function MetricsTables() {
       {/* DeepVar Table */}
       <TabsContent value="time-series" className="mt-0 outline-none">
         <div className="rounded-xl border border-zinc-800 bg-zinc-900 shadow overflow-hidden">
-          <div className="p-6 border-b border-zinc-800">
-            <h3 className="font-semibold leading-none mb-1">Time Series Metrics (DeepVar)</h3>
-            <p className="text-sm text-zinc-400">Historical performance metrics for the Time Series Forecasting model.</p>
+          <div className="p-6 border-b border-zinc-800 flex items-start justify-between gap-4">
+            <div>
+              <h3 className="font-semibold leading-none mb-1">Time Series Metrics (DeepVar)</h3>
+              <p className="text-sm text-zinc-400">Historical performance metrics for the Time Series Forecasting model.</p>
+            </div>
+            <MetricsInfoDialog
+              defaultTab="time-series"
+              trigger={
+                <button
+                  className="p-1.5 -mr-1.5 -mt-1.5 text-zinc-400 hover:text-zinc-100 hover:bg-zinc-800 rounded-full transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-zinc-700 shrink-0"
+                  aria-label="DeepVar Metrics Information"
+                >
+                  <InfoIcon />
+                </button>
+              }
+            />
           </div>
           <div className="overflow-x-auto text-sm">
             <table className="w-full text-left whitespace-nowrap">
               <thead className="bg-zinc-950/50 text-zinc-400 border-b border-zinc-800 uppercase text-xs">
                 <tr>
-                  <th className="px-6 py-3 font-medium">Model Name</th>
-                  <th className="px-6 py-3 font-medium">Version/Date</th>
-                  <th className="px-6 py-3 font-medium">Forecast Year</th>
-                  <th className="px-6 py-3 font-medium text-right">MAE</th>
-                  <th className="px-6 py-3 font-medium text-right">RMSE</th>
+                  <th className="px-6 py-3 font-medium text-center">Model Name</th>
+                  <th className="px-6 py-3 font-medium text-center">Training Data</th>
+                  <th className="px-6 py-3 font-medium text-center">Training Date</th>
+                  <th className="px-6 py-3 font-medium text-center">Forecast Year</th>
+                  <th className="px-6 py-3 font-medium text-center">MAE</th>
+                  <th className="px-6 py-3 font-medium text-center">RMSE</th>
+                  <th className="px-6 py-3 font-medium text-center">R²</th>
+                  <th className="px-6 py-3 font-medium text-center">CRPS</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-zinc-800">
                 {deepVarMetrics.map((row, i) => (
                   <tr key={i} className="hover:bg-zinc-800/30 transition-colors">
-                    <td className="px-6 py-4 font-medium">{row.modelName}</td>
-                    <td className="px-6 py-4">{row.date}</td>
-                    <td className="px-6 py-4">{row.year}</td>
-                    <td className="px-6 py-4 text-right">{row.mae}</td>
-                    <td className="px-6 py-4 text-right">{row.rmse}</td>
+                    <td className="px-6 py-4 font-medium text-center">{row.modelName}</td>
+                    <td className="px-6 py-4 text-center">{row.trainingData}</td>
+                    <td className="px-6 py-4 text-center">{row.trainingDate}</td>
+                    <td className="px-6 py-4 text-center">{row.year}</td>
+                    <td className="px-6 py-4 text-center">{row.mae}</td>
+                    <td className="px-6 py-4 text-center">{row.rmse}</td>
+                    <td className="px-6 py-4 text-center">{row.r2}</td>
+                    <td className="px-6 py-4 text-center">{row.crps}</td>
                   </tr>
                 ))}
               </tbody>

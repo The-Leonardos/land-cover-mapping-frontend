@@ -25,7 +25,6 @@ import { ForecastChartEmpty } from "../_skeletons/forecast-chart-empty"
 interface ForecastChartProps {
   chartData: ChartDataPoint[]
   selectedClasses: Set<string>
-  currentYear: number
   selectedBarangay: string
 }
 
@@ -135,7 +134,6 @@ function ForecastTooltipContent({
 export function ForecastChart({
   chartData,
   selectedClasses,
-  currentYear,
   selectedBarangay
 }: ForecastChartProps) {
   const [yMin, yMax] = computeYAxisDomain(chartData, selectedClasses)
@@ -153,7 +151,6 @@ export function ForecastChart({
   const activeClasses = LAND_COVER_CLASSES.filter((cls) =>
     selectedClasses.has(cls.id)
   )
-  const hasForecast = chartData.some((d) => d.isForecast)
 
   // ── Empty states ─────────────────────────────────────────────────
 
@@ -243,8 +240,7 @@ export function ForecastChart({
         />
 
         {/* Forecast boundary line */}
-        {hasForecast && (() => {
-          // Find the xKey of the last historical quarter for the boundary line
+        {(() => {
           const lastHistorical = [...chartData].reverse().find((d) => !d.isForecast)
           const boundaryXKey = lastHistorical ? lastHistorical.xKey : undefined
           return boundaryXKey != null ? (
