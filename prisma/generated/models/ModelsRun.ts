@@ -39,6 +39,7 @@ export type ModelsRunMinAggregateOutputType = {
   training_status: $Enums.TrainingStatus | null
   inference_status: $Enums.InferenceStatus | null
   training_date: Date | null
+  training_data: string | null
 }
 
 export type ModelsRunMaxAggregateOutputType = {
@@ -46,6 +47,7 @@ export type ModelsRunMaxAggregateOutputType = {
   training_status: $Enums.TrainingStatus | null
   inference_status: $Enums.InferenceStatus | null
   training_date: Date | null
+  training_data: string | null
 }
 
 export type ModelsRunCountAggregateOutputType = {
@@ -53,6 +55,7 @@ export type ModelsRunCountAggregateOutputType = {
   training_status: number
   inference_status: number
   training_date: number
+  training_data: number
   _all: number
 }
 
@@ -70,6 +73,7 @@ export type ModelsRunMinAggregateInputType = {
   training_status?: true
   inference_status?: true
   training_date?: true
+  training_data?: true
 }
 
 export type ModelsRunMaxAggregateInputType = {
@@ -77,6 +81,7 @@ export type ModelsRunMaxAggregateInputType = {
   training_status?: true
   inference_status?: true
   training_date?: true
+  training_data?: true
 }
 
 export type ModelsRunCountAggregateInputType = {
@@ -84,6 +89,7 @@ export type ModelsRunCountAggregateInputType = {
   training_status?: true
   inference_status?: true
   training_date?: true
+  training_data?: true
   _all?: true
 }
 
@@ -178,6 +184,7 @@ export type ModelsRunGroupByOutputType = {
   training_status: $Enums.TrainingStatus
   inference_status: $Enums.InferenceStatus | null
   training_date: Date | null
+  training_data: string | null
   _count: ModelsRunCountAggregateOutputType | null
   _avg: ModelsRunAvgAggregateOutputType | null
   _sum: ModelsRunSumAggregateOutputType | null
@@ -208,6 +215,7 @@ export type ModelsRunWhereInput = {
   training_status?: Prisma.EnumTrainingStatusFilter<"ModelsRun"> | $Enums.TrainingStatus
   inference_status?: Prisma.EnumInferenceStatusNullableFilter<"ModelsRun"> | $Enums.InferenceStatus | null
   training_date?: Prisma.DateTimeNullableFilter<"ModelsRun"> | Date | string | null
+  training_data?: Prisma.StringNullableFilter<"ModelsRun"> | string | null
   deeplabPerformance?: Prisma.XOR<Prisma.DeepLabPerformanceNullableScalarRelationFilter, Prisma.DeepLabPerformanceWhereInput> | null
   deepvarPerformance?: Prisma.XOR<Prisma.DeepVarPerformanceNullableScalarRelationFilter, Prisma.DeepVarPerformanceWhereInput> | null
 }
@@ -217,6 +225,7 @@ export type ModelsRunOrderByWithRelationInput = {
   training_status?: Prisma.SortOrder
   inference_status?: Prisma.SortOrderInput | Prisma.SortOrder
   training_date?: Prisma.SortOrderInput | Prisma.SortOrder
+  training_data?: Prisma.SortOrderInput | Prisma.SortOrder
   deeplabPerformance?: Prisma.DeepLabPerformanceOrderByWithRelationInput
   deepvarPerformance?: Prisma.DeepVarPerformanceOrderByWithRelationInput
 }
@@ -229,6 +238,7 @@ export type ModelsRunWhereUniqueInput = Prisma.AtLeast<{
   training_status?: Prisma.EnumTrainingStatusFilter<"ModelsRun"> | $Enums.TrainingStatus
   inference_status?: Prisma.EnumInferenceStatusNullableFilter<"ModelsRun"> | $Enums.InferenceStatus | null
   training_date?: Prisma.DateTimeNullableFilter<"ModelsRun"> | Date | string | null
+  training_data?: Prisma.StringNullableFilter<"ModelsRun"> | string | null
   deeplabPerformance?: Prisma.XOR<Prisma.DeepLabPerformanceNullableScalarRelationFilter, Prisma.DeepLabPerformanceWhereInput> | null
   deepvarPerformance?: Prisma.XOR<Prisma.DeepVarPerformanceNullableScalarRelationFilter, Prisma.DeepVarPerformanceWhereInput> | null
 }, "forecast_year">
@@ -238,6 +248,7 @@ export type ModelsRunOrderByWithAggregationInput = {
   training_status?: Prisma.SortOrder
   inference_status?: Prisma.SortOrderInput | Prisma.SortOrder
   training_date?: Prisma.SortOrderInput | Prisma.SortOrder
+  training_data?: Prisma.SortOrderInput | Prisma.SortOrder
   _count?: Prisma.ModelsRunCountOrderByAggregateInput
   _avg?: Prisma.ModelsRunAvgOrderByAggregateInput
   _max?: Prisma.ModelsRunMaxOrderByAggregateInput
@@ -253,6 +264,7 @@ export type ModelsRunScalarWhereWithAggregatesInput = {
   training_status?: Prisma.EnumTrainingStatusWithAggregatesFilter<"ModelsRun"> | $Enums.TrainingStatus
   inference_status?: Prisma.EnumInferenceStatusNullableWithAggregatesFilter<"ModelsRun"> | $Enums.InferenceStatus | null
   training_date?: Prisma.DateTimeNullableWithAggregatesFilter<"ModelsRun"> | Date | string | null
+  training_data?: Prisma.StringNullableWithAggregatesFilter<"ModelsRun"> | string | null
 }
 
 export type ModelsRunCreateInput = {
@@ -260,6 +272,7 @@ export type ModelsRunCreateInput = {
   training_status?: $Enums.TrainingStatus
   inference_status?: $Enums.InferenceStatus | null
   training_date?: Date | string | null
+  training_data?: string | null
   deeplabPerformance?: Prisma.DeepLabPerformanceCreateNestedOneWithoutModel_runInput
   deepvarPerformance?: Prisma.DeepVarPerformanceCreateNestedOneWithoutModel_runInput
 }
@@ -269,6 +282,7 @@ export type ModelsRunUncheckedCreateInput = {
   training_status?: $Enums.TrainingStatus
   inference_status?: $Enums.InferenceStatus | null
   training_date?: Date | string | null
+  training_data?: string | null
   deeplabPerformance?: Prisma.DeepLabPerformanceUncheckedCreateNestedOneWithoutModel_runInput
   deepvarPerformance?: Prisma.DeepVarPerformanceUncheckedCreateNestedOneWithoutModel_runInput
 }
@@ -278,6 +292,7 @@ export type ModelsRunUpdateInput = {
   training_status?: Prisma.EnumTrainingStatusFieldUpdateOperationsInput | $Enums.TrainingStatus
   inference_status?: Prisma.NullableEnumInferenceStatusFieldUpdateOperationsInput | $Enums.InferenceStatus | null
   training_date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  training_data?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deeplabPerformance?: Prisma.DeepLabPerformanceUpdateOneWithoutModel_runNestedInput
   deepvarPerformance?: Prisma.DeepVarPerformanceUpdateOneWithoutModel_runNestedInput
 }
@@ -287,6 +302,7 @@ export type ModelsRunUncheckedUpdateInput = {
   training_status?: Prisma.EnumTrainingStatusFieldUpdateOperationsInput | $Enums.TrainingStatus
   inference_status?: Prisma.NullableEnumInferenceStatusFieldUpdateOperationsInput | $Enums.InferenceStatus | null
   training_date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  training_data?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deeplabPerformance?: Prisma.DeepLabPerformanceUncheckedUpdateOneWithoutModel_runNestedInput
   deepvarPerformance?: Prisma.DeepVarPerformanceUncheckedUpdateOneWithoutModel_runNestedInput
 }
@@ -296,6 +312,7 @@ export type ModelsRunCreateManyInput = {
   training_status?: $Enums.TrainingStatus
   inference_status?: $Enums.InferenceStatus | null
   training_date?: Date | string | null
+  training_data?: string | null
 }
 
 export type ModelsRunUpdateManyMutationInput = {
@@ -303,6 +320,7 @@ export type ModelsRunUpdateManyMutationInput = {
   training_status?: Prisma.EnumTrainingStatusFieldUpdateOperationsInput | $Enums.TrainingStatus
   inference_status?: Prisma.NullableEnumInferenceStatusFieldUpdateOperationsInput | $Enums.InferenceStatus | null
   training_date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  training_data?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type ModelsRunUncheckedUpdateManyInput = {
@@ -310,6 +328,7 @@ export type ModelsRunUncheckedUpdateManyInput = {
   training_status?: Prisma.EnumTrainingStatusFieldUpdateOperationsInput | $Enums.TrainingStatus
   inference_status?: Prisma.NullableEnumInferenceStatusFieldUpdateOperationsInput | $Enums.InferenceStatus | null
   training_date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  training_data?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type ModelsRunCountOrderByAggregateInput = {
@@ -317,6 +336,7 @@ export type ModelsRunCountOrderByAggregateInput = {
   training_status?: Prisma.SortOrder
   inference_status?: Prisma.SortOrder
   training_date?: Prisma.SortOrder
+  training_data?: Prisma.SortOrder
 }
 
 export type ModelsRunAvgOrderByAggregateInput = {
@@ -328,6 +348,7 @@ export type ModelsRunMaxOrderByAggregateInput = {
   training_status?: Prisma.SortOrder
   inference_status?: Prisma.SortOrder
   training_date?: Prisma.SortOrder
+  training_data?: Prisma.SortOrder
 }
 
 export type ModelsRunMinOrderByAggregateInput = {
@@ -335,6 +356,7 @@ export type ModelsRunMinOrderByAggregateInput = {
   training_status?: Prisma.SortOrder
   inference_status?: Prisma.SortOrder
   training_date?: Prisma.SortOrder
+  training_data?: Prisma.SortOrder
 }
 
 export type ModelsRunSumOrderByAggregateInput = {
@@ -356,6 +378,10 @@ export type NullableEnumInferenceStatusFieldUpdateOperationsInput = {
 
 export type NullableDateTimeFieldUpdateOperationsInput = {
   set?: Date | string | null
+}
+
+export type NullableStringFieldUpdateOperationsInput = {
+  set?: string | null
 }
 
 export type ModelsRunCreateNestedOneWithoutDeeplabPerformanceInput = {
@@ -391,6 +417,7 @@ export type ModelsRunCreateWithoutDeeplabPerformanceInput = {
   training_status?: $Enums.TrainingStatus
   inference_status?: $Enums.InferenceStatus | null
   training_date?: Date | string | null
+  training_data?: string | null
   deepvarPerformance?: Prisma.DeepVarPerformanceCreateNestedOneWithoutModel_runInput
 }
 
@@ -399,6 +426,7 @@ export type ModelsRunUncheckedCreateWithoutDeeplabPerformanceInput = {
   training_status?: $Enums.TrainingStatus
   inference_status?: $Enums.InferenceStatus | null
   training_date?: Date | string | null
+  training_data?: string | null
   deepvarPerformance?: Prisma.DeepVarPerformanceUncheckedCreateNestedOneWithoutModel_runInput
 }
 
@@ -423,6 +451,7 @@ export type ModelsRunUpdateWithoutDeeplabPerformanceInput = {
   training_status?: Prisma.EnumTrainingStatusFieldUpdateOperationsInput | $Enums.TrainingStatus
   inference_status?: Prisma.NullableEnumInferenceStatusFieldUpdateOperationsInput | $Enums.InferenceStatus | null
   training_date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  training_data?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deepvarPerformance?: Prisma.DeepVarPerformanceUpdateOneWithoutModel_runNestedInput
 }
 
@@ -431,6 +460,7 @@ export type ModelsRunUncheckedUpdateWithoutDeeplabPerformanceInput = {
   training_status?: Prisma.EnumTrainingStatusFieldUpdateOperationsInput | $Enums.TrainingStatus
   inference_status?: Prisma.NullableEnumInferenceStatusFieldUpdateOperationsInput | $Enums.InferenceStatus | null
   training_date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  training_data?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deepvarPerformance?: Prisma.DeepVarPerformanceUncheckedUpdateOneWithoutModel_runNestedInput
 }
 
@@ -439,6 +469,7 @@ export type ModelsRunCreateWithoutDeepvarPerformanceInput = {
   training_status?: $Enums.TrainingStatus
   inference_status?: $Enums.InferenceStatus | null
   training_date?: Date | string | null
+  training_data?: string | null
   deeplabPerformance?: Prisma.DeepLabPerformanceCreateNestedOneWithoutModel_runInput
 }
 
@@ -447,6 +478,7 @@ export type ModelsRunUncheckedCreateWithoutDeepvarPerformanceInput = {
   training_status?: $Enums.TrainingStatus
   inference_status?: $Enums.InferenceStatus | null
   training_date?: Date | string | null
+  training_data?: string | null
   deeplabPerformance?: Prisma.DeepLabPerformanceUncheckedCreateNestedOneWithoutModel_runInput
 }
 
@@ -471,6 +503,7 @@ export type ModelsRunUpdateWithoutDeepvarPerformanceInput = {
   training_status?: Prisma.EnumTrainingStatusFieldUpdateOperationsInput | $Enums.TrainingStatus
   inference_status?: Prisma.NullableEnumInferenceStatusFieldUpdateOperationsInput | $Enums.InferenceStatus | null
   training_date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  training_data?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deeplabPerformance?: Prisma.DeepLabPerformanceUpdateOneWithoutModel_runNestedInput
 }
 
@@ -479,6 +512,7 @@ export type ModelsRunUncheckedUpdateWithoutDeepvarPerformanceInput = {
   training_status?: Prisma.EnumTrainingStatusFieldUpdateOperationsInput | $Enums.TrainingStatus
   inference_status?: Prisma.NullableEnumInferenceStatusFieldUpdateOperationsInput | $Enums.InferenceStatus | null
   training_date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  training_data?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deeplabPerformance?: Prisma.DeepLabPerformanceUncheckedUpdateOneWithoutModel_runNestedInput
 }
 
@@ -489,6 +523,7 @@ export type ModelsRunSelect<ExtArgs extends runtime.Types.Extensions.InternalArg
   training_status?: boolean
   inference_status?: boolean
   training_date?: boolean
+  training_data?: boolean
   deeplabPerformance?: boolean | Prisma.ModelsRun$deeplabPerformanceArgs<ExtArgs>
   deepvarPerformance?: boolean | Prisma.ModelsRun$deepvarPerformanceArgs<ExtArgs>
 }, ExtArgs["result"]["modelsRun"]>
@@ -498,6 +533,7 @@ export type ModelsRunSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Ext
   training_status?: boolean
   inference_status?: boolean
   training_date?: boolean
+  training_data?: boolean
 }, ExtArgs["result"]["modelsRun"]>
 
 export type ModelsRunSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -505,6 +541,7 @@ export type ModelsRunSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Ext
   training_status?: boolean
   inference_status?: boolean
   training_date?: boolean
+  training_data?: boolean
 }, ExtArgs["result"]["modelsRun"]>
 
 export type ModelsRunSelectScalar = {
@@ -512,9 +549,10 @@ export type ModelsRunSelectScalar = {
   training_status?: boolean
   inference_status?: boolean
   training_date?: boolean
+  training_data?: boolean
 }
 
-export type ModelsRunOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"forecast_year" | "training_status" | "inference_status" | "training_date", ExtArgs["result"]["modelsRun"]>
+export type ModelsRunOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"forecast_year" | "training_status" | "inference_status" | "training_date" | "training_data", ExtArgs["result"]["modelsRun"]>
 export type ModelsRunInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   deeplabPerformance?: boolean | Prisma.ModelsRun$deeplabPerformanceArgs<ExtArgs>
   deepvarPerformance?: boolean | Prisma.ModelsRun$deepvarPerformanceArgs<ExtArgs>
@@ -533,6 +571,7 @@ export type $ModelsRunPayload<ExtArgs extends runtime.Types.Extensions.InternalA
     training_status: $Enums.TrainingStatus
     inference_status: $Enums.InferenceStatus | null
     training_date: Date | null
+    training_data: string | null
   }, ExtArgs["result"]["modelsRun"]>
   composites: {}
 }
@@ -962,6 +1001,7 @@ export interface ModelsRunFieldRefs {
   readonly training_status: Prisma.FieldRef<"ModelsRun", 'TrainingStatus'>
   readonly inference_status: Prisma.FieldRef<"ModelsRun", 'InferenceStatus'>
   readonly training_date: Prisma.FieldRef<"ModelsRun", 'DateTime'>
+  readonly training_data: Prisma.FieldRef<"ModelsRun", 'String'>
 }
     
 

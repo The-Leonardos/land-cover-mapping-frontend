@@ -49,6 +49,7 @@ model ModelsRun {
   inference_status   InferenceStatus?
 
   training_date      DateTime?
+  training_data      String?
 
   deeplabPerformance DeepLabPerformance?
   deepvarPerformance DeepVarPerformance?

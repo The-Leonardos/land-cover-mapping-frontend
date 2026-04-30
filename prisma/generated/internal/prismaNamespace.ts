@@ -845,7 +845,8 @@ export const ModelsRunScalarFieldEnum = {
   forecast_year: 'forecast_year',
   training_status: 'training_status',
   inference_status: 'inference_status',
-  training_date: 'training_date'
+  training_date: 'training_date',
+  training_data: 'training_data'
 } as const
 
 export type ModelsRunScalarFieldEnum = (typeof ModelsRunScalarFieldEnum)[keyof typeof ModelsRunScalarFieldEnum]
