@@ -135,3 +135,18 @@
         @apply absolute z-10 bg-card border border-border rounded-lg p-3 shadow-lg backdrop-blur-sm bg-card/95;
     }
 }
+
+/* ── Login spinner (keyframe not expressible via Tailwind inline) ── */
+
+.login-spinner {
+    width: 1rem;
+    height: 1rem;
+    border: 2px solid oklch(0.3 0 0);
+    border-top-color: oklch(0.9 0 0);
+    border-radius: 9999px;
+    animation: login-spin 0.6s linear infinite;
+}
+
+@keyframes login-spin {
+    to { transform: rotate(360deg); }
+}

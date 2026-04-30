@@ -27,7 +27,7 @@ export function SharedHeader() {
       });
       return;
     }
-    // If we have selectedBarangay, we proceed to default link which goes to /forecast/[barangay]
+    // If we have selectedBarangay, we proceed to default link which goes to   /forecast/[barangay]
     router.push(`/forecast/${encodedBarangay}`);
   };
 
