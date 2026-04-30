@@ -56,7 +56,7 @@ export default function PipelineManualInfoDialog({ trigger }: { trigger: React.R
                     <div className="flex flex-col gap-1.5">
                       <h5 className="font-semibold text-zinc-200 flex items-center gap-2">
                         <span className="bg-emerald-500/20 text-emerald-400 px-2 py-0.5 rounded text-[10px] uppercase font-bold tracking-wider border border-emerald-500/30">Time-Series</span>
-                        DeepVar
+                        DeepVAR
                       </h5>
                       <p className="text-zinc-400 text-sm leading-relaxed">
                         This model drives the time-series mathematical forecasting. While it leverages the exact same Dynamic World dataset, it analyzes the data computationally by 
@@ -82,7 +82,7 @@ export default function PipelineManualInfoDialog({ trigger }: { trigger: React.R
                       <div className="pb-4">
                         <h5 className="font-semibold text-zinc-200 mb-1 border-b border-zinc-800/50 pb-1">Model Training (Past Data)</h5>
                         <p className="text-zinc-400 mt-1.5">
-                          The system gathers a massive amount of historical satellite data (for example, from <strong className="text-zinc-200 border-b border-zinc-700">2016 to 2025</strong>). Both models (DeepVar and DeepLab V3+) use this past as training data to learn how land changes over time.
+                          The system gathers a massive amount of historical satellite data (for example, from <strong className="text-zinc-200 border-b border-zinc-700">2016 to 2025</strong>). Both models (DeepVAR and DeepLab V3+) use this past as training data to learn how land changes over time.
                         </p>
                       </div>
                     </div>
@@ -142,7 +142,7 @@ export default function PipelineManualInfoDialog({ trigger }: { trigger: React.R
                   <div className="pl-7 space-y-2 text-zinc-400">
                     <p><strong className="text-zinc-200">Unlock Condition:</strong> Available on or after <strong className="text-zinc-200">January 1st at 12:00 AM UTC</strong> of the forecast year.</p>
                     <p>
-                      <strong className="text-zinc-200">Action Overview:</strong> This marks the end of the previous year's dataset. Clicking this button starts the process of downloading the needed data to train <em>both</em> the DeepVar and DeepLab V3+ models at the same time. 
+                      <strong className="text-zinc-200">Action Overview:</strong> This marks the end of the previous year's dataset. Clicking this button starts the process of downloading the needed data to train <em>both</em> the DeepVAR and DeepLab V3+ models at the same time. 
                       You should click this early in the year to get the models ready.
                     </p>
                   </div>
@@ -155,7 +155,7 @@ export default function PipelineManualInfoDialog({ trigger }: { trigger: React.R
                   </h4>
                   <div className="pl-7 space-y-2 text-zinc-400">
                     <p><strong className="text-zinc-200">Unlock Condition:</strong> Available on or after <strong className="text-zinc-200">April 1st at 12:00 AM UTC</strong>.</p>
-                    <p><strong className="text-zinc-200">Prerequisite:</strong> Both models (DeepVar and DeepLab V3+) must already have a "Trained" status.</p>
+                    <p><strong className="text-zinc-200">Prerequisite:</strong> Both models (DeepVAR and DeepLab V3+) must already have a "Trained" status.</p>
                     <p>
                       <strong className="text-zinc-200">Action Overview:</strong> By April 1st, the system has successfully collected all the Quarter 1 (Q1) satellite images. Clicking this button takes those newly gathered Q1 images and feeds them into the trained DeepLab model. The model then uses these Q1 images as the base input (the inference image) to predict and generate the final map for the rest of the forecast year. Once finished, the dashboard map will be unlocked for users to view.
                     </p>

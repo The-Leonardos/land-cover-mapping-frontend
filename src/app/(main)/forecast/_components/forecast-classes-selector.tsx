@@ -19,7 +19,7 @@ export function ForecastClassesSelector({
 
   return (
     <div className="flex flex-wrap items-center gap-1.5">
-      <span className="text-[11px] font-medium text-muted-foreground mr-1 uppercase tracking-wider">
+      <span className="text-xs font-medium text-muted-foreground mr-1 uppercase tracking-wider">
         Classes
       </span>
 

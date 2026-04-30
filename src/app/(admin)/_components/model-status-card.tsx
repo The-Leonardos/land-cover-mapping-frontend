@@ -79,14 +79,14 @@ export function ModelStatusCard() {
   const styles = statusStyles[status];
 
   return (
-    <div className={`md:col-span-1 rounded-xl border-2 ${styles.border} bg-zinc-900 shadow-lg text-zinc-100 p-6 transition-colors duration-500`}>
+    <div className={`md:col-span-1 rounded-xl border ${styles.border} bg-card shadow-xl shadow-black/20 text-foreground p-6 transition-all duration-500`}>
       <div className="flex flex-col space-y-1.5 mb-6">
         <h3 className="font-semibold leading-none tracking-tight">Pipeline Status</h3>
-        <p className="text-sm text-zinc-400">Real-time status of the current model training pipeline.</p>
+        <p className="text-sm text-muted-foreground">Real-time status of the current model training pipeline.</p>
       </div>
 
       <div className="flex items-center gap-4">
-        <div className={`flex items-center gap-2.5 px-4 py-2 rounded-full border ${styles.border} ${styles.bg} transition-all duration-500`}>
+        <div className={`flex items-center gap-2.5 px-4 py-2 rounded-full border ${styles.border} ${styles.bg} transition-all duration-500 shadow-sm`}>
           <span className={styles.color}>{icon}</span>
           <span className={`text-lg font-semibold tracking-tight ${styles.color}`}>
             {label}
@@ -94,8 +94,9 @@ export function ModelStatusCard() {
         </div>
       </div>
       
-      <div className="mt-4">
-        <p className="text-sm text-zinc-500 font-medium">Auto-refresh: {REFRESH_INTERVAL / 1000}s</p>
+      <div className="mt-4 flex items-center gap-2">
+        <div className="w-2 h-2 rounded-full bg-primary animate-pulse" />
+        <p className="text-sm text-muted-foreground/60 font-medium">Auto-refresh: {REFRESH_INTERVAL / 1000}s</p>
       </div>
     </div>
   );

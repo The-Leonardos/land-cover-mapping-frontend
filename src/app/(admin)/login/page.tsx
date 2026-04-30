@@ -73,11 +73,11 @@ export default function LoginPage() {
 
             {/* Stat chips */}
             <div className="flex gap-3 flex-wrap">
-              <div className="flex items-center gap-1.5 text-xs text-muted-foreground bg-secondary/10 border border-border rounded-full px-2.5 py-1">
+              <div className="flex items-center gap-1.5 text-sm text-muted-foreground bg-secondary/10 border border-border rounded-full px-2.5 py-1">
                 <MapPin className="h-3.5 w-3.5 text-primary" />
                 <span>129 barangays</span>
               </div>
-              <div className="flex items-center gap-1.5 text-xs text-muted-foreground bg-secondary/10 border border-border rounded-full px-2.5 py-1">
+              <div className="flex items-center gap-1.5 text-sm text-muted-foreground bg-secondary/10 border border-border rounded-full px-2.5 py-1">
                 <span className="w-1.5 h-1.5 rounded-full bg-primary" />
                 <span>7 LULC classes</span>
               </div>
