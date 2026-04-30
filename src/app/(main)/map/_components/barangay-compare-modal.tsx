@@ -62,19 +62,19 @@ export function BarangayCompareModal({
       <DialogTrigger asChild>
         {trigger}
       </DialogTrigger>
-      <DialogContent className="sm:max-w-3xl p-0 overflow-hidden">
-        <DialogHeader className="p-4 md:p-6 border-b border-border bg-muted/30 flex-row items-center justify-between space-y-0">
+      <DialogContent className="sm:max-w-3xl p-0 overflow-hidden border-border bg-background shadow-2xl">
+        <DialogHeader className="p-6 border-b border-border bg-muted/30 flex-row items-center justify-between space-y-0">
           <div className="space-y-1">
             <h2 className="text-xl md:text-2xl font-bold tracking-tight text-foreground">
               Compare Years
             </h2>
-            <p className="text-xs md:text-sm text-muted-foreground font-medium">
-              Analyzing changes for {selectedBarangay}
+            <p className="text-sm text-muted-foreground font-medium">
+              Analyzing land cover changes for <span className="text-primary font-semibold">{selectedBarangay}</span>
             </p>
           </div>
         </DialogHeader>
 
-        <div className="p-4 md:p-6 space-y-6 max-h-[85vh] overflow-y-auto">
+        <div className="px-4 pb-4 space-y-4 max-h-[85vh] overflow-y-auto">
           
           {/* Year Selection */}
           <BarangayCompareYearFilters
@@ -86,8 +86,7 @@ export function BarangayCompareModal({
           />
 
           {/* Comparison Table Container */}
-          <div className="border border-border rounded-xl overflow-hidden shadow-sm bg-background">              
-            {/* Horizontal scroll wrapper so Change column is never clipped */}
+          <div className="border border-border rounded-xl overflow-hidden shadow-xl shadow-black/10 bg-card">              
             <div className="overflow-x-auto">
             {comparisonLoading ? (
               <BarangayCompareLoading />
@@ -133,40 +132,36 @@ function RenderTableComparison({
   };
 
   return (
-    <table className="w-full text-xs min-w-[440px]">
+    <table className="w-full text-xs">
       <thead>
-        <tr className="border-b border-border bg-muted/30">
-          <th className="text-left py-2 px-3 font-bold text-foreground whitespace-nowrap">
-            Class
+        <tr className="border-b border-border bg-muted/50">
+          <th className="text-left py-4 px-4 font-bold text-muted-foreground text-sm">
+            Land Cover Class
           </th>
-          <th className="text-center py-2 px-3 font-bold text-foreground whitespace-nowrap">
-            <span className="px-2 py-1 rounded text-xs font-bold">
-              {comparisonYear1}
-            </span>
+          <th className="text-center py-4 px-4 font-bold text-muted-foreground text-sm">
+            {comparisonYear1} Coverage
           </th>
-          <th className="text-center py-2 px-3 font-bold text-foreground whitespace-nowrap">
-            <span className="px-2 py-1 rounded text-xs font-bold">
-              {comparisonYear2}
-            </span>
+          <th className="text-center py-4 px-4 font-bold text-muted-foreground text-sm">
+            {comparisonYear2} Coverage
           </th>
-          <thead 
-            className="text-center py-2 px-3 font-bold text-foreground whitespace-nowrap cursor-pointer hover:bg-muted/50 transition-colors select-none"
+          <th 
+            className="text-center py-4 px-4 font-bold text-muted-foreground text-sm cursor-pointer hover:bg-muted/80 transition-colors select-none group"
             onClick={toggleSort}
           >
-            <div className="flex items-center justify-center gap-1">
-              Change
+            <div className="flex items-center justify-center gap-1.5">
+              Net Change
               {sortOrder === "asc" ? (
-                <ArrowUp className="w-3 h-3 text-primary" />
+                <ArrowUp className="w-3.5 h-3.5 text-primary" />
               ) : sortOrder === "desc" ? (
-                <ArrowDown className="w-3 h-3 text-primary" />
+                <ArrowDown className="w-3.5 h-3.5 text-primary" />
               ) : (
-                <ArrowUpDown className="w-3 h-3 text-muted-foreground opacity-50" />
+                <ArrowUpDown className="w-3.5 h-3.5 text-muted-foreground opacity-30 group-hover:opacity-70 transition-opacity" />
               )}
             </div>
-          </thead>
+          </th>
         </tr>
       </thead>
-      <tbody className="divide-y divide-border">
+      <tbody className="divide-y divide-border/50">
         {(() => {
           const data1Q1 = comparisonData1.data.find((d: any) => d.quarter === 1);
           const data2Q1 = comparisonData2.data.find((d: any) => d.quarter === 1);
@@ -194,52 +189,52 @@ function RenderTableComparison({
             return (
               <tr
                 key={entry.id}
-                className="hover:bg-muted/20 transition-colors group"
+                className="hover:bg-muted/30 transition-colors group"
               >
-                <td className="py-2.5 md:py-3 px-3 md:px-4 text-foreground font-semibold whitespace-nowrap text-xs md:text-sm">
-                  <div className="flex items-center gap-2">
+                <td className="py-4 px-4 text-foreground font-semibold whitespace-nowrap text-sm">
+                  <div className="flex items-center gap-3">
                     <div
-                      className="w-2.5 h-2.5 md:w-3 md:h-3 rounded-[3px] shrink-0 shadow-sm ring-1 ring-black/5 group-hover:scale-110 transition-transform"
+                      className="w-3.5 h-3.5 rounded-[4px] shrink-0 shadow-sm ring-1 ring-black/10 group-hover:scale-110 transition-transform"
                       style={{ backgroundColor: color }}
                     />
                     {entry.label}
                   </div>
                 </td>
-                <td className="py-2.5 md:py-3 px-3 md:px-4 text-center whitespace-nowrap text-xs md:text-sm">
+                <td className="py-4 px-4 text-center whitespace-nowrap">
                   <div className="flex flex-col items-center">
-                    <span className="text-white">{value1.toFixed(1)}%</span>
-                    <span className="text-xs text-muted-foreground">
+                    <span className="text-foreground font-bold text-sm">{value1.toFixed(1)}%</span>
+                    <span className="text-xs text-muted-foreground font-medium tracking-tight">
                       {formatDisplayArea(getBarangayAreaByName(selectedBarangay) * (value1 / 100))}
                     </span>
                   </div>
                 </td>
-                <td className="py-2.5 md:py-3 px-3 md:px-4 text-center whitespace-nowrap text-xs md:text-sm">
+                <td className="py-4 px-4 text-center whitespace-nowrap">
                   <div className="flex flex-col items-center">
-                    <span className="text-white">{value2.toFixed(1)}%</span>
-                    <span className="text-xs text-muted-foreground">
+                    <span className="text-foreground font-bold text-sm">{value2.toFixed(1)}%</span>
+                    <span className="text-xs text-muted-foreground font-medium tracking-tight">
                       {formatDisplayArea(getBarangayAreaByName(selectedBarangay) * (value2 / 100))}
                     </span>
                   </div>
                 </td>
-                <td className="py-2.5 md:py-3 px-3 md:px-4 text-center whitespace-nowrap">
-                  <div className="flex flex-col items-center gap-1">
+                <td className="py-4 px-4 text-center whitespace-nowrap">
+                  <div className="flex flex-col items-center gap-1.5">
                     <span
-                      className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs md:text-xs font-semibold ${
+                      className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-bold ${
                         isZero
                           ? "text-muted-foreground bg-muted/50"
                           : isIncrease
-                          ? "text-emerald-700 bg-emerald-500/15 dark:text-emerald-400 dark:bg-emerald-500/20"
-                          : "text-rose-700 bg-rose-500/15 dark:text-rose-400 dark:bg-rose-500/20"
+                          ? "text-emerald-500 bg-emerald-500/10 border border-emerald-500/20 shadow-[0_0_10px_rgba(16,185,129,0.1)]"
+                          : "text-rose-500 bg-rose-500/10 border border-rose-500/20 shadow-[0_0_10px_rgba(244,63,94,0.1)]"
                       }`}
                     >
-                      {!isZero && (isIncrease ? "↑ " : "↓ ")}
+                      {!isZero && (isIncrease ? <ArrowUp className="w-3 h-3" /> : <ArrowDown className="w-3 h-3" />)}
                       {Math.abs(change).toFixed(1)}%
                     </span>
                     {!isZero && (
-                      <span className={`text-xs font-medium ${
+                      <span className={`text-xs font-bold uppercase tracking-tight ${
                         isIncrease 
-                          ? "text-emerald-600/70 dark:text-emerald-400/60" 
-                          : "text-rose-600/70 dark:text-rose-400/60"
+                          ? "text-emerald-500/80" 
+                          : "text-rose-500/80"
                       }`}>
                         {isIncrease ? "+" : "-"}{formatDisplayArea(getBarangayAreaByName(selectedBarangay) * (Math.abs(change) / 100))}
                       </span>

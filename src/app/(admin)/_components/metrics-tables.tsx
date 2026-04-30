@@ -8,14 +8,8 @@ import MetricsInfoDialog from "./metrics-info-dialog";
 import { MetricsTablesSkeleton } from "../_skeletons/metrics-tables-skeleton";
 import { usePipelineStore } from "../_stores/pipelineStore";
 import type { DeepLabMetrics, DeepVarMetrics } from "@/lib/types/metrics";
+import { InfoIcon } from "lucide-react";
 
-const InfoIcon = () => (
-  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-    <circle cx="12" cy="12" r="10"/>
-    <path d="M12 16v-4"/>
-    <path d="M12 8h.01"/>
-  </svg>
-);
 
 export function MetricsTables() {
   const [deepLabMetrics, setDeepLabMetrics] = useState<DeepLabMetrics[] | null>(null);
@@ -66,13 +60,13 @@ export function MetricsTables() {
             <MetricsInfoDialog
               defaultTab="image-prediction"
               trigger={
-                <button
-                  className="p-1.5 -mr-1.5 -mt-1.5 text-muted-foreground hover:text-foreground hover:bg-muted rounded-full transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-primary/50 shrink-0"
+                <button 
+                  className="p-1.5 -mr-1.5 -mt-1.5 text-zinc-400 hover:text-zinc-100 hover:bg-zinc-800 rounded-full transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-zinc-700 shrink-0" 
                   aria-label="DeepLab V3+ Metrics Information"
                 >
-                  <InfoIcon />
+                  <InfoIcon size={20}></InfoIcon>
                 </button>
-              }
+              } 
             />
           </div>
           <div className="overflow-x-auto text-sm">

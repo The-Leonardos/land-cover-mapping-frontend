@@ -6,6 +6,7 @@ import PipelineManualInfoDialog from "./pipeline-manual-info-dialog";
 import { usePipelineStore } from "../_stores/pipelineStore";
 import { useBarangayStore } from "@/app/(main)/map/_stores/barangayStore";
 import { PipelineTriggersSkeleton } from "../_skeletons/pipeline-triggers-skeleton";
+import { InfoIcon } from "lucide-react";
 
 export function PipelineTriggers() {
   const [timeInfo, setTimeInfo] = useState<{
@@ -51,11 +52,7 @@ export function PipelineTriggers() {
                 className="p-1.5 -mr-1.5 -mt-1.5 text-zinc-400 hover:text-zinc-100 hover:bg-zinc-800 rounded-full transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-zinc-700 shrink-0" 
                 aria-label="Pipeline Information"
               >
-                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                  <circle cx="12" cy="12" r="10"/>
-                  <path d="M12 16v-4"/>
-                  <path d="M12 8h.01"/>
-                </svg>
+                <InfoIcon size={20}></InfoIcon>
               </button>
             } 
           />

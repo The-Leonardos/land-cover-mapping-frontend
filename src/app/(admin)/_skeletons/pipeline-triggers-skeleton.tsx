@@ -6,8 +6,6 @@ export function PipelineTriggersSkeleton() {
           <div className="flex flex-col space-y-2">
             {/* Title Skeleton */}
             <div className="h-6 w-48 bg-zinc-800 rounded"></div>
-            {/* Description Skeleton */}
-            <div className="h-4 w-72 bg-zinc-800 rounded"></div>
           </div>
           {/* Info Button Skeleton */}
           <div className="h-5 w-5 bg-zinc-800 rounded-full shrink-0"></div>
