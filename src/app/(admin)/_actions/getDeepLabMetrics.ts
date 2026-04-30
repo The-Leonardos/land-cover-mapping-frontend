@@ -12,6 +12,7 @@ export async function getDeepLabMetrics(): Promise<DeepLabMetrics[]> {
 
   return rows.map((row) => ({
     modelName:    row.model_name,
+    trainingData: row.model_run.training_data ?? "—",
     trainingDate: row.model_run.training_date
       ? row.model_run.training_date.toISOString().split("T")[0]
       : "—",

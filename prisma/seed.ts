@@ -90,6 +90,7 @@ async function seedActualData() {
   const bothModelsRun = await prisma.modelsRun.create({
     data: {
       forecast_year:    2026,
+      training_data:    '2016-2025',
       training_status:  'trained',
       inference_status: 'completed',
       training_date:    new Date('2026-01-01'),
@@ -206,6 +207,7 @@ async function seedDynamicModelDemo() {
   const modelsRun2026 = await prisma.modelsRun.create({
     data: {
       forecast_year:    2026,
+      training_data:    '2016-2025',
       training_status:  'trained',
       inference_status: 'completed',
       training_date:    new Date('2026-01-01'),
@@ -248,6 +250,7 @@ async function seedDynamicModelDemo() {
   const modelsRun2027 = await prisma.modelsRun.create({
     data: {
       forecast_year:    2027,
+      training_data:    '2016-2026',
       training_status:  'not_started',
       inference_status: 'not_started',
       training_date:    null,

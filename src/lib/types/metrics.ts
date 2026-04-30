@@ -1,6 +1,7 @@
 export type DeepLabMetrics = {
   modelName: string;
   trainingDate: string;
+  trainingData: string;
   year: string;
 
   iou: string;
@@ -13,6 +14,7 @@ export type DeepLabMetrics = {
 export type DeepVarMetrics = {
   modelName: string;
   trainingDate: string;
+  trainingData: string;
   year: string;
 
   mae: string;

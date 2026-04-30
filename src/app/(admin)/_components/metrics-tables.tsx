@@ -79,27 +79,29 @@ export function MetricsTables() {
             <table className="w-full text-left whitespace-nowrap">
               <thead className="bg-zinc-950/50 text-zinc-400 border-b border-zinc-800 uppercase text-xs">
                 <tr>
-                  <th className="px-6 py-3 font-medium">Model Name</th>
-                  <th className="px-6 py-3 font-medium">Training Date</th>
-                  <th className="px-6 py-3 font-medium">Forecast Year</th>
-                  <th className="px-6 py-3 font-medium">IoU</th>
-                  <th className="px-6 py-3 font-medium">Accuracy</th>
-                  <th className="px-6 py-3 font-medium">Precision</th>
-                  <th className="px-6 py-3 font-medium">Recall</th>
-                  <th className="px-6 py-3 font-medium">F1-Score</th>
+                  <th className="px-6 py-3 font-medium text-center">Model Name</th>
+                  <th className="px-6 py-3 font-medium text-center">Training Data</th>
+                  <th className="px-6 py-3 font-medium text-center">Training Date</th>
+                  <th className="px-6 py-3 font-medium text-center">Forecast Year</th>
+                  <th className="px-6 py-3 font-medium text-center">IoU</th>
+                  <th className="px-6 py-3 font-medium text-center">Accuracy</th>
+                  <th className="px-6 py-3 font-medium text-center">Precision</th>
+                  <th className="px-6 py-3 font-medium text-center">Recall</th>
+                  <th className="px-6 py-3 font-medium text-center">F1-Score</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-zinc-800">
                 {deepLabMetrics.map((row, i) => (
                   <tr key={i} className="hover:bg-zinc-800/30 transition-colors">
-                    <td className="px-6 py-4 font-medium">{row.modelName}</td>
-                    <td className="px-6 py-4">{row.trainingDate}</td>
-                    <td className="px-6 py-4">{row.year}</td>
-                    <td className="px-6 py-4">{row.iou} {row.iou === '—' ? '' : "%"}</td>
-                    <td className="px-6 py-4">{row.accuracy} {row.accuracy === '—' ? '' : "%"}</td>
-                    <td className="px-6 py-4">{row.precision} {row.precision === '—' ? '' : "%"}</td>
-                    <td className="px-6 py-4">{row.recall} {row.recall === '—' ? '' : "%"}</td>
-                    <td className="px-6 py-4">{row.f1} {row.f1 === '—' ? '' : "%"}</td>
+                    <td className="px-6 py-4 font-medium text-center">{row.modelName}</td>
+                    <td className="px-6 py-4 text-center">{row.trainingData}</td>
+                    <td className="px-6 py-4 text-center">{row.trainingDate}</td>
+                    <td className="px-6 py-4 text-center">{row.year}</td>
+                    <td className="px-6 py-4 text-center">{row.iou} {row.iou === '—' ? '' : "%"}</td>
+                    <td className="px-6 py-4 text-center">{row.accuracy} {row.accuracy === '—' ? '' : "%"}</td>
+                    <td className="px-6 py-4 text-center">{row.precision} {row.precision === '—' ? '' : "%"}</td>
+                    <td className="px-6 py-4 text-center">{row.recall} {row.recall === '—' ? '' : "%"}</td>
+                    <td className="px-6 py-4 text-center">{row.f1} {row.f1 === '—' ? '' : "%"}</td>
                   </tr>
                 ))}
               </tbody>
@@ -132,25 +134,27 @@ export function MetricsTables() {
             <table className="w-full text-left whitespace-nowrap">
               <thead className="bg-zinc-950/50 text-zinc-400 border-b border-zinc-800 uppercase text-xs">
                 <tr>
-                  <th className="px-6 py-3 font-medium">Model Name</th>
-                  <th className="px-6 py-3 font-medium">Training Date</th>
-                  <th className="px-6 py-3 font-medium">Forecast Year</th>
-                  <th className="px-6 py-3 font-medium text-right">MAE</th>
-                  <th className="px-6 py-3 font-medium text-right">RMSE</th>
-                  <th className="px-6 py-3 font-medium text-right">R²</th>
-                  <th className="px-6 py-3 font-medium text-right">CRPS</th>
+                  <th className="px-6 py-3 font-medium text-center">Model Name</th>
+                  <th className="px-6 py-3 font-medium text-center">Training Data</th>
+                  <th className="px-6 py-3 font-medium text-center">Training Date</th>
+                  <th className="px-6 py-3 font-medium text-center">Forecast Year</th>
+                  <th className="px-6 py-3 font-medium text-center">MAE</th>
+                  <th className="px-6 py-3 font-medium text-center">RMSE</th>
+                  <th className="px-6 py-3 font-medium text-center">R²</th>
+                  <th className="px-6 py-3 font-medium text-center">CRPS</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-zinc-800">
                 {deepVarMetrics.map((row, i) => (
                   <tr key={i} className="hover:bg-zinc-800/30 transition-colors">
-                    <td className="px-6 py-4 font-medium">{row.modelName}</td>
-                    <td className="px-6 py-4">{row.trainingDate}</td>
-                    <td className="px-6 py-4">{row.year}</td>
-                    <td className="px-6 py-4 text-right">{row.mae}</td>
-                    <td className="px-6 py-4 text-right">{row.rmse}</td>
-                    <td className="px-6 py-4 text-right">{row.r2}</td>
-                    <td className="px-6 py-4 text-right">{row.crps}</td>
+                    <td className="px-6 py-4 font-medium text-center">{row.modelName}</td>
+                    <td className="px-6 py-4 text-center">{row.trainingData}</td>
+                    <td className="px-6 py-4 text-center">{row.trainingDate}</td>
+                    <td className="px-6 py-4 text-center">{row.year}</td>
+                    <td className="px-6 py-4 text-center">{row.mae}</td>
+                    <td className="px-6 py-4 text-center">{row.rmse}</td>
+                    <td className="px-6 py-4 text-center">{row.r2}</td>
+                    <td className="px-6 py-4 text-center">{row.crps}</td>
                   </tr>
                 ))}
               </tbody>
