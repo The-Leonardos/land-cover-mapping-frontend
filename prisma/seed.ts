@@ -193,31 +193,31 @@ async function seedDynamicModelDemo() {
   // ── Seed Years ─────────────────────────────────────────────────────────────
   console.log('Seeding Years table from 2016-2026 where 2026 is the forecast year...');
 
-  // length 11 - 2016-2026
+  // length 11 - 2016-2027
   await prisma.years.createMany({
-    data: Array.from({ length: 11 }, (_, i) => ({ year: 2016 + i })),
+    data: Array.from({ length: 12 }, (_, i) => ({ year: 2016 + i })),
     skipDuplicates: true,
   });
 
   // ── Seed ModelsRun ─────────────────────────────────────────────────────────
-  console.log('Seeding ModelsRun where 2025 is the previous year and has metrics...');
+  console.log('Seeding ModelsRun where 2026 is the previous year and has metrics...');
 
   
-  const modelsRun2025 = await prisma.modelsRun.create({
+  const modelsRun2026 = await prisma.modelsRun.create({
     data: {
-      forecast_year:    2025,
+      forecast_year:    2026,
       training_status:  'trained',
       inference_status: 'completed',
-      training_date:    new Date('2025-01-01'),
+      training_date:    new Date('2026-01-01'),
     },
   });
 
   // ── Seed DeepLabPerformance ────────────────────────────────────────────────
-  console.log('Seeding DeepLabPerformance for 2025...');
+  console.log('Seeding DeepLabPerformance for 2026...');
 
   await prisma.deepLabPerformance.create({
     data: {
-      forecast_year: modelsRun2025.forecast_year,
+      forecast_year: modelsRun2026.forecast_year,
       model_name: "DeepLabV3+",
       iou:          67.095,
       accuracy:     93.57,
@@ -232,7 +232,7 @@ async function seedDynamicModelDemo() {
 
   await prisma.deepVarPerformance.create({
     data: {
-      forecast_year: modelsRun2025.forecast_year,
+      forecast_year: modelsRun2026.forecast_year,
       model_name: "DeepVAR",
       mae:          0.039391,
       rmse:         0.071678,
@@ -242,12 +242,12 @@ async function seedDynamicModelDemo() {
   });
 
   // ── Seed ModelsRun (Dynamic Modelling) ────────────────────────────────────
-  console.log('Seeding ModelsRun for 2026 where it does not have metrics yet');
+  console.log('Seeding ModelsRun for 2027 where it does not have metrics yet');
 
   
-  const modelsRun2026 = await prisma.modelsRun.create({
+  const modelsRun2027 = await prisma.modelsRun.create({
     data: {
-      forecast_year:    2026,
+      forecast_year:    2027,
       training_status:  'not_started',
       inference_status: 'not_started',
       training_date:    null,
@@ -255,11 +255,11 @@ async function seedDynamicModelDemo() {
   });
 
   // ── Seed DeepLabPerformance ────────────────────────────────────────────────
-  console.log('Seeding DeepLabPerformance for 2026...');
+  console.log('Seeding DeepLabPerformance for 2027...');
 
   await prisma.deepLabPerformance.create({
     data: {
-      forecast_year: modelsRun2026.forecast_year,
+      forecast_year: modelsRun2027.forecast_year,
       model_name: "DeepLabV3+",
       iou:          null,
       accuracy:     null,
@@ -270,11 +270,11 @@ async function seedDynamicModelDemo() {
   });
 
   // ── Seed DeepVarPerformance ────────────────────────────────────────────────
-  console.log('Seeding DeepVarPerformance for 2026...');
+  console.log('Seeding DeepVarPerformance for 2027...');
 
   await prisma.deepVarPerformance.create({
     data: {
-      forecast_year: modelsRun2026.forecast_year,
+      forecast_year: modelsRun2027.forecast_year,
       model_name: "DeepVAR",
       mae:          null,
       rmse:         null,
@@ -288,7 +288,7 @@ async function seedDynamicModelDemo() {
 
 async function main(args: string[]) {
   // check whether args[0] is actual_data or dynamic_model_demo
-  if(args[0] === 'complete_data') {
+  if(args[0] === 'actual_data') {
     await clearAllData();
     await seedActualData();
   } else if(args[0] === 'dynamic_model_demo') {
@@ -297,7 +297,7 @@ async function main(args: string[]) {
   } else if(args[0] === 'clear_all_data') {
     await clearAllData();
   } else {
-    throw new Error('Invalid argument. Please provide an argument either "complete_data" or "dynamic_model_demo".');
+    throw new Error('Invalid argument. Please provide an argument either "actual_data" or "dynamic_model_demo".');
   }
 }
 

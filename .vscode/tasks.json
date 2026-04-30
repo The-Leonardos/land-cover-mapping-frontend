@@ -11,9 +11,9 @@
 			}
 		},
 		{
-			"label": "🌱 Seed Data (Complete Data)",
+			"label": "🌱 Seed Data (Actual Data)",
 			"type": "shell",
-			"command": "npx prisma db seed complete_data",
+			"command": "npx prisma db seed actual_data",
 			"presentation": {
 				"reveal": "always",
 				"panel": "new"
@@ -38,9 +38,9 @@
 			}
 		},
 		{
-			"label": "✅ Mark Models as Trained for 2026",
+			"label": "✅ Mark Models as Trained for 2027",
 			"type": "shell",
-			"command": "npx tsx prisma/magic.ts 2026",
+			"command": "npx tsx prisma/magic.ts 2027",
 			"presentation": {
 				"reveal": "always",
 				"panel": "new"
