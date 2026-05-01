@@ -15,49 +15,7 @@ export interface TimeSeriesDataPoint {
 }
 
 /**
- * Generates deterministic mock forecast data for any barangay.
- * Derives base values from the last historical data point so trends feel
- * continuous, then simulates a 10-year lookahead (2026–2035).
- */
-function getMockForecastData(lastHistorical: TimeSeriesDataPoint): TimeSeriesDataPoint[] {
-  const mockData: TimeSeriesDataPoint[] = []
-
-  const base = {
-    water: lastHistorical.water,
-    trees: lastHistorical.trees,
-    grass: lastHistorical.grass,
-    crops: lastHistorical.crops,
-    shrub_and_scrub: lastHistorical.shrub_and_scrub,
-    built_up_area: lastHistorical.built_up_area,
-    bare_ground: lastHistorical.bare_ground,
-  }
-
-  for (let year = 2026; year <= 2035; year++) {
-    const offset = year - 2026
-    for (let quarter = 1; quarter <= 4; quarter++) {
-      // Deterministic variation using sin/cos for consistency across renders
-      const seed = year * 4 + quarter
-      const v = Math.sin(seed * 0.7) * 0.5 + Math.cos(seed * 1.3) * 0.3
-
-      mockData.push({
-        year,
-        quarter,
-        water: +Math.max(0, base.water - offset * 0.008 + v * 0.05).toFixed(4),
-        trees: +Math.max(0, base.trees - offset * 1.0 + v * 1.2).toFixed(4),
-        grass: +Math.max(0, base.grass - offset * 0.15 + v * 0.4).toFixed(4),
-        crops: +Math.max(0, base.crops - offset * 0.06 + v * 0.2).toFixed(4),
-        shrub_and_scrub: +Math.max(0, base.shrub_and_scrub - offset * 0.12 + v * 0.3).toFixed(4),
-        built_up_area: +Math.min(100, base.built_up_area + offset * 1.3 + v * 0.6).toFixed(4),
-        bare_ground: +Math.max(0, base.bare_ground - offset * 0.03 + v * 0.1).toFixed(4),
-      })
-    }
-  }
-  return mockData
-}
-
-/**
  * Fetches all time series data for a barangay across every year from the database.
- * Appends 10 years of mock forecast data (2026–2035) for every barangay.
  */
 export async function getBarangayAllYearsTimeSeries(
   barangayName: string
@@ -79,13 +37,6 @@ export async function getBarangayAllYearsTimeSeries(
       built_up_area: d.built_up_area,
       bare_ground: d.bare_ground,
     }))
-
-    // Append mock forecast data for every barangay, based on its last historical point
-    //todo: to be removed
-    const lastHistorical = data[data.length - 1]
-    if (lastHistorical) {
-      data.push(...getMockForecastData(lastHistorical))
-    }
 
     return data
   } catch (error) {

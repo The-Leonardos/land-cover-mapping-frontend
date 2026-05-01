@@ -58,13 +58,13 @@ async function seedActualData() {
       barangay_name: String(values[idxBrgyName]),
       year,
       quarter:       parseInt(values[idxQuarter]),
-      bare_ground:   parseFloat(values[idxBareGround]),
-      built_up_area: parseFloat(values[idxBuiltArea]),
-      crops:         parseFloat(values[idxCrops]),
-      grass:         parseFloat(values[idxGrass]),
-      shrub_and_scrub: parseFloat(values[idxShrubScrub]),
-      trees:         parseFloat(values[idxTrees]),
-      water:         parseFloat(values[idxWater]),
+      bare_ground:   parseFloat(values[idxBareGround]) * 100,
+      built_up_area: parseFloat(values[idxBuiltArea]) * 100,
+      crops:         parseFloat(values[idxCrops]) * 100,
+      grass:         parseFloat(values[idxGrass]) * 100,
+      shrub_and_scrub: parseFloat(values[idxShrubScrub]) * 100,
+      trees:         parseFloat(values[idxTrees]) * 100,
+      water:         parseFloat(values[idxWater]) * 100,
     });
   }
 
