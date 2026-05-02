@@ -1,0 +1,85 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Get a free hosted Postgres database in seconds: `npx create-db`
+
+generator client {
+  provider = "prisma-client"
+  output   = "../prisma/generated"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum TrainingStatus {
+  not_started
+  training
+  trained
+}
+
+enum InferenceStatus {
+  not_started
+  completed
+}
+
+model LandCoverTimeSeries {
+  barangay_id     String
+  barangay_name   String
+  year            Int
+  quarter         Int
+  bare_ground     Float
+  built_up_area   Float
+  crops           Float
+  grass           Float
+  shrub_and_scrub Float
+  trees           Float
+  water           Float
+
+  @@id([barangay_id, year, quarter])
+}
+
+model Years {
+  year   Int     @id
+}
+
+model ModelsRun {
+  forecast_year      Int                @id
+  training_status    TrainingStatus     @default(not_started)
+  inference_status   InferenceStatus?
+
+  training_date      DateTime?
+  training_data      String?
+
+  deeplabPerformance DeepLabPerformance?
+  deepvarPerformance DeepVarPerformance?
+}
+
+model DeepLabPerformance {
+  forecast_year  Int @unique
+  model_name       String
+
+  iou            Float?
+  accuracy       Float?
+  precision      Float?
+  recall         Float?
+  f1_score       Float?
+
+  model_run      ModelsRun @relation(fields: [forecast_year], references: [forecast_year])
+
+  @@id([forecast_year, model_name])
+}
+
+model DeepVarPerformance {
+  forecast_year  Int @unique
+  model_name       String
+
+  mae            Float?
+  rmse           Float?
+  r2             Float?
+  crps           Float?
+
+  model_run      ModelsRun @relation(fields: [forecast_year], references: [forecast_year])
+
+  @@id([forecast_year, model_name])
+}

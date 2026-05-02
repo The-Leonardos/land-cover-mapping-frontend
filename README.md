@@ -1,36 +1,85 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Land Cover Mapping Frontend
 
-## Getting Started
+This project is a Next.js application for land cover mapping, using PostgreSQL for data storage and Prisma as the ORM.
 
-First, run the development server:
+## Setup Instructions
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+Follow these steps to set up the project locally on your machine.
+
+### 1. Prerequisites
+
+Ensure you have the following installed:
+- [Node.js](https://nodejs.org/) (Latest LTS recommended)
+- [pnpm](https://pnpm.io/installation)
+- [Docker Desktop](https://www.docker.com/products/docker-desktop/)
+
+### 2. Environment Configuration (local development)
+
+Create a `.env` file in the root directory and add the following database configuration:
+
+```env
+DATABASE_URL="postgresql://user:password@localhost:5432/thesis_db"
+POSTGRES_USER=user
+POSTGRES_PASSWORD=password
+POSTGRES_DB=thesis_db
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### 3. Install Dependencies
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Install the required node modules using pnpm:
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+pnpm install
+```
 
-## Learn More
+### 4. Start the Database (Docker)
 
-To learn more about Next.js, take a look at the following resources:
+This project uses a local PostgreSQL instance running in a Docker container.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+1. Ensure **Docker Desktop** is running.
+2. Start the database container:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+```bash
+pnpm db:start
+# or directly using docker compose:
+# docker compose up -d
+```
 
-## Deploy on Vercel
+### 5. Database Setup (Prisma)
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Once the database is running, sync the Prisma schema and seed the initial data:
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+```bash
+# Generate Prisma client
+npx prisma generate
+
+# Push schema to the database
+npx prisma db push
+
+# (Only run once) Seed the database
+pnpm db:seed
+
+# View the database
+pnpm db:studio
+```
+
+### 6. Run the Development Server
+
+Start the Next.js development server:
+
+```bash
+pnpm dev
+```
+
+Open [http://localhost:3000](http://localhost:3000) in your browser to see the application.
+
+## Available Scripts
+
+- `pnpm dev`: Runs the development server.
+- `pnpm build`: Builds the application for production.
+- `pnpm start`: Starts the production server.
+- `pnpm db:start`: Starts the PostgreSQL Docker container.
+- `pnpm db:stop`: Stops the PostgreSQL Docker container.
+- `pnpm db:seed`: Seeds the database using Prisma.
+- `pnpm db:studio`: Views the database.
+- `pnpm lint`: Runs ESLint for code quality checks.
