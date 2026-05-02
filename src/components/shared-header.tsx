@@ -1,6 +1,7 @@
 "use client";
 
-import { Globe, Satellite, BarChart3, SplitSquareHorizontal } from "lucide-react";
+import { Satellite, BarChart3, SplitSquareHorizontal } from "lucide-react";
+import Image from "next/image";
 import { BarangaySearch } from "@/components/barangay-search";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
@@ -36,8 +37,8 @@ export function SharedHeader() {
       <div className="flex items-center justify-between gap-1 sm:gap-4">
         {/* Logo and Title */}
         <div className="flex items-center gap-2 md:gap-4">
-          <div className="w-8 h-8 md:w-11 md:h-11 bg-gradient-to-br from-primary/30 to-primary/10 border border-primary/50 rounded-lg md:rounded-xl flex items-center justify-center shadow-sm shrink-0">
-            <Globe className="h-4 w-4 md:h-6 md:w-6 text-primary" />
+          <div className="w-8 h-8 md:w-11 md:h-11 rounded-lg md:rounded-xl overflow-hidden shadow-sm shrink-0">
+            <Image src="/data/icon.png" alt="Baguio City Land Cover" width={44} height={44} className="w-full h-full object-cover" />
           </div>
           <div className="hidden sm:block">
             <h1 className="text-sm md:text-base font-bold text-foreground tracking-tight whitespace-nowrap">

@@ -4,7 +4,8 @@ import { useTransition, useState } from "react";
 import { useRouter } from "next/navigation";
 import { loginAction } from "../_actions/login";
 import { Button } from "@/components/ui/button";
-import { Globe, Lock, ArrowRight, MapPin, Eye, EyeOff } from "lucide-react";
+import { Lock, ArrowRight, MapPin, Eye, EyeOff } from "lucide-react";
+import Image from "next/image";
 import Link from "next/link";
 
 export default function LoginPage() {
@@ -51,8 +52,8 @@ export default function LoginPage() {
         >
           <div className="flex flex-col gap-5">
             {/* Logo mark */}
-            <div className="w-14 h-14 flex items-center justify-center rounded-xl border border-primary/30 bg-primary/10">
-              <Globe className="h-8 w-8 text-primary" />
+            <div className="w-14 h-14 rounded-xl overflow-hidden border border-primary/30">
+              <Image src="/data/icon.png" alt="Baguio City Land Cover" width={56} height={56} className="w-full h-full object-cover" />
             </div>
 
             <h2 className="text-3xl font-bold leading-[1.15] tracking-tight text-foreground">
