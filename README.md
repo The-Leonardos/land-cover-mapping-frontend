@@ -12,13 +12,14 @@ Ensure you have the following installed:
 - [Node.js](https://nodejs.org/) (Latest LTS recommended)
 - [pnpm](https://pnpm.io/installation)
 - [Docker Desktop](https://www.docker.com/products/docker-desktop/)
+- [VS Code](https://code.visualstudio.com/) (recommended, for running predefined tasks)
 
 ### 2. Environment Configuration (local development)
 
 Create a `.env` file in the root directory and add the following database configuration:
 
 ```env
-DATABASE_URL="postgresql://user:password@localhost:5432/thesis_db"
+DATABASE_URL="postgresql://postgres:postgres@localhost:5432/thesis_database?schema=public"
 POSTGRES_USER=user
 POSTGRES_PASSWORD=password
 POSTGRES_DB=thesis_db
@@ -32,38 +33,74 @@ Install the required node modules using pnpm:
 pnpm install
 ```
 
-### 4. Start the Database (Docker)
-
-This project uses a local PostgreSQL instance running in a Docker container.
-
-1. Ensure **Docker Desktop** is running.
-2. Start the database container:
+### 4. Generate the Prisma Client
 
 ```bash
-pnpm db:start
-# or directly using docker compose:
-# docker compose up -d
-```
-
-### 5. Database Setup (Prisma)
-
-Once the database is running, sync the Prisma schema and seed the initial data:
-
-```bash
-# Generate Prisma client
 npx prisma generate
-
-# Push schema to the database
-npx prisma db push
-
-# (Only run once) Seed the database
-pnpm db:seed
-
-# View the database
-pnpm db:studio
 ```
 
-### 6. Run the Development Server
+## Running the Project
+
+This project provides predefined VS Code tasks (see `.vscode/tasks.json`) so you don't have to type the commands manually. **For every step below**, run the task by following these instructions:
+
+1. Press `Ctrl + Shift + P` to open the Command Palette.
+2. Type and select **`Tasks: Run Task`**.
+3. Pick the task name listed in the step (e.g., `🐳 Docker Compose: Up (Persisted)`).
+4. If prompted with **`Continue without scanning the task output`**, click it to proceed.
+
+> If you are not using VS Code, you can run the equivalent terminal command shown next to each task.
+
+### Step 1: Make Sure Docker Desktop Is Running
+
+Open **Docker Desktop** and make sure it is fully started before running any task.
+
+### Step 2: Start the Database Container
+
+Run task: **`🐳 Docker Compose: Up (Persisted)`**
+
+Equivalent command:
+```bash
+docker compose -f docker-compose-persisted.yml up -d
+```
+
+Once the container is up, push the Prisma schema to the database:
+
+```bash
+npx prisma db push
+```
+
+### Step 3: Seed the Database
+
+Pick **one** of the following depending on the data you want:
+
+- Run task: **`🌱 Seed Data (Actual Data)`** — seeds the actual project data.
+  ```bash
+  npx prisma db seed actual_data
+  ```
+- Run task: **`🌿 Seed Data (Dynamic Model Demo)`** — seeds demo data for the dynamic model.
+  ```bash
+  npx prisma db seed dynamic_model_demo
+  ```
+
+### Step 4: Clear the Database (Optional)
+
+Run task: **`🗑️ Clear All Data`**
+
+Equivalent command:
+```bash
+npx prisma db seed clear_all_data
+```
+
+### Step 5: Mark Models as Trained for 2027 (Optional)
+
+Run task: **`✅ Mark Models as Trained for 2027`**
+
+Equivalent command:
+```bash
+npx tsx prisma/magic.ts 2027
+```
+
+### Step 6: Run the Development Server
 
 Start the Next.js development server:
 
