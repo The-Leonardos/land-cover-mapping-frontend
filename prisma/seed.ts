@@ -22,7 +22,7 @@ async function seedActualData() {
   console.log('Seeding actual data...');
 
   // ── Seed LandCoverTimeSeries from CSV ──────────────────────────────────────
-  const csvPath = path.resolve(process.cwd(), 'public/data/deepvar/time-series-data.csv');
+  const csvPath = path.resolve(process.cwd(), 'public/data/deepvar/final-time-series-data.csv');
   const csvContent = fs.readFileSync(csvPath, 'utf-8');
 
   const lines = csvContent.trim().split('\n');
