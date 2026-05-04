@@ -301,7 +301,7 @@ export const InteractiveMap = () => {
             style={{ transform: `translate(${position.x}px, ${position.y}px) scale(${scale})` }}
           >
             <div className="relative" style={{ width: mapSize, height: mapSize }}>
-              {activeLayers.has("satellite") && !isForecastYear && rawSatelliteImageURL && (
+              {activeLayers.has("satellite") && rawSatelliteImageURL && (
                 <div className="absolute inset-0 z-0 flex items-center justify-center">
                   <SatelliteImageRenderer url={rawSatelliteImageURL} />
                 </div>
