@@ -58,7 +58,6 @@ export function LayerPanel({
       {/* Layers */}
       <div className="p-3 md:p-4 space-y-3 md:space-y-4">
         {layers
-          .filter((layer) => !(layer.id === "satellite" && isForecastYear))
           .map((layer) => (
             <div key={layer.id} className="space-y-2">
               <div className="flex items-start justify-between gap-2 md:gap-3">
@@ -81,9 +80,7 @@ export function LayerPanel({
                         ? isForecastYear
                           ? "DeepLabV3+ AI Prediction"
                           : "Dynamic World Observation"
-                        : layer.id === "satellite" && isForecastYear
-                          ? "Reference historical view"
-                          : layer.description}
+                        : layer.description}
                     </p>
                   </div>
                 </div>
@@ -105,12 +102,11 @@ export function LayerPanel({
               </div>
 
               {/* Opacity Slider for Segmentation */}
-              {layer.id === "segmentation" && !isForecastYear &&
-                activeLayers.has("segmentation") && (
-                  <div className="ml-9 md:ml-11 space-y-2">
-                    <div className="flex items-center gap-2">
-                      <span className="text-xs md:text-xs text-muted-foreground">
-                        Opacity
+              {layer.id === "segmentation" && activeLayers.has("segmentation") && (
+                <div className="ml-9 md:ml-11 space-y-2">
+                  <div className="flex items-center gap-2">
+                    <span className="text-xs md:text-xs text-muted-foreground">
+                      Opacity
                       </span>
                       <span className="text-xs md:text-xs font-medium text-primary">
                         {Math.round(segmentationOpacity * 100)}%
