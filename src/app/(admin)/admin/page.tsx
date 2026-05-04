@@ -72,7 +72,7 @@ export default function AdminPage() {
         <section className="w-full">
           <div className="mb-6">
             <h2 className="text-xl font-semibold text-foreground tracking-tight">Performance Metrics</h2>
-            <p className="text-sm text-muted-foreground">Historical accuracy and validation scores for DeepLabV3+ and DeepAR models.</p>
+            <p className="text-sm text-muted-foreground">Historical accuracy and validation scores for DeepLabV3+ and DeepVAR models.</p>
           </div>
           <MetricsTables />
         </section>

@@ -85,7 +85,7 @@ export function SharedHeader() {
               }`}
             >
               <BarChart3 className="h-4 w-4 shrink-0" />
-              <span className="hidden lg:inline whitespace-nowrap">DEEPAR FORECAST</span>
+              <span className="hidden lg:inline whitespace-nowrap">DEEPVAR FORECAST</span>
             </Link>
           </div>
         </div>

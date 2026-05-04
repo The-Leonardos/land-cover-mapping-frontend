@@ -65,7 +65,7 @@ export default function LoginPage() {
             </h2>
 
             <p className="text-sm leading-relaxed text-muted-foreground max-w-[22rem]">
-              DeepLabV3+ segmentation &amp; DeepAR forecasting
+              DeepLabV3+ segmentation &amp; DeepVAR forecasting
               pipeline for environmental monitoring across 129 barangays.
             </p>
 

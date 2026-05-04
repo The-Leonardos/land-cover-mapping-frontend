@@ -10,7 +10,7 @@ const inter = Inter({
 
 export const metadata: Metadata = {
   title: "Land Cover Monitoring Agent",
-  description: "DeepLabV3+ & DeepAR-based environmental monitoring system for Baguio City",
+  description: "DeepLabV3+ & DeepVAR-based environmental monitoring system for Baguio City",
 }
 
 import { Toaster } from "sonner";
